@@ -515,38 +515,25 @@ class EngineRegistry:
 
     def _inspect_module(self, module_path: Path) -> List[Dict[str, Any]]:
         """
-        Inspect a Python module file to discover BaseEngine subclasses.
+        INTERNAL: Inspect a Python module file to discover BaseEngine subclasses.
 
-        This internal method dynamically loads a Python module and uses runtime
-        introspection to identify all classes that inherit from BaseEngine. It
-        extracts metadata from discovered engine classes for registration.
+        This is a private/internal method. It dynamically loads a Python module and uses
+        runtime introspection to identify all classes that inherit from BaseEngine, extracting
+        metadata for registration.
 
-        Parameters:
-        -----------
+        Do NOT call this method directly. Use the public `discover_engines()` method instead,
+        which handles engine discovery and registration in a safe and supported manner.
+
+        Parameters
+        ----------
         module_path : Path
-            Absolute or relative path to the Python module file (.py) to inspect.
+            Path to the Python module file (.py) to inspect.
 
-        Returns:
-        --------
+        Returns
+        -------
         List[Dict[str, Any]]
-            List of dictionaries containing metadata for each discovered engine class.
-            Returns an empty list if no engines are found or if module loading fails.
-
-            Each dictionary contains:
-            - `class_name` (str): The name of the discovered engine class
-            - `module_path` (str): Absolute path string to the module file
-            - `engine_type` (str): Engine type extracted from the class's ENGINE_TYPE
-                                   attribute, defaults to "execution" if not present
-
-        Discovery Process:
-        ------------------
-        1. Creates a module spec from the file path using importlib
-        2. Loads the module in an isolated namespace
-        3. Executes the module to populate its namespace
-        4. Iterates through all module-level attributes
-        5. Identifies classes that meet engine criteria
-        6. Extracts metadata from qualifying classes
-
+            List of metadata dictionaries for each discovered engine class, or an empty list.
+        """
         Engine Class Criteria:
         ----------------------
         A class is considered a valid engine if ALL of these conditions are met:
