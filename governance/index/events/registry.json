@@ -51,6 +51,14 @@
         "id": "decision-flow",
         "chain": ["intent.received", "intent.mapped", "automation.started", "automation.completed"],
         "closes_at": "feedback.analyzed"
+      },
+      {
+        "id": "auto-comment-flow",
+        "dimension": "81-auto-comment",
+        "chain": ["ci.failed", "auto-comment.triggered", "auto-comment.generated", "auto-comment.posted", "event.registered"],
+        "on_auto_fix": ["auto-fix.triggered", "auto-fix.completed", "commit.created"],
+        "closes_at": "feedback.collected",
+        "depends_on": ["39-automation", "71-feedback-loops"]
       }
     ]
   },
@@ -59,7 +67,12 @@
     "total_events": 1,
     "total_files": 0,
     "last_event_id": "evt-20251212004747-d807207d",
-    "last_update": "2025-12-12T00:47:47.591155Z"
+    "last_update": "2025-12-12T00:47:47.591155Z",
+    "auto_comment_stats": {
+      "total_auto_comments": 0,
+      "total_auto_fixes": 0,
+      "auto_fix_success_rate": 0
+    }
   },
   "shared_context": {
     "enabled": true,
