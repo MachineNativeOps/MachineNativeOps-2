@@ -849,31 +849,31 @@ shared_resources:
   purpose: CI/CD workflows and reusable actions
   consumers:
   - all dimensions
-- name: policies
+- name: 23-policies
   type: shared
   owner: policy-engine
-  path: governance/policies
+  path: governance/23-policies
   purpose: Global policy library (Rego/OPA/Conftest)
   consumers:
   - 10-policy
-  - 23-policies
   - all dimensions
-- name: schemas
+  note: Previously named 'policies', renamed to 23-policies for consistency
+- name: 31-schemas
   type: shared
   owner: schema-team
-  path: governance/schemas
+  path: governance/31-schemas
   purpose: JSON Schema definitions and validation rules
   consumers:
-  - 31-schemas
   - all dimensions
-- name: scripts
+  note: Previously named 'schemas', renamed to 31-schemas for consistency
+- name: 35-scripts
   type: shared
   owner: automation-team
-  path: governance/scripts
+  path: governance/35-scripts
   purpose: Utility scripts and automation helpers
   consumers:
-  - 35-scripts
   - all dimensions
+  note: Previously named 'scripts', renamed to 35-scripts for consistency
 - name: packages
   type: shared
   owner: infra-team
@@ -905,6 +905,21 @@ shared_resources:
   purpose: Temporary workspace for development and testing
   consumers:
   - development-team
+- name: _legacy
+  type: shared
+  owner: governance-bot
+  path: governance/_legacy
+  purpose: Deprecated and legacy governance artifacts for reference
+  consumers:
+  - governance-bot
+  note: Contains deprecated directories and files for historical reference
+- name: examples
+  type: shared
+  owner: governance-team
+  path: governance/examples
+  purpose: Example configurations and reference implementations
+  consumers:
+  - all dimensions
 root_documentation:
 - name: README.md
   type: documentation
