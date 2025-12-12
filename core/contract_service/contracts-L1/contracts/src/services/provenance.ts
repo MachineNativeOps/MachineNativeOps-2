@@ -1,11 +1,12 @@
 import { createHash, randomUUID } from 'crypto';
 import { readFile, stat } from 'fs/promises';
-import { relative, resolve, normalize } from 'path';
 import * as path from 'path';
+
+import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
+import { PathValidationError } from '../errors';
 
 // Define a safe root directory for allowed file operations
 const SAFE_ROOT = path.resolve(process.cwd(), 'safefiles');
-import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 export interface BuildAttestation {
   id: string;
@@ -72,17 +73,62 @@ export class ProvenanceService {
     this.slsaService = new SLSAAttestationService();
   }
   /**
-   * 生成文件的 SHA256 摘要
+   * Generates a SHA256 digest for a file with path traversal protection
+   * 
+   * @param filePath - Relative path to the file within the safe directory
+   * @returns SHA256 digest in format "sha256:hexstring"
+   * @throws {PathValidationError} If the path attempts to escape the safe directory
+   * 
+   * @security Path Traversal Protection
+   * - All paths are resolved relative to SAFE_ROOT
+   * - Blocks directory traversal attempts (../)
+   * - Blocks absolute paths (/path or C:\path)
+   * - Cross-platform compatible (Windows/Linux/macOS)
+   * 
+   * @example
+   * // Valid usage
+   * const digest = await generateFileDigest('test-file.txt');
+   * 
+   * @example
+   * // Blocked - directory traversal
+   * await generateFileDigest('../../../etc/passwd'); // throws PathValidationError
    */
   async generateFileDigest(filePath: string): Promise<string> {
-    const content = await readFile(filePath);
+    // Normalize and resolve against the SAFE_ROOT
+    const resolvedPath = path.resolve(SAFE_ROOT, filePath);
+    // Ensure the resolved path is within SAFE_ROOT using relative path check
+    const relativePath = path.relative(SAFE_ROOT, resolvedPath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      throw new PathValidationError();
+    }
+    const content = await readFile(resolvedPath);
     const hash = createHash('sha256');
     hash.update(content);
     return `sha256:${hash.digest('hex')}`;
   }
 
   /**
-   * 創建構建認證 - 使用 SLSA 格式
+   * Creates a build attestation using SLSA format with path traversal protection
+   * 
+   * @param subjectPath - Relative path to the subject file within the safe directory
+   * @param builder - Builder information including ID and version
+   * @param metadata - Optional build metadata (timestamps, reproducibility, etc.)
+   * @returns Build attestation with SLSA provenance
+   * @throws {PathValidationError} If the path attempts to escape the safe directory
+   * @throws {Error} If the subject path is not a file
+   * 
+   * @security Path Traversal Protection
+   * - All paths are resolved relative to SAFE_ROOT
+   * - Blocks directory traversal attempts (../)
+   * - Blocks absolute paths (/path or C:\path)
+   * - Cross-platform compatible (Windows/Linux/macOS)
+   * 
+   * @example
+   * const attestation = await createBuildAttestation(
+   *   'build-artifact.tar.gz',
+   *   { id: 'https://builder.example.com', version: '1.0.0' },
+   *   { reproducible: true }
+   * );
    */
   async createBuildAttestation(
     subjectPath: string,
@@ -91,9 +137,10 @@ export class ProvenanceService {
   ): Promise<BuildAttestation> {
     // Normalize and resolve against the SAFE_ROOT
     const resolvedPath = path.resolve(SAFE_ROOT, subjectPath);
-    // Ensure the resolved path is within SAFE_ROOT
-    if (!resolvedPath.startsWith(SAFE_ROOT + path.sep)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted.');
+    // Ensure the resolved path is within SAFE_ROOT using relative path check
+    const relativePath = path.relative(SAFE_ROOT, resolvedPath);
+    if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+      throw new PathValidationError();
     }
     const stats = await stat(resolvedPath);
     if (!stats.isFile()) {
@@ -102,7 +149,7 @@ export class ProvenanceService {
 
     const content = await readFile(resolvedPath);
     const subject = this.slsaService.createSubjectFromContent(
-      relative(process.cwd(), resolvedPath),
+      path.relative(process.cwd(), resolvedPath),
       content
     );
 
