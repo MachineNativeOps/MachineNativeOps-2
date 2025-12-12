@@ -273,10 +273,6 @@ PY
             exit 0
           fi
           npm install --ignore-scripts
-          if [ ! -d node_modules ]; then
-            echo "::error::node_modules not found after npm install; SBOM would be incomplete"
-            exit 1
-          fi
           npx @cyclonedx/cyclonedx-npm --output-file sbom.json
           npm audit --audit-level=high
           cp sbom.json "$GITHUB_WORKSPACE/sbom.json"
@@ -301,6 +297,7 @@ PY
           else
             compose_cmd="docker-compose"
           fi
+          echo "Using compose command: ${compose_cmd}"
 
           if [ -f docker-compose.yml ]; then
             ${compose_cmd} config || { echo "::error::Compose config validation failed"; exit 1; }

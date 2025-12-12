@@ -3,7 +3,7 @@ set -euo pipefail
 
 echo "📥 Loading governance index..."
 if [ ! -f "governance/index/governance-index.json" ]; then
-  echo "::error::governance/index/governance-index.json not found"
+  echo "::error::governance/index/governance-index.json not found at governance/index/governance-index.json"
   exit 1
 fi
 
