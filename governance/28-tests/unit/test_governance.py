@@ -1,8 +1,17 @@
 """
 Tests for governance framework
 """
-import pytest
+import sys
 from pathlib import Path
+
+import pytest
+
+sys.path.append(str(Path(__file__).resolve().parents[2]))
+from structure_baseline import (  # noqa: E402
+    REQUIRED_DIMENSIONS,
+    REQUIRED_ROOT_FILES,
+    missing_items,
+)
 
 def test_governance_structure_exists(governance_root):
     """Test that governance structure exists"""
@@ -11,27 +20,13 @@ def test_governance_structure_exists(governance_root):
 
 def test_dimensions_exist(governance_root):
     """Test that all dimension directories exist"""
-    expected_dims = [
-        "00-vision-strategy", "01-architecture", "02-decision",
-        "03-change", "04-risk", "05-compliance", "06-security",
-        "07-audit", "08-process", "09-performance", "10-policy",
-        "11-tools-systems", "12-culture-capability", 
-        "13-metrics-reporting", "14-improvement"
-    ]
-    
     # Note: 10-stakeholder moved to _legacy/10-stakeholder (2025-12-12)
     # Now using 10-policy for layered governance framework
-    
-    for dim in expected_dims:
-        dim_path = governance_root / dim
-        assert dim_path.exists(), f"Dimension {dim} does not exist"
+
+    missing = missing_items(governance_root, REQUIRED_DIMENSIONS)
+    assert not missing, f"Missing dimensions: {missing}"
 
 def test_root_files_exist(governance_root):
     """Test that root files exist"""
-    root_files = [
-        "README.md", "QUICKSTART.md", "IMPLEMENTATION-ROADMAP.md",
-        "requirements.txt", "docker-compose.yml", "Makefile"
-    ]
-    
-    for file in root_files:
-        assert (governance_root / file).exists(), f"Root file {file} missing"
+    missing = missing_items(governance_root, REQUIRED_ROOT_FILES)
+    assert not missing, f"Missing root files: {missing}"
