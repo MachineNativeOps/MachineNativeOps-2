@@ -5,7 +5,7 @@
 ## Governance Sources Reviewed
 
 - `governance/RESTRUCTURING_GUIDE.md` — layered dimensions, dual audit directories (`07-audit/` vs `70-audit/`), shared resource consolidation.
-- `governance/ARCHITECTURE_GOVERNANCE_MATRIX.md` — canonical roles, capabilities, and naming across 00-80 dimensions.
+- `governance/README.md` + `governance/29-docs/GOVERNANCE_STRUCTURE_INDEX.md` — canonical roles, capabilities, naming, and mappings across 00-80 dimensions.
 - `config/system-module-map.yaml` — root directory cleanup guidelines and consolidation targets (automation/, services/, infrastructure/, docs/, tools/, tests/, ops/, shared/, legacy/).
 
 ## Alignment Rules for Root Moves
@@ -18,5 +18,5 @@
 ## Validation Checklist
 
 - Confirm new locations follow `root_directory_guidelines` in `config/system-module-map.yaml`.
-- Re-run governance validators (e.g., `governance/35-scripts/validate-governance-structure.py`) if paths change.
+- Re-run governance validators (e.g., `governance/28-tests/validate-governance-matrix.py`) if paths change.
 - Ensure any renamed paths continue to satisfy the layered governance matrix and dependency flow.
