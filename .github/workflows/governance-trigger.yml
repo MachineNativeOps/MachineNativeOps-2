@@ -71,14 +71,44 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🔍 Validate governance tools path
+      - name: 🔍 Validate and normalize governance tools path
         id: validate
         run: |
-          if [ -d "${{ env.GOVERNANCE_TOOLS_PATH }}" ]; then
-            echo "✅ Governance tools path exists"
+          # Define safe root boundary (repository root)
+          SAFE_ROOT="${GITHUB_WORKSPACE}"
+          
+          # Hardcoded expected path - prevents manipulation
+          EXPECTED_PATH="governance/dimensions/81-auto-comment/scripts"
+          
+          # Resolve to absolute path and canonicalize
+          RESOLVED_PATH=$(cd "${SAFE_ROOT}" && realpath -m "${EXPECTED_PATH}" 2>/dev/null || echo "")
+          
+          # Security check 1: Path resolution succeeded
+          if [ -z "$RESOLVED_PATH" ]; then
+            echo "❌ Failed to resolve path"
+            echo "path_valid=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Security check 2: Ensure path stays within repository boundary
+          case "$RESOLVED_PATH" in
+            "${SAFE_ROOT}"*)
+              echo "✅ Path is within safe boundary"
+              ;;
+            *)
+              echo "❌ Path traversal detected - path outside repository: $RESOLVED_PATH"
+              echo "path_valid=false" >> $GITHUB_OUTPUT
+              exit 0
+              ;;
+          esac
+          
+          # Security check 3: Directory exists
+          if [ -d "$RESOLVED_PATH" ]; then
+            echo "✅ Governance tools path exists: $RESOLVED_PATH"
             echo "path_valid=true" >> $GITHUB_OUTPUT
+            echo "safe_path=$RESOLVED_PATH" >> $GITHUB_OUTPUT
           else
-            echo "⚠️ Governance tools path not found: ${{ env.GOVERNANCE_TOOLS_PATH }}"
+            echo "⚠️ Governance tools path not found: $RESOLVED_PATH"
             echo "path_valid=false" >> $GITHUB_OUTPUT
           fi
 
@@ -93,14 +123,16 @@ jobs:
       - name: 📦 Install dependencies
         if: steps.validate.outputs.path_valid == 'true'
         run: |
-          npm install -g typescript@5 ts-node@10
+          npm install -g typescript@5.3.3 ts-node@10.9.2
           npm install minimist@1.2.8 @types/node@20.10.6
 
       - name: 🔧 Run governance comment generator
         id: generate
         if: steps.validate.outputs.path_valid == 'true'
         run: |
-          cd ${{ env.GOVERNANCE_TOOLS_PATH }}
+          # Use the validated safe path from previous step
+          SAFE_PATH="${{ steps.validate.outputs.safe_path }}"
+          cd "$SAFE_PATH"
           
           # 執行評論生成工具，捕獲錯誤但不中斷 CI
           if npx ts-node generate-comment.ts \
@@ -120,7 +152,9 @@ jobs:
         id: registry
         if: steps.validate.outputs.path_valid == 'true'
         run: |
-          cd ${{ env.GOVERNANCE_TOOLS_PATH }}
+          # Use the validated safe path from previous step
+          SAFE_PATH="${{ steps.validate.outputs.safe_path }}"
+          cd "$SAFE_PATH"
           
           # 更新事件 registry，捕獲錯誤但不中斷 CI
           if node update-registry.js \
