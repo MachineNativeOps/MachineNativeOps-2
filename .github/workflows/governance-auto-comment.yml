@@ -379,14 +379,7 @@ jobs:
     steps:
       - name: Generate workflow summary
         env:
-          WORKFLOW_NAME: ${{ needs.check-trigger.outputs.workflow_name }}
-          WORKFLOW_CONCLUSION: ${{ needs.check-trigger.outputs.workflow_conclusion }}
-          HEAD_SHA: ${{ needs.check-trigger.outputs.head_sha }}
-          HEAD_BRANCH: ${{ needs.check-trigger.outputs.head_branch }}
-          PR_NUMBER: ${{ needs.check-trigger.outputs.pr_number || 'N/A' }}
           EVENT_ID: ${{ needs.generate-comment.outputs.event_id }}
-          ERROR_TYPE: ${{ needs.generate-comment.outputs.error_type }}
-          AUTO_FIXED: ${{ needs.generate-comment.outputs.auto_fixed }}
         run: |
           cat >> $GITHUB_STEP_SUMMARY << EOF
           ## 🤖 Governance Auto-Comment Engine Report
