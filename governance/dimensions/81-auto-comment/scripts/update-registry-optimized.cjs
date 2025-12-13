@@ -272,6 +272,11 @@ function updateStatistics(registry, newEvent) {
     stats.auto_fixed = (stats.auto_fixed || 0) + 1;
   }
 
+  // Initialize nested objects if they don't exist
+  stats.by_type = stats.by_type || {};
+  stats.by_workflow = stats.by_workflow || {};
+  stats.by_status = stats.by_status || {};
+
   // Update by_type
   if (newEvent.error_type) {
     stats.by_type[newEvent.error_type] =
