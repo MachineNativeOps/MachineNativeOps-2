@@ -1,0 +1,134 @@
+# =============================================================================
+# SynergyMesh Governance Trigger
+# 治理觸發器 - CI 只負責觸發，不做驗證
+# =============================================================================
+#
+# 設計理念：
+# - CI 不需要自己跑完整的治理驗證
+# - CI 只在 pipeline 裡偵測到事件（push、PR、merge）
+# - 直接呼叫治理工具，由工具來做掃描、修復、評論、治理閉環
+#
+# 優點：
+# - 降低 CI 失敗率：CI 不再因為治理錯誤而標紅
+# - 治理閉環仍存在：錯誤與修復由工具紀錄在 registry
+# - 彈性高：可隨時更新工具邏輯，不用改 CI workflow
+# =============================================================================
+
+name: Governance Trigger
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      trigger_mode:
+        description: "觸發模式"
+        required: false
+        type: choice
+        options:
+          - "standard"
+          - "full-scan"
+          - "auto-fix-only"
+        default: "standard"
+
+# 限制權限到最小必要範圍
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+# 防止並行執行
+concurrency:
+  group: governance-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+  GOVERNANCE_TOOLS_PATH: "governance/dimensions/81-auto-comment/scripts"
+
+jobs:
+  # ===========================================================================
+  # 唯一的 Job：觸發治理工具
+  # ===========================================================================
+  trigger-governance:
+    name: "🔄 Trigger Governance Tools"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      - name: 📦 Install dependencies
+        run: |
+          npm install -g typescript ts-node
+          npm install minimist @types/node
+
+      - name: 🔧 Run governance comment generator
+        id: generate
+        run: |
+          cd ${{ env.GOVERNANCE_TOOLS_PATH }}
+          
+          # 執行評論生成工具
+          npx ts-node generate-comment.ts \
+            --workflow "GitHub CI Trigger" \
+            --run-id "${{ github.run_id }}" \
+            --commit "${{ github.sha }}" \
+            --branch "${{ github.ref_name }}" \
+            --pr-number "${{ github.event.pull_request.number || '' }}" || true
+          
+          echo "✅ Comment generator executed"
+
+      - name: 📝 Update governance registry
+        run: |
+          cd ${{ env.GOVERNANCE_TOOLS_PATH }}
+          
+          # 更新事件 registry
+          node update-registry.js \
+            --event-id "auto-comment-${{ github.run_id }}" \
+            --status "triggered" \
+            --workflow "GitHub CI Trigger" \
+            --commit "${{ github.sha }}" \
+            --branch "${{ github.ref_name }}" \
+            --from-file || true
+          
+          echo "✅ Registry updated"
+
+      - name: 📊 Generate workflow summary
+        if: always()
+        run: |
+          cat >> $GITHUB_STEP_SUMMARY << 'EOF'
+          ## 🔄 Governance Trigger Summary
+          
+          | 項目 | 值 |
+          |------|-----|
+          | 事件類型 | ${{ github.event_name }} |
+          | 分支 | ${{ github.ref_name }} |
+          | Commit | `${{ github.sha }}` |
+          | 執行 ID | `${{ github.run_id }}` |
+          | PR 編號 | ${{ github.event.pull_request.number || 'N/A' }} |
+          
+          ---
+          
+          ### 🎯 設計理念
+          
+          此 workflow 只負責**觸發**治理工具，不做驗證邏輯：
+          
+          - ✅ CI 永遠成功（除非工具本身出錯）
+          - ✅ 治理閉環由工具維護
+          - ✅ 事件追蹤記錄在 `governance/index/events/registry.json`
+          
+          ---
+          
+          *此報告由 Governance Trigger 自動生成*
+          EOF
