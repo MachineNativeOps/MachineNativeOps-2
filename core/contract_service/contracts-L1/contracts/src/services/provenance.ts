@@ -3,8 +3,9 @@ import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
 
-import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 import { PathValidator } from '../utils/path-validator';
+
+import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 // Define a safe root directory for allowed file operations
 // In test environment, this can be overridden to use tmpdir
