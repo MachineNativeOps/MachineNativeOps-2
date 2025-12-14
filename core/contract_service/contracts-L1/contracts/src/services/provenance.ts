@@ -65,7 +65,6 @@ async function validateAndNormalizePath(
     throw new Error('Invalid file path: Path must be a non-empty string');
   }
 
-
   // If you need multi-directory paths, reject obvious traversal
   if (
     filePath.includes('\0') ||
@@ -76,6 +75,20 @@ async function validateAndNormalizePath(
   }
 
   const systemTmpDir = tmpdir();
+  
+  // Conditional absolute path validation:
+  // In production mode, reject all absolute paths to prevent unauthorized access.
+  // In test mode, allow absolute paths only if they're within the system temp directory.
+  if (path.isAbsolute(filePath)) {
+    if (process.env.NODE_ENV !== 'test') {
+      throw new Error('Invalid file path: Absolute paths are not permitted');
+    }
+    // In test mode, verify the absolute path is within tmpdir
+    if (!isInTestTmpDir(filePath, systemTmpDir)) {
+      throw new Error('Invalid file path: Absolute paths must be within system temp directory in test mode');
+    }
+  }
+
   const resolvedPath = resolveFilePath(filePath, safeRoot, systemTmpDir);
 
   try {
