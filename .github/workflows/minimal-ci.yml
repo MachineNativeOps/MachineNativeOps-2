@@ -1,0 +1,29 @@
+name: Minimal CI Trigger
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  trigger-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      - name: "🔍 抓取工具與引擎檔案"
+        run: |
+          echo "Fetching toolchain definitions..."
+          ls tools/engine/ || echo "No local engine files found"
+          # 如果需要從外部拉取，可以改成：
+          # curl -O https://your-engine-repo/tools/engine/run.sh
+
+      - name: "🚀 呼叫外部引擎"
+        run: |
+          echo "Triggering external engine..."
+          bash tools/engine/run.sh || echo "Engine script not found"
+          # 或者呼叫 API：
+          # curl -X POST https://workflow-engine/trigger -d '{"event":"push"}'

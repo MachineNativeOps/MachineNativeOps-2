@@ -1,77 +1,67 @@
-name: 03-build
+name: Governed Build Pipeline
+# Consolidated workflows: lint/test/build across Node/Rust/Go/Python/Java and governance validation
+# Removed optional workflows: docker image builds (use release workflow), deployment/CD pipelines, SARIF security uploads
+# Behavior: single governed job runs sequentially to preserve ordering and reduce runner concurrency cost; adjust to matrix if speed outweighs ordering needs
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
-
-# Cost protection: prevent concurrent runs
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: governed-build-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:
-  # Workflow status check - always runs to prevent startup_failure
-  workflow-status:
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - name: Workflow validation
-        run: echo "Build workflow triggered successfully"
+permissions:
+  contents: read
+  pull-requests: write
+  security-events: write
 
-  build-matrix:
-    needs: workflow-status
-    timeout-minutes: 15  # Prevent runaway costs
+jobs:
+  governed-build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [typescript, rust, go, java]
+    timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        if: ${{ matrix.target == 'typescript' }}
+        if: ${{ hashFiles('package.json') != '' }}
         uses: actions/setup-node@v6
         with:
           node-version: 18
           cache: npm
 
-      - name: Build TypeScript workspaces
-        if: ${{ matrix.target == 'typescript' }}
-        run: |
-          npm install
-          npm run build --workspaces --if-present
-
-      - name: Setup Rust
-        if: ${{ matrix.target == 'rust' }}
+      - name: Setup Rust toolchain
+        if: ${{ hashFiles('core/**') != '' }}
         uses: dtolnay/rust-toolchain@stable
         with:
-          components: clippy
-
-      - name: Cargo build
-        if: ${{ matrix.target == 'rust' }}
-        run: cargo build --workspace --all-features
+          components: rustfmt,clippy
 
       - name: Setup Go
-        if: ${{ matrix.target == 'go' }}
+        if: ${{ hashFiles('services/**') != '' }}
         uses: actions/setup-go@v5
         with:
           go-version: 1.21
 
-      - name: Go build
-        if: ${{ matrix.target == 'go' }}
-        run: go build ./...
-        working-directory: services
+      - name: Setup Python
+        if: ${{ hashFiles('**/*.py', 'requirements.txt', 'pyproject.toml') != '' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
       - name: Setup Java
-        if: ${{ matrix.target == 'java' }}
+        if: ${{ hashFiles('pom.xml') != '' }}
         uses: actions/setup-java@v4
         with:
+          java-version: "21"
           distribution: temurin
-          java-version: '21'
           cache: maven
 
-      - name: Maven build
-        if: ${{ matrix.target == 'java' }}
-        run: mvn clean install -DskipTests
+      - name: Run governed build pipeline
+        env:
+          PR_BODY: ${{ github.event.pull_request.body || '' }}
+        run: bash scripts/ci/governed-build.sh
+        # Governance coverage: validate-governance-structure.py, make validate-governance-ci, optional scan-governance-directory.py (auto-discovered)
