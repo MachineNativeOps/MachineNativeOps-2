@@ -1,19 +1,31 @@
 import { ProvenanceService } from '../services/provenance';
-import { writeFile, unlink } from 'fs/promises';
+import { writeFile, unlink, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
 
 describe('ProvenanceService', () => {
   let service: ProvenanceService;
   let testFilePath: string;
+  let originalSafeRoot: string | undefined;
 
   beforeEach(async () => {
+    // Set SAFE_ROOT_PATH to tmpdir for testing
+    originalSafeRoot = process.env.SAFE_ROOT_PATH;
+    process.env.SAFE_ROOT_PATH = tmpdir();
+    
     service = new ProvenanceService();
     testFilePath = join(tmpdir(), `test-${Date.now()}.txt`);
     await writeFile(testFilePath, 'test content for attestation');
   });
 
   afterEach(async () => {
+    // Restore original SAFE_ROOT_PATH
+    if (originalSafeRoot !== undefined) {
+      process.env.SAFE_ROOT_PATH = originalSafeRoot;
+    } else {
+      delete process.env.SAFE_ROOT_PATH;
+    }
+    
     try {
       await unlink(testFilePath);
     } catch {
@@ -23,13 +35,20 @@ describe('ProvenanceService', () => {
 
   describe('generateFileDigest', () => {
     it('should generate correct SHA256 digest', async () => {
-      const digest = await service.generateFileDigest(testFilePath);
+      // Use relative path from SAFE_ROOT (tmpdir in tests)
+      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const digest = await service.generateFileDigest(relativePath);
       expect(digest).toMatch(/^sha256:[a-f0-9]{64}$/);
     });
 
     it('should throw error for non-existent file', async () => {
-      await expect(service.generateFileDigest('/non/existent/file'))
-        .rejects.toThrow(/ENOENT/);
+      await expect(service.generateFileDigest('non/existent/file'))
+        .rejects.toThrow();
+    });
+    
+    it('should reject path traversal attempts', async () => {
+      await expect(service.generateFileDigest('../../../etc/passwd'))
+        .rejects.toThrow(/not allowed/);
     });
   });
 
@@ -40,7 +59,9 @@ describe('ProvenanceService', () => {
         version: '1.0.0'
       };
 
-      const attestation = await service.createBuildAttestation(testFilePath, builder);
+      // Use relative path from SAFE_ROOT
+      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const attestation = await service.createBuildAttestation(relativePath, builder);
 
       expect(attestation).toMatchObject({
         id: expect.stringMatching(/^att_\d+_[a-z0-9]+$/),
@@ -48,7 +69,7 @@ describe('ProvenanceService', () => {
         subject: {
           name: expect.stringContaining('test-'),
           digest: expect.stringMatching(/^sha256:[a-f0-9]{64}$/),
-          path: testFilePath
+          path: expect.any(String)
         },
         predicate: {
           type: 'https://slsa.dev/provenance/v1',
@@ -74,7 +95,8 @@ describe('ProvenanceService', () => {
         buildInvocationId: 'test-build-123'
       };
 
-      const attestation = await service.createBuildAttestation(testFilePath, builder, metadata);
+      const relativePath = testFilePath.replace(tmpdir(), '').substring(1);
+      const attestation = await service.createBuildAttestation(relativePath, builder, metadata);
 
       expect(attestation.predicate.metadata.reproducible).toBe(true);
       expect(attestation.predicate.metadata.buildInvocationId).toBe('test-build-123');

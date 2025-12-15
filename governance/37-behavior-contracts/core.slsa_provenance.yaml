@@ -51,6 +51,7 @@ api:
           artifact_uri:
             type: "string"
             description: "URI of the artifact (e.g., container image)"
+            note: "Path validation required - must be within SAFE_ROOT"
           artifact_digest:
             type: "object"
             properties:
@@ -69,6 +70,10 @@ api:
                 digest: { type: "object" }
           metadata:
             type: "object"
+          safe_root_config:
+            type: "string"
+            description: "Environment variable defining SAFE_ROOT path (default: SAFE_ROOT_PATH)"
+            optional: true
       
       output_schema:
         type: "object"
@@ -90,11 +95,16 @@ api:
         - "Signature uses Sigstore/Fulcio"
         - "Certificate includes transparency log entry"
         - "Attestation is immutable after creation"
+        - "File paths validated against SAFE_ROOT to prevent path traversal (PR #351)"
+        - "All file operations use realpath() and relative() for security"
       
       error_responses:
         - code: 400
           condition: "Invalid artifact URI or missing required fields"
           message: "ERR_INVALID_INPUT"
+        - code: 403
+          condition: "Path traversal attempt detected or path outside SAFE_ROOT"
+          message: "ERR_PATH_SECURITY_VIOLATION"
         - code: 500
           condition: "Sigstore signing failure"
           message: "ERR_SIGNING_FAILED"
@@ -339,6 +349,18 @@ security:
     - "Certificates include OIDC identity"
     - "Transparency log provides non-repudiation"
     - "No long-lived signing keys stored"
+    - "Path traversal prevention using SAFE_ROOT validation (PR #351)"
+    - "File operations use realpath() for symlink resolution"
+    - "Path containment verified using relative() checks"
+  
+  security_enhancements_pr351:
+    date: "2025-12-15"
+    changes:
+      - "Added resolveSafePath() method for path validation"
+      - "SAFE_ROOT configurable via SAFE_ROOT_PATH environment variable"
+      - "All file operations protected against directory traversal"
+      - "Symlink resolution before path validation"
+    policy_reference: "governance/10-policy/base-policies/security-policies.yaml#SEC-PATH-001"
   
   compliance:
     - "SLSA Level 3"

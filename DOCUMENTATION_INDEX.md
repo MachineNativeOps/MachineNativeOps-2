@@ -98,6 +98,7 @@
 | [docs/architecture/DELEGATION_WORKFLOW.md](./docs/architecture/DELEGATION_WORKFLOW.md)                             | 委派工作流       | 任務委派流程            |
 | [docs/architecture/FileDescription.md](./docs/architecture/FileDescription.md)                                     | 文件描述         | 重要文件說明            |
 | [docs/architecture/ADVANCED_SYSTEM_INTEGRATION.md](./docs/architecture/ADVANCED_SYSTEM_INTEGRATION.md)             | 進階系統整合     | 高級整合方案            |
+| [docs/architecture/PR351_ARCHITECTURE_EVOLUTION.md](./docs/architecture/PR351_ARCHITECTURE_EVOLUTION.md) ⭐ **NEW** | PR #351 架構演化 | 三層治理模型、配置優化、子系統整合 |
 | [docs/architecture/REPOSITORY_INTEGRATION_ASSESSMENT.md](./docs/architecture/REPOSITORY_INTEGRATION_ASSESSMENT.md) | 倉庫整合評估     | 整合評估報告            |
 | [docs/architecture/matechat-integration.md](./docs/architecture/matechat-integration.md)                           | MateChat 整合    | 聊天系統整合            |
 | [docs/architecture.zh.md](./docs/architecture.zh.md)                                                               | 架構說明（中文） | 中文架構文檔            |
@@ -434,6 +435,7 @@ const reports = await runStageOne({
 | 文件路徑                                                                                       | 說明          | 操作指引                 |
 | ---------------------------------------------------------------------------------------------- | ------------- | ------------------------ |
 | [docs/security/SECURITY_SUMMARY.md](./docs/security/SECURITY_SUMMARY.md)                       | 安全摘要      | 安全總覽                 |
+| [docs/security/PR351_SECURITY_ENHANCEMENTS.md](./docs/security/PR351_SECURITY_ENHANCEMENTS.md) ⭐ **NEW** | PR #351 安全增強 | 路徑遍歷防護、安全日誌、強加密 |
 | [docs/security/GHAS_IMPLEMENTATION_SUMMARY.md](./docs/security/GHAS_IMPLEMENTATION_SUMMARY.md) | GHAS 實施摘要 | GitHub Advanced Security |
 | [docs/VULNERABILITY_MANAGEMENT.md](./docs/VULNERABILITY_MANAGEMENT.md)                         | 漏洞管理      | CVE 偵測與回應           |
 | [docs/SECRET_SCANNING.md](./docs/SECRET_SCANNING.md)                                           | 密鑰掃描      | 密鑰偵測                 |

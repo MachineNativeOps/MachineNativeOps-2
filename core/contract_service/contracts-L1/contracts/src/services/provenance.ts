@@ -65,11 +65,14 @@ export interface Dependency {
 
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
+  
   // Define the root directory for allowed files. Change as needed for your project needs
   // Use a fixed absolute path or environment variable for SAFE_ROOT
-  private static readonly SAFE_ROOT = process.env.SAFE_ROOT_PATH
-    ? resolve(process.env.SAFE_ROOT_PATH)
-    : resolve(__dirname, '../../safefiles');
+  private static getSafeRoot(): string {
+    return process.env.SAFE_ROOT_PATH
+      ? resolve(process.env.SAFE_ROOT_PATH)
+      : resolve(__dirname, '../../safefiles');
+  }
 
   constructor() {
     this.slsaService = new SLSAAttestationService();
@@ -80,10 +83,11 @@ export class ProvenanceService {
    * Throws an error if the check fails.
    */
   private async resolveSafePath(userInputPath: string): Promise<string> {
+    const safeRoot = ProvenanceService.getSafeRoot();
     // Resolve the user input to an absolute path within SAFE_ROOT
-    const absPath = resolve(ProvenanceService.SAFE_ROOT, userInputPath);
+    const absPath = resolve(safeRoot, userInputPath);
     const realAbsPath = await realpath(absPath);
-    const rel = relative(ProvenanceService.SAFE_ROOT, realAbsPath);
+    const rel = relative(safeRoot, realAbsPath);
     if (rel.startsWith('..') || rel === '' || rel.includes('..' + require('path').sep) || rel === '..') {
       throw new Error('Access to the specified file path is not allowed');
     }

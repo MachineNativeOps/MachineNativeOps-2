@@ -22,6 +22,11 @@ describe('Error Middleware', () => {
       method: 'GET',
       url: '/test',
       headers: {},
+      get: jest.fn((header: string) => {
+        if (header === 'user-agent') return 'test-agent';
+        return undefined;
+      }),
+      ip: '127.0.0.1',
     };
 
     mockResponse = {
