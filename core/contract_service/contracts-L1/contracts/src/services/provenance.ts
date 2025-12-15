@@ -3,8 +3,6 @@ import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
 
-import { PathValidator } from '../utils/path-validator';
-
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
 // Define a safe root directory for allowed file operations
@@ -158,11 +156,9 @@ export interface Dependency {
 
 export class ProvenanceService {
   private readonly slsaService: SLSAAttestationService;
-  private readonly pathValidator: PathValidator;
 
-  constructor(pathValidator?: PathValidator) {
+  constructor() {
     this.slsaService = new SLSAAttestationService();
-    this.pathValidator = pathValidator || new PathValidator();
   }
 
   /**
