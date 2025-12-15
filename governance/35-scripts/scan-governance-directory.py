@@ -44,6 +44,12 @@ class Colors:
     UNDERLINE = '\033[4m'
 
 
+SEPARATOR_LENGTH = 80
+MAIN_SEPARATOR = "=" * SEPARATOR_LENGTH
+SUB_SEPARATOR = "-" * SEPARATOR_LENGTH
+NO_EXTENSION_LABEL = "<no-ext>"
+
+
 class GovernanceScanner:
     """Comprehensive governance directory scanner with deep analysis."""
     
@@ -58,7 +64,8 @@ class GovernanceScanner:
         self,
         governance_root: str = "governance",
         verbose: bool = False,
-        report_format: str = "yaml"
+        report_format: str = "yaml",
+        deep_scan: bool = False
     ):
         """
         Initialize the governance scanner.
@@ -67,10 +74,12 @@ class GovernanceScanner:
             governance_root: Path to governance directory
             verbose: Enable detailed output
             report_format: Report format (yaml, json, or text)
+            deep_scan: Enable recursive deep scan for file type and depth statistics
         """
         self.governance_root = Path(governance_root)
         self.verbose = verbose
         self.report_format = report_format
+        self.deep_scan_enabled = deep_scan
         
         # Scan results
         self.dimensions: List[Dict] = []
@@ -311,6 +320,36 @@ class GovernanceScanner:
             'missing_dimensions': sorted(list(missing_dims))
         }
     
+    def perform_deep_scan(self) -> Dict[str, Any]:
+        """Recursively scan governance directory for deep statistics."""
+        file_types: Counter[str] = Counter()
+        total_files = 0
+        total_dirs = 0
+        max_depth = 0
+        
+        for root, dirs, files in os.walk(self.governance_root):
+            dirs[:] = [d for d in dirs if not d.startswith('.')]
+            
+            relative_parts = Path(root).relative_to(self.governance_root).parts
+            depth = len(relative_parts)
+            max_depth = max(max_depth, depth)
+            total_dirs += len(dirs)
+            
+            for file_name in files:
+                if file_name.startswith('.'):
+                    continue
+                total_files += 1
+                ext = Path(file_name).suffix.lower() or NO_EXTENSION_LABEL
+                file_types[ext] += 1
+        
+        sorted_types = dict(sorted(file_types.items(), key=lambda item: (-item[1], item[0])))
+        return {
+            'total_files': total_files,
+            'total_directories': total_dirs,
+            'max_depth': max_depth,
+            'file_types': sorted_types
+        }
+    
     def generate_statistics(self) -> Dict[str, Any]:
         """Generate comprehensive statistics about governance structure."""
         stats = {
@@ -344,6 +383,9 @@ class GovernanceScanner:
         # Add dimension coverage analysis
         coverage = self.analyze_dimension_coverage()
         stats['dimension_coverage'] = coverage
+        
+        if self.deep_scan_enabled:
+            stats['deep_scan'] = self.perform_deep_scan()
         
         return stats
     
@@ -397,9 +439,9 @@ class GovernanceScanner:
         Returns:
             True if scan completed successfully, False otherwise
         """
-        self.log("=" * 80, "header")
+        self.log(MAIN_SEPARATOR, "header")
         self.log("SynergyMesh Governance Directory Scanner", "header")
-        self.log("=" * 80, "header")
+        self.log(MAIN_SEPARATOR, "header")
         print()
         
         # Load governance map
@@ -495,9 +537,9 @@ class GovernanceScanner:
     
     def print_summary(self) -> None:
         """Print scan summary to console."""
-        print(f"\n{Colors.HEADER}{Colors.BOLD}{'=' * 80}")
+        print(f"\n{Colors.HEADER}{Colors.BOLD}{MAIN_SEPARATOR}")
         print("Governance Directory Scan Summary")
-        print(f"{'=' * 80}{Colors.ENDC}\n")
+        print(f"{MAIN_SEPARATOR}{Colors.ENDC}\n")
         
         stats = self.statistics
         
@@ -524,6 +566,18 @@ class GovernanceScanner:
         print(f"  With framework.yaml: {dims['with_framework_yaml']}/{dims['total']}")
         print(f"  Missing required files: {dims['missing_required_files']}")
         
+        deep_stats = stats.get('deep_scan')
+        if deep_stats:
+            print(f"\n{Colors.BOLD}Deep Scan (recursive):{Colors.ENDC}")
+            print(f"  Total files: {deep_stats.get('total_files', 0)}")
+            print(f"  Total directories: {deep_stats.get('total_directories', 0)}")
+            print(f"  Max depth: {deep_stats.get('max_depth', 0)}")
+            file_types = list(deep_stats.get('file_types', {}).items())
+            if file_types:
+                print("  Top file types:")
+                for ext, count in file_types[:5]:
+                    print(f"    {ext}: {count}")
+        
         # Issues
         print(f"\n{Colors.BOLD}Issues Found:{Colors.ENDC}")
         print(f"  Total issues: {stats['issues']['total']}")
@@ -540,7 +594,7 @@ class GovernanceScanner:
             for i, rec in enumerate(self.recommendations, 1):
                 print(f"  {i}. {rec}")
         
-        print(f"\n{Colors.BOLD}{'=' * 80}{Colors.ENDC}\n")
+        print(f"\n{Colors.BOLD}{MAIN_SEPARATOR}{Colors.ENDC}\n")
     
     def generate_report(self, output_path: Optional[str] = None) -> str:
         """
@@ -588,15 +642,15 @@ class GovernanceScanner:
     def _format_text_report(self, report: Dict) -> str:
         """Format report as human-readable text."""
         lines = [
-            "=" * 80,
+            MAIN_SEPARATOR,
             "SynergyMesh Governance Directory Scan Report",
-            "=" * 80,
+            MAIN_SEPARATOR,
             "",
             f"Scan Timestamp: {report['metadata']['scan_timestamp']}",
             f"Governance Root: {report['metadata']['governance_root']}",
             "",
             "STATISTICS",
-            "-" * 80,
+            SUB_SEPARATOR,
         ]
         
         stats = report['statistics']
@@ -608,7 +662,7 @@ class GovernanceScanner:
             f"Total Issues: {stats['issues']['total']}",
             "",
             "DIMENSION COVERAGE",
-            "-" * 80,
+            SUB_SEPARATOR,
         ])
         
         coverage = stats.get('dimension_coverage', {})
@@ -616,14 +670,32 @@ class GovernanceScanner:
             f"Coverage: {coverage.get('coverage_percentage', 0):.1f}% ({coverage.get('total_present', 0)}/81)",
             f"Missing Dimensions: {', '.join(map(str, coverage.get('missing_dimensions', [])[:20]))}",
             "",
+            "DEEP SCAN",
+            SUB_SEPARATOR,
+        ])
+        
+        deep_stats = stats.get('deep_scan')
+        if deep_stats:
+            lines.extend([
+                f"Total Files (recursive): {deep_stats.get('total_files', 0)}",
+                f"Total Directories (recursive): {deep_stats.get('total_directories', 0)}",
+                f"Max Depth: {deep_stats.get('max_depth', 0)}",
+                "Top File Types:"
+            ])
+            for ext, count in list(deep_stats.get('file_types', {}).items())[:5]:
+                lines.append(f"  - {ext}: {count}")
+        else:
+            lines.append("Deep scan disabled")
+        
+        lines.extend([
             "RECOMMENDATIONS",
-            "-" * 80,
+            SUB_SEPARATOR,
         ])
         
         for i, rec in enumerate(report.get('recommendations', []), 1):
             lines.append(f"{i}. {rec}")
         
-        lines.extend(["", "=" * 80])
+        lines.extend(["", MAIN_SEPARATOR])
         
         return "\n".join(lines)
 
@@ -657,6 +729,12 @@ Examples:
     )
     
     parser.add_argument(
+        '--deep',
+        action='store_true',
+        help='Enable recursive deep scan with file type statistics'
+    )
+    
+    parser.add_argument(
         '--report-format',
         choices=['yaml', 'json', 'text'],
         default='yaml',
@@ -680,7 +758,8 @@ Examples:
     scanner = GovernanceScanner(
         governance_root=args.governance_root,
         verbose=args.verbose,
-        report_format=args.report_format
+        report_format=args.report_format,
+        deep_scan=args.deep
     )
     
     # Run scan

@@ -13,6 +13,7 @@ The Governance Directory Scanner is a comprehensive tool for scanning, analyzing
 - **Orphaned Directory Detection**: Finds directories not registered in the governance map
 - **Coverage Analysis**: Reports on dimension implementation coverage (0-80)
 - **Statistics Generation**: Provides comprehensive metrics about governance health
+- **Deep Recursive Analysis**: Optional `--deep` mode for file type counts and depth
 - **Actionable Recommendations**: Generates specific recommendations for improvements
 - **Multiple Report Formats**: Supports YAML, JSON, and text output formats
 
@@ -46,6 +47,14 @@ python governance/35-scripts/scan-governance-directory.py --verbose
 
 # Or using Make
 make scan-governance
+```
+
+### Deep Scan (Recursive)
+
+Include recursive file statistics and depth analysis:
+
+```bash
+python governance/35-scripts/scan-governance-directory.py --deep --verbose
 ```
 
 ### Generate Reports
