@@ -30,6 +30,25 @@ function isPathContained(targetPath: string, rootPath: string): boolean {
 }
 
 /**
+ * Checks if a normalized path contains consecutive path separators,
+ * which could indicate a path normalization bypass attempt.
+ * This check is performed after path normalization to avoid false positives
+ * on Windows UNC paths or legitimate URLs.
+ *
+ * Defense-in-depth: As of Node.js v18+, path.normalize() and fs.realpath() reliably
+ * collapse consecutive path separators on all supported platforms, so this check
+ * should never trigger on properly normalized paths. However, it is retained as a
+ * defense-in-depth measure in case of future platform changes, unexpected input,
+ * or unanticipated edge cases in path normalization. No known bypasses exist as of
+ * this writing, but this check helps ensure robust protection against path traversal.
+ */
+function hasConsecutiveSeparators(normalizedPath: string): boolean {
+  // Check for consecutive platform-specific path separators
+  const doubleSep = path.sep + path.sep;
+  return normalizedPath.includes(doubleSep);
+}
+
+/**
  * Checks if a path is within the system temp directory in test mode.
  */
 function isInTestTmpDir(targetPath: string, systemTmpDir: string): boolean {
@@ -151,12 +170,8 @@ async function validateAndNormalizePath(
   try {
     const canonicalPath = await realpath(resolvedPath);
 
-    // Verify canonical path is within allowed boundaries
-    // Always enforce path containment within either the test temp dir or safe root
-    if (
-      (process.env.NODE_ENV === 'test' && isInTestTmpDir(canonicalPath, systemTmpDir)) ||
-      isPathContained(canonicalPath, safeRoot)
-    ) {
+·    // Verify canonical path is within allowed boundaries
+    if (isInTestTmpDir(canonicalPath, systemTmpDir)) {
       return canonicalPath;
     }
   let pathToValidate: string;
@@ -179,6 +194,11 @@ async function validateAndNormalizePath(
     });
 
     const normalizedPath = path.normalize(resolvedPath);
+
+    // Check for consecutive separators after normalization to detect bypass attempts
+    if (hasConsecutiveSeparators(normalizedPath)) {
+      throw new Error('Invalid file path: Path normalization bypass detected');
+    }
 
     if (isInTestTmpDir(normalizedPath, systemTmpDir)) {
       if (!isPathContained(normalizedPath, systemTmpDir)) {
