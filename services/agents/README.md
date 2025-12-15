@@ -27,9 +27,13 @@ services/agents/
 └── runbook-executor.sh    # 運維手冊執行腳本 - Runbook executor script
 ```
 
+<<<<<<< HEAD
 **Related Configuration** 相關配置: Agent configurations are centralized in
 `config/agents/` directory.
 
+=======
+**Related Configuration** 相關配置: Agent configurations are centralized in `config/agents/` directory.
+>>>>>>> origin/alert-autofix-37
 - Individual profiles: `config/agents/profiles/`
 - Team configurations: `config/agents/team/`
 - Validation schemas: `config/agents/schemas/`

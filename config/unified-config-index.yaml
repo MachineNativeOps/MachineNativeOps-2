@@ -361,10 +361,26 @@ unified_capabilities:
   security:
     attestation:
       provider: "core/slsa_provenance/"
+      enhancements: "Path traversal protection, SAFE_ROOT validation (PR #351)"
     vulnerability_detection:
       provider: "mcp-servers/security-scanner.js"
     safety_checks:
       provider: "core/safety_mechanisms/"
+    path_validation:
+      provider: "core/contract_service/contracts-L1/contracts/src/services/provenance.ts"
+      description: "Path traversal prevention using SAFE_ROOT"
+      policy_reference: "governance/10-policy/base-policies/security-policies.yaml#SEC-PATH-001"
+    secure_logging:
+      provider: "core/contract_service/contracts-L1/contracts/src/middleware/logging.ts"
+      description: "Sensitive data redaction in logs"
+      policy_reference: "governance/10-policy/base-policies/security-policies.yaml#SEC-LOG-001"
+    cryptography:
+      provider: "core/contract_service/contracts-L1/contracts/src/services/provenance.ts"
+      description: "Strong cryptographic algorithms (SHA-256+)"
+      policy_reference: "governance/10-policy/base-policies/security-policies.yaml#SEC-CRYPTO-001"
+      algorithms:
+        hashing: ["SHA-256", "SHA-384", "SHA-512", "SHA3-256", "BLAKE3"]
+        forbidden: ["MD5", "SHA-1"]
 
   # Code Analysis (程式碼分析)
   code_analysis:

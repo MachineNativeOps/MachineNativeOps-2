@@ -140,7 +140,18 @@ capabilities:
       - "core/slsa_provenance/"
       - "core/safety_mechanisms/"
       - "mcp-servers/security-scanner.js"
-    features: ["attestation", "vulnerability_detection", "safety_checks"]
+    features: ["attestation", "vulnerability_detection", "safety_checks", "path_validation", "secure_logging"]
+    enhancements:
+      pr_351_security_fixes:
+        date: "2025-12-15"
+        improvements:
+          - "Path traversal prevention with SAFE_ROOT validation"
+          - "Clear-text sensitive data logging eliminated"
+          - "Strong cryptographic algorithms enforced (SHA-256+)"
+        policy_compliance:
+          - "SEC-PATH-001: Path security validation"
+          - "SEC-LOG-001: Secure logging practices"
+          - "SEC-CRYPTO-001: Strong cryptographic algorithms"
 
   # Code Analysis
   analysis:
@@ -299,6 +310,9 @@ features:
   drift_detection: true
   cognitive_processing: true
   slsa_attestation: true
+  security_enhancements: true
+  path_traversal_protection: true
+  secure_logging: true
 
 # ============================================================================
 # Health Check (健康檢查)

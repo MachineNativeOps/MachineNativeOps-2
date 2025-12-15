@@ -1,5 +1,4 @@
 # 🚀 SynergyMesh 部署指南
-
 # Deployment Guide
 
 **文档版本**: 1.0.0  
@@ -269,7 +268,6 @@ automation/autonomous/architecture-stability/
 ```
 
 待实现功能：
-
 - 100Hz 控制循环
 - IMU 传感器融合
 - PID 控制器
@@ -414,7 +412,6 @@ npm run test:unit
 **症状**: `npm install` 报错或超时
 
 **解决方案**:
-
 ```bash
 # 清除缓存
 npm cache clean --force
@@ -434,7 +431,6 @@ npm install --registry=https://registry.npmmirror.com
 **症状**: `pip install` 报错
 
 **解决方案**:
-
 ```bash
 # 升级 pip
 python3 -m pip install --upgrade pip
@@ -453,7 +449,6 @@ python3 -m pip install -e .
 **症状**: `docker compose build` 失败
 
 **解决方案**:
-
 ```bash
 # 清理 Docker 资源
 docker system prune -af
@@ -470,7 +465,6 @@ docker compose config
 **症状**: `ImportError: No module named 'master_orchestrator'`
 
 **解决方案**:
-
 ```bash
 # 确保在正确的目录
 cd /path/to/SynergyMesh
@@ -487,7 +481,6 @@ python3 -c "import sys; sys.path.insert(0, 'tools/automation'); import automatio
 **症状**: 服务无法启动，端口已被占用
 
 **解决方案**:
-
 ```bash
 # 检查端口占用
 lsof -i :3000
@@ -546,9 +539,9 @@ NODE_ENV=development npm run dev:stack
 
 ## 🆘 获取支持
 
-- **GitHub Issues**: <https://github.com/SynergyMesh/SynergyMesh/issues>
-- **Discussions**: <https://github.com/SynergyMesh/SynergyMesh/discussions>
-- **Email**: <admin@synergymesh.io>
+- **GitHub Issues**: https://github.com/SynergyMesh/SynergyMesh/issues
+- **Discussions**: https://github.com/SynergyMesh/SynergyMesh/discussions
+- **Email**: admin@synergymesh.io
 
 ---
 

@@ -13,14 +13,12 @@
 #### 📦 baseline-01-namespace-governance.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 命名空間治理與隔離 (Namespace Governance & Isolation)
 - 標籤規範與強制執行 (Label Standards & Enforcement)
 - 能力註冊與聲明機制 (Capability Registry & Declaration)
 - 生命週期狀態機 (Lifecycle State Machine)
 
 **功能模組 Functional Modules:**
-
 1. **Namespace Naming Convention**: 生產/預備/開發/特性/租戶環境命名規則
 2. **Mandatory Labels Policy**: 9 個必要標籤 + 3 個可選標籤
 3. **Lifecycle State Machine**: 8 個狀態轉換 (DECLARED → REGISTERED →
@@ -29,7 +27,6 @@
 5. **Governance Controller**: ClusterRole/ClusterRoleBinding 配置
 
 **對外依賴 External Dependencies:**
-
 - Kubernetes Namespace API
 - Admission Webhooks (ValidatingWebhookConfiguration,
   MutatingWebhookConfiguration)
@@ -37,7 +34,6 @@
 - GitOps 同步機制
 
 **可重用邏輯 Reusable Logic:**
-
 - 正則表達式驗證模式 (regex patterns)
 - 標籤驗證規則 (label validation rules)
 - 狀態機定義 (state machine definitions)
@@ -48,18 +44,21 @@
 #### 🔐 baseline-02-security-rbac.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 零信任架構原則 (Zero Trust Principles)
 - 基於角色的存取控制矩陣 (RBAC Role Matrix)
 - 加密標準 (Encryption Standards)
 - 審計策略 (Audit Policy)
 
 **功能模組 Functional Modules:**
-
 1. **Zero Trust Principles**: 明確驗證、最小權限、假設入侵
+<<<<<<< HEAD
 2. **RBAC Role Matrix**: 5 個角色層級 (cluster-admin, platform-operator,
    developer, viewer, ci-cd-automation)
 3. **Encryption Standards**:
+=======
+2. **RBAC Role Matrix**: 5 個角色層級 (cluster-admin, platform-operator, developer, viewer, ci-cd-automation)
+3. **Encryption Standards**: 
+>>>>>>> origin/alert-autofix-37
    - Data at Rest: AES-256-GCM, Vault 後端
    - Data in Transit: mTLS STRICT, TLS 1.3
    - Post-Quantum Cryptography: CRYSTALS-Kyber, CRYSTALS-Dilithium
@@ -68,7 +67,6 @@
 6. **Pod Security Standards**: 受限安全上下文配置
 
 **對外依賴 External Dependencies:**
-
 - OIDC Provider (Identity Provider)
 - HashiCorp Vault (Key Management)
 - External KMS (Key Management Service)
@@ -76,7 +74,6 @@
 - Rekor (Transparency Log)
 
 **可重用邏輯 Reusable Logic:**
-
 - 角色權限映射表 (role permission matrix)
 - 加密算法配置 (encryption algorithm configs)
 - 審計日誌保留策略 (audit log retention policies)
@@ -87,14 +84,12 @@
 #### 📊 baseline-03-resource-management.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 資源配額與限制 (Resource Quotas & Limits)
 - 多租戶隔離 (Multi-tenant Isolation)
 - 資源優化策略 (Resource Optimization Strategies)
 - 成本分配模型 (Cost Allocation Model)
 
 **功能模組 Functional Modules:**
-
 1. **ResourceQuota**: CPU/Memory/Storage/Object Count 限制
 2. **LimitRange**: Pod/Container/PVC 限制範圍
 3. **Tenant Tier Definitions**: 4 個租戶層級 (enterprise, business, startup,
@@ -110,14 +105,12 @@
 8. **Node Affinity Rules**: 租戶隔離/環境分離/可用區分散/成本優化
 
 **對外依賴 External Dependencies:**
-
 - Kubernetes Metrics Server
 - Vertical Pod Autoscaler Operator
 - Prometheus (Monitoring)
 - Cost Management System
 
 **可重用邏輯 Reusable Logic:**
-
 - 租戶層級配額模板 (tenant tier quota templates)
 - 自動擴縮容策略 (autoscaling strategies)
 - 成本計算公式 (cost calculation formulas)
@@ -128,14 +121,12 @@
 #### 🌐 baseline-04-network-policy.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 零信任網路架構 (Zero Trust Network Architecture)
 - 微分段策略 (Microsegmentation Strategy)
 - 服務網格整合 (Service Mesh Integration)
 - 出入口控制 (Ingress/Egress Control)
 
 **功能模組 Functional Modules:**
-
 1. **Default Deny NetworkPolicy**: 預設拒絕所有流量
 2. **Microsegmentation Rules**: 4 個網路區域 (DMZ, Application, Data,
    Management)
@@ -150,7 +141,6 @@
 6. **Network Observability**: Flow Monitoring, Anomaly Detection
 
 **對外依賴 External Dependencies:**
-
 - Istio Service Mesh
 - Ingress Controller (Istio Gateway)
 - Certificate Manager (TLS Certificates)
@@ -158,7 +148,6 @@
 - WAF (Web Application Firewall)
 
 **可重用邏輯 Reusable Logic:**
-
 - 網路分段模板 (network segmentation templates)
 - mTLS 配置 (mTLS configurations)
 - 熔斷器策略 (circuit breaker policies)
@@ -169,7 +158,6 @@
 #### ✅ baseline-05-compliance-attestation.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 合規框架支援 (Compliance Framework Support)
 - 策略即代碼引擎 (Policy-as-Code Engine)
 - 證明生成機制 (Attestation Generation)
@@ -177,8 +165,7 @@
 - 證據收集系統 (Evidence Collection)
 
 **功能模組 Functional Modules:**
-
-1. **Compliance Standards**:
+1. **Compliance Standards**: 
    - SOC 2 Type II
    - GDPR
    - PCI DSS 4.0
@@ -191,7 +178,7 @@
    - in-toto
    - SLSA Provenance
 4. **Drift Detection Engine**: 配置漂移/狀態漂移/策略漂移
-5. **Evidence Collection**:
+5. **Evidence Collection**: 
    - Audit Logs (7 年保留)
    - Configuration Snapshots (hourly)
    - Security Scans (daily)
@@ -201,7 +188,6 @@
 7. **Compliance Attestation CronJob**: 每 6 小時執行
 
 **對外依賴 External Dependencies:**
-
 - OPA Gatekeeper
 - Kyverno
 - Conftest
@@ -213,7 +199,6 @@
 - kube-bench (CIS Benchmark)
 
 **可重用邏輯 Reusable Logic:**
-
 - 合規控制映射表 (compliance control mappings)
 - 策略模板 (policy templates)
 - 證明生成腳本 (attestation generation scripts)
@@ -225,14 +210,12 @@
 #### ⚛️ baseline-06-quantum-orchestration.v1.0.yaml
 
 **核心概念 Core Concepts:**
-
 - 混合量子-經典計算編排 (Hybrid Quantum-Classical Orchestration)
 - 量子線路定義與執行 (Quantum Circuit Definitions & Execution)
 - 量子資源池管理 (Quantum Resource Pool Management)
 - 量子工作流範本 (Quantum Workflow Templates)
 
 **功能模組 Functional Modules:**
-
 1. **Quantum Circuit Definitions**:
    - QAOA Optimization (16 qubits, 8 depth)
    - VQE Ground State (4 qubits, 12 depth)
@@ -250,7 +233,6 @@
    - VQE Executor (Python/Qiskit)
 
 **對外依賴 External Dependencies:**
-
 - IBM Quantum (QiskitRuntimeService)
 - AWS Braket (Rigetti Backend)
 - Argo Workflows
@@ -259,7 +241,6 @@
 - Container Registry (gcr.io)
 
 **可重用邏輯 Reusable Logic:**
-
 - 量子線路模板 (quantum circuit templates)
 - 優化器配置 (optimizer configurations)
 - 資源調度策略 (resource scheduling policies)
@@ -428,7 +409,6 @@ unmanned-island/
 | 8           | `docs/refactor_playbooks/03_refactor/meta/KUBERNETES_BASELINE_GUIDE.md` | 新建                 | 建立基線部署文檔，指導如何應用 baseline 到集群  |
 
 **P0 預期成果 Expected Outcomes:**
-
 - 關鍵治理策略移出 `_legacy_scratch`，進入正式目錄
 - 建立合規與安全基準
 - 提供清晰的部署指南
@@ -462,7 +442,6 @@ unmanned-island/
 | 29          | `docs/architecture/security/network-segmentation.md`          | 新建                 | 從 baseline-04 抽取網路分段文檔               |
 
 **P1 預期成果 Expected Outcomes:**
-
 - 完成所有非量子相關的治理策略、配置、範本遷移
 - 建立完整的 Kubernetes 基線資源清單
 - 補充安全架構文檔
@@ -490,7 +469,6 @@ unmanned-island/
 | 44          | `docs/refactor_playbooks/_legacy_scratch/*.yaml`                          | 刪除                 | 整合完成後清理暫存檔案             |
 
 **P2 預期成果 Expected Outcomes:**
-
 - 完成量子計算相關模組的整合（實驗性功能）
 - 補充量子編排文檔與工具
 - 清空 `_legacy_scratch` 目錄
@@ -687,4 +665,9 @@ if __name__ == "__main__":
 
 **文件狀態 Document Status:** ✅ 規劃完成，等待執行  
 **下一步審查 Next Review:** P0 執行完成後  
+<<<<<<< HEAD
 **負責人 Owner:** Repository Maintainers
+=======
+**負責人 Owner:** Repository Maintainers  
+
+>>>>>>> origin/alert-autofix-37

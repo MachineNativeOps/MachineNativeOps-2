@@ -23,7 +23,6 @@ and escalation paths.
 ### 1. Kubernetes API 不可用 | Kubernetes API Unavailable
 
 #### 症狀 | Symptoms
-
 ```
 ERROR: Failed to connect to Kubernetes API server
 Connection refused: https://kubernetes.default.svc:443
@@ -31,7 +30,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
 ```
 
 #### 影響範圍 | Impact Scope
-
 - ⚠️ **嚴重性**: P1 - Critical
 - 🎯 **影響範圍**: 所有 HLP 執行無法進行 | All HLP executions blocked
 - ⏱️ **RTO**: < 30 seconds
@@ -40,7 +38,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
 #### 診斷步驟 | Diagnostic Steps
 
 1. **檢查 Kubernetes API Server 狀態 | Check Kubernetes API Server Status**
-
    ```bash
    # Check if API server is responding
    kubectl cluster-info
@@ -53,7 +50,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
    ```
 
 2. **驗證網路連接 | Verify Network Connectivity**
-
    ```bash
    # From HLP Executor pod
    kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -65,7 +61,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
    ```
 
 3. **檢查服務帳戶權限 | Check ServiceAccount Permissions**
-
    ```bash
    # Verify ServiceAccount exists
    kubectl get serviceaccount hlp-executor-sa -n unmanned-island-system
@@ -79,7 +74,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
    ```
 
 4. **檢查斷路器狀態 | Check Circuit Breaker Status**
-
    ```bash
    # Query Prometheus metrics
    curl -s http://prometheus:9090/api/v1/query \
@@ -93,7 +87,6 @@ circuit_breaker: kubernetes_api OPEN (failure_threshold: 5 reached)
 #### 恢復策略 | Recovery Strategies
 
 ##### 策略 A: 重置斷路器 (Circuit Breaker Reset)
-
 ```bash
 # Reset circuit breaker via admin API
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -109,7 +102,6 @@ recovered but circuit breaker still open
 **風險等級 | Risk Level**: LOW
 
 ##### 策略 B: 重啟 HLP Executor Pod
-
 ```bash
 # Graceful restart
 kubectl rollout restart deployment/hlp-executor-core -n unmanned-island-system
@@ -128,7 +120,6 @@ failed or connection still problematic
 **風險等級 | Risk Level**: MEDIUM
 
 ##### 策略 C: 更新 RBAC 配置
-
 ```bash
 # Reapply RBAC configuration
 kubectl apply -f infrastructure/kubernetes/rbac/hlp-executor-rbac.yaml
@@ -150,7 +141,6 @@ issues
 ### 2. 狀態持久化失敗 | State Persistence Failures
 
 #### 症狀 | Symptoms
-
 ```
 ERROR: Failed to persist execution state
 PersistentVolumeClaim not bound: hlp-executor-state-pvc
@@ -159,7 +149,6 @@ state_corruption_detected: Checkpoint validation failed
 ```
 
 #### 影響範圍 | Impact Scope
-
 - ⚠️ **嚴重性**: P2 - High
 - 🎯 **影響範圍**: 執行狀態可能遺失，部分回滾功能受損 | Execution state may be
   lost, partial rollback impaired
@@ -170,7 +159,6 @@ state_corruption_detected: Checkpoint validation failed
 #### 診斷步驟 | Diagnostic Steps
 
 1. **檢查 PVC 狀態 | Check PVC Status**
-
    ```bash
    # Check PVC binding status
    kubectl get pvc hlp-executor-state-pvc -n unmanned-island-system
@@ -183,7 +171,6 @@ state_corruption_detected: Checkpoint validation failed
    ```
 
 2. **檢查磁碟空間 | Check Disk Space**
-
    ```bash
    # Check pod disk usage
    kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- df -h
@@ -198,7 +185,6 @@ state_corruption_detected: Checkpoint validation failed
    ```
 
 3. **驗證 Checkpoint 完整性 | Verify Checkpoint Integrity**
-
    ```bash
    # Run checkpoint validation
    kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -213,7 +199,6 @@ state_corruption_detected: Checkpoint validation failed
 #### 恢復策略 | Recovery Strategies
 
 ##### 策略 A: 清理過期 Checkpoint
-
 ```bash
 # Manual cleanup (older than 7 days)
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -232,7 +217,6 @@ kubectl logs -n unmanned-island-system deployment/hlp-executor-core --tail=50 | 
 **風險等級 | Risk Level**: LOW
 
 ##### 策略 B: 擴充 PVC 容量
-
 ```bash
 # Check if storage class supports expansion
 kubectl get storageclass -o json | jq '.items[] | select(.metadata.name=="standard") | .allowVolumeExpansion'
@@ -253,7 +237,6 @@ kubectl rollout restart deployment/hlp-executor-core -n unmanned-island-system
 **風險等級 | Risk Level**: MEDIUM
 
 ##### 策略 C: 從最近的 Checkpoint 恢復
-
 ```bash
 # List available checkpoints
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -278,7 +261,6 @@ need to restore to known good state
 ### 3. Quantum Backend 不可用 | Quantum Backend Unavailable
 
 #### 症狀 | Symptoms
-
 ```
 ERROR: Quantum backend connection timeout
 quantum_api: HTTP 503 Service Unavailable
@@ -287,7 +269,6 @@ retry_policy: Exponential backoff (attempt 3/5)
 ```
 
 #### 影響範圍 | Impact Scope
-
 - ⚠️ **嚴重性**: P2 - High
 - 🎯 **影響範圍**: 需要量子處理的 HLP 執行受阻 | HLP executions requiring
   quantum processing blocked
@@ -297,7 +278,6 @@ retry_policy: Exponential backoff (attempt 3/5)
 #### 診斷步驟 | Diagnostic Steps
 
 1. **檢查 Quantum Backend 健康狀態 | Check Quantum Backend Health**
-
    ```bash
    # Check quantum service endpoint
    kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -311,7 +291,6 @@ retry_policy: Exponential backoff (attempt 3/5)
    ```
 
 2. **檢查網路策略 | Check Network Policies**
-
    ```bash
    # Verify network policy allows communication
    kubectl get networkpolicy -n unmanned-island-system
@@ -323,7 +302,6 @@ retry_policy: Exponential backoff (attempt 3/5)
    ```
 
 3. **檢查重試策略狀態 | Check Retry Policy Status**
-
    ```bash
    # Check retry metrics
    kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -337,7 +315,6 @@ retry_policy: Exponential backoff (attempt 3/5)
 #### 恢復策略 | Recovery Strategies
 
 ##### 策略 A: 等待自動恢復 (配合斷路器)
-
 ```bash
 # Monitor circuit breaker state transitions
 watch -n 5 'kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -354,7 +331,6 @@ failure
 **風險等級 | Risk Level**: LOW
 
 ##### 策略 B: 手動重啟 Quantum Backend
-
 ```bash
 # Restart quantum backend deployment
 kubectl rollout restart deployment/quantum-backend -n quantum-system
@@ -373,7 +349,6 @@ backend unresponsive or auto-recovery failed
 **風險等級 | Risk Level**: MEDIUM
 
 ##### 策略 C: 降級模式 (跳過量子處理)
-
 ```bash
 # Enable fallback mode
 kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
@@ -497,7 +472,6 @@ avg(hlp_executor_recovery_duration_seconds) by (failure_type)
 ## 🔄 預防措施 | Preventive Measures
 
 ### 1. 定期健康檢查 | Regular Health Checks
-
 ```bash
 # Weekly health check script
 #!/bin/bash
@@ -511,13 +485,11 @@ kubectl top pod -n unmanned-island-system -l app=hlp-executor-core
 ```
 
 ### 2. 容量規劃 | Capacity Planning
-
 - 每月檢查 PVC 使用率 | Monthly PVC utilization review
 - 提前擴容 (使用率 > 70%) | Proactive expansion (utilization > 70%)
 - 監控 checkpoint 增長趨勢 | Monitor checkpoint growth trend
 
 ### 3. 演練 | Drills
-
 - 季度性故障恢復演練 | Quarterly failure recovery drills
 - 模擬 Kubernetes API 不可用 | Simulate Kubernetes API unavailable
 - 測試備份恢復流程 | Test backup recovery procedures

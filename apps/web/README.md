@@ -7,17 +7,22 @@
 企業級 Web 應用，提供 SynergyMesh 平台的前端介面、FastAPI 後端服務，以及語言治理儀表板。
 
 #### 主要功能
-
 - **React + TypeScript 前端**：現代化 SPA，使用 esbuild 建構
 - **FastAPI 後端**：高效能 Python API 服務（需要獨立部署）
 - **語言治理儀表板**：實時政策合規性監控與可視化
 
 > **⚠️ 部署注意事項**
+<<<<<<< HEAD
 >
 > - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build`
 >   生成靜態文件到 `dist/` 目錄
 > - **後端服務部署**：需要 Python 3.11+，依賴 `requirements.txt`
 >   中的套件（FastAPI、uvicorn 等）
+=======
+> 
+> - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build` 生成靜態文件到 `dist/` 目錄
+> - **後端服務部署**：需要 Python 3.11+，依賴 `requirements.txt` 中的套件（FastAPI、uvicorn 等）
+>>>>>>> origin/alert-autofix-37
 > - 如果只需要靜態前端，不需要安裝 Python 依賴或執行後端服務
 > - 對於完整功能，建議使用「自動擴充」或「預留虛擬機器」部署類型以支持後端 API
 
@@ -103,7 +108,6 @@ python api.py
 #### 端點：`GET /api/v1/language-governance`
 
 **回應範例：**
-
 ```json
 {
   "health_score": 85,
@@ -141,7 +145,6 @@ python api.py
 ```
 
 **資料來源：**
-
 - `governance/language-governance-report.md`
 - `governance/semgrep-report.json`
 - `governance/sankey-data.json`

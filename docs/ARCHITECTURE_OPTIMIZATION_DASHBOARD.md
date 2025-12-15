@@ -13,9 +13,13 @@ Reasoner agent and human reviewers to monitor system-wide quality.
 
 ### Definition
 
+<<<<<<< HEAD
 The dashboard tracks **optimization toward ideal state** across multiple
 dimensions. Each objective function defines:
 
+=======
+The dashboard tracks **optimization toward ideal state** across multiple dimensions. Each objective function defines:
+>>>>>>> origin/alert-autofix-37
 - **Current State**: Measured from live system
 - **Ideal State**: Theoretical optimum based on architecture principles
 - **Gap**: Distance from ideal (what remains to be improved)
@@ -74,7 +78,6 @@ objective_function:
 ```
 
 **Visualization**:
-
 ```
 Current Language Distribution:
 TypeScript ████████████████████████ 45%
@@ -138,7 +141,6 @@ objective_function:
 ```
 
 **Visualization**:
-
 ```
 Architecture Health:
 ┌─────────────────────────────────────┐
@@ -471,7 +473,6 @@ governance compliance
 **URL**: `http://localhost:3000/architecture/dashboard`
 
 **Layout**:
-
 ```
 ┌────────────────────────────────────────────────────────────────┐
 │  🏝️ Unmanned Island System - Architecture Dashboard            │

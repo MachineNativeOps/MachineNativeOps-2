@@ -14,7 +14,6 @@ capabilities.
 This is a polyglot monorepo containing:
 
 ### Languages & Frameworks
-
 - **TypeScript/JavaScript**: Frontend (React) and tooling
 - **Python**: Core AI/ML modules, automation, and backend services
 - **Rust**: High-performance runtime components (planned)
@@ -24,24 +23,50 @@ This is a polyglot monorepo containing:
 
 ```
 apps/
-  web/           # React frontend application (esbuild + Tailwind) - STATIC ONLY
-  web-backend/   # Python backend services (moved from web/ for deployment compatibility)
+  web/              # React frontend - THE ONLY SOURCE for UI components
+  web-backend/      # Python backend services
 
 core/
-  modules/       # Python AI/automation modules
+  modules/          # THE ONLY SOURCE for Python AI/automation modules
+    ai_constitution/
+    ci_error_handler/
+    cloud_agent_delegation/
+    drone_system/
+    execution_architecture/
+    execution_engine/
+    main_system/
+    mcp_servers_enhanced/
+    mind_matrix/
+    monitoring_system/
+    tech_stack/
+    training_system/
+    virtual_experts/
+    yaml_module_system/
   safety_mechanisms/
   slsa_provenance/
   unified_integration/
 
-mcp-servers/     # MCP server implementations
-island-ai/       # Island AI components
-tools/           # Development utilities
-docs/            # Documentation
-tests/           # Test suites
+services/
+  agents/           # Agent services (auto-repair, code-analyzer, etc.)
+  mcp/              # MCP services
+
+automation/         # Automation pipelines and intelligent agents
+infrastructure/     # Kubernetes manifests and monitoring
+governance/         # Policies, schemas, and compliance
+docs/               # Documentation
+tests/              # Test suites
+tools/              # Development utilities
 ```
 
-### Package Managers
+### Key Principles
 
+1. **Single Source of Truth for Python Modules**: All Python modules reside in `core/modules/`. Do not create Python modules elsewhere.
+
+2. **Single Source of Truth for UI Components**: All UI components reside in `apps/web/src/components/`. Do not create UI components elsewhere.
+
+3. **No Scratch Directories**: Temporary scratch directories have been removed. Use `experiments/` for experimental code.
+
+### Package Managers
 - **npm**: Primary JavaScript package manager (workspaces in package.json)
 - **pnpm**: Alternative JS package manager (pnpm-workspace.yaml)
 - **pip/uv**: Python dependencies (pyproject.toml)
@@ -49,17 +74,14 @@ tests/           # Test suites
 ## Development
 
 ### Frontend
-
 ```bash
 cd apps/web && npm run dev
 ```
-
 - Runs on port 5000
 - Uses esbuild for bundling
 - Tailwind CSS for styling
 
 ### Python
-
 ```bash
 pip install -e ".[dev]"
 ```
@@ -72,7 +94,6 @@ pip install -e ".[dev]"
 ## Deployment
 
 The frontend is configured for static deployment:
-
 - Build: `npm run build --workspace apps/web`
 - Output: `apps/web/dist/`
 

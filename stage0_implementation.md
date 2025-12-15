@@ -20,7 +20,6 @@ Week 5-6: 驗證 + 優化 + 團隊培訓
 ## ðŸ"Œ Stage 0.1: 項目骨架（Week 1-2）
 
 ### 目標
-
 建立完整的目錄結構和配置文件，確保所有開發工具就位。
 
 ### 交付物
@@ -57,7 +56,6 @@ Week 5-6: 驗證 + 優化 + 團隊培訓
 ```
 
 **執行命令**:
-
 ```bash
 # 初始化項目
 git init
@@ -72,36 +70,35 @@ cat > Makefile << 'EOF'
 .PHONY: help install build test clean
 
 help:
- @echo "Island AI - Makefile Commands"
- @echo "  make install  - 安裝所有依賴"
- @echo "  make build    - 構建所有項目"
- @echo "  make test     - 運行所有測試"
- @echo "  make clean    - 清理構建產物"
+	@echo "Island AI - Makefile Commands"
+	@echo "  make install  - 安裝所有依賴"
+	@echo "  make build    - 構建所有項目"
+	@echo "  make test     - 運行所有測試"
+	@echo "  make clean    - 清理構建產物"
 
 install:
- npm install
- cd core && cargo build
- cd services && go mod download
+	npm install
+	cd core && cargo build
+	cd services && go mod download
 
 build:
- npm run build
- cd core && cargo build --release
- cd services && go build ./...
+	npm run build
+	cd core && cargo build --release
+	cd services && go build ./...
 
 test:
- npm run test
- cd core && cargo test
- cd services && go test ./...
+	npm run test
+	cd core && cargo test
+	cd services && go test ./...
 
 clean:
- rm -rf node_modules dist target build
+	rm -rf node_modules dist target build
 EOF
 ```
 
 #### 1.2 多語言配置（3天）
 
 ##### TypeScript/JavaScript
-
 ```bash
 # package.json
 cat > package.json << 'EOF'
@@ -162,7 +159,6 @@ EOF
 ```
 
 ##### Rust
-
 ```bash
 # Cargo.toml (工作空間)
 cat > Cargo.toml << 'EOF'
@@ -210,7 +206,6 @@ EOF
 ```
 
 ##### Go
-
 ```bash
 # go.work
 cat > go.work << 'EOF'
@@ -228,7 +223,6 @@ EOF
 ```
 
 ##### Java (Maven)
-
 ```bash
 # pom.xml (父項目)
 cat > pom.xml << 'EOF'
@@ -388,11 +382,17 @@ use island_runtime::{Agent, Runtime};
 let runtime = Runtime::new();
 let agent = Agent::new("developer-agent");
 runtime.spawn(agent);
+<<<<<<< HEAD
 ````
 
 EOF
 
 ````
+=======
+```
+EOF
+```
+>>>>>>> origin/alert-autofix-37
 
 #### 1.5 服務目錄創建（2天）
 
@@ -454,10 +454,13 @@ go run cmd/server/main.go
 ```bash
 curl http://localhost:8080/health
 ```
-
 EOF
+<<<<<<< HEAD
 
 ````
+=======
+```
+>>>>>>> origin/alert-autofix-37
 
 #### 1.6 Agents 目錄創建（3天）
 
@@ -550,7 +553,6 @@ EOF
 ## ðŸ"Œ Stage 0.2: 自動化基礎（Week 3-4）
 
 ### 目標
-
 建立完整的 CI/CD 流程和自動同步機制。
 
 ### 交付物
@@ -659,7 +661,6 @@ EOF
 ## ðŸ"Œ Stage 0.3: 驗證與優化（Week 5-6）
 
 ### 目標
-
 全面驗證自動化流程，優化性能，培訓團隊。
 
 ### 交付物
@@ -741,7 +742,6 @@ EOF
 Stage 0 完成後，即可進入：
 
 **Stage 1: 基礎設施（3個月，$1.5M）**
-
 - Agent 運行時實現
 - 知識庫系統 v1
 - 工作流編排引擎

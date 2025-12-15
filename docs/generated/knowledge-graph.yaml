@@ -3,7 +3,11 @@ version: 1.0.0
 id: unmanned-island-knowledge-graph
 title: Unmanned Island System Knowledge Graph
 description: Knowledge graph representation of the repository structure and entities
+<<<<<<< HEAD
 generated_at: '2025-12-12T07:44:12.987782Z'
+=======
+generated_at: '2025-12-15T00:28:44.853161Z'
+>>>>>>> origin/alert-autofix-37
 source_repo: .
 nodes:
 - id: system:unmanned-island
@@ -412,12 +416,6 @@ nodes:
   path: apps/web-backend/analyzers
   properties:
     label_zh: 目錄
-- id: dir:apps:_scratch
-  type: directory
-  label: _scratch
-  path: apps/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root
   type: directory
   label: _codeql_detected_source_root
@@ -638,12 +636,6 @@ nodes:
   type: directory
   label: web-backend
   path: _codeql_detected_source_root/apps/web-backend
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:apps:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/apps/_scratch
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:_codeql_detected_source_root
@@ -958,12 +950,6 @@ nodes:
   path: _codeql_detected_source_root/services/mcp
   properties:
     label_zh: 目錄
-- id: dir:_codeql_detected_source_root:services:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/services/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:services:agents
   type: directory
   label: agents
@@ -1180,12 +1166,6 @@ nodes:
   path: _codeql_detected_source_root/tools/cli
   properties:
     label_zh: 目錄
-- id: dir:_codeql_detected_source_root:tools:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/tools/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:tools:utilities
   type: directory
   label: utilities
@@ -1378,12 +1358,6 @@ nodes:
   path: _codeql_detected_source_root/automation/self_awareness_report.py
   properties:
     label_zh: 模組
-- id: dir:_codeql_detected_source_root:automation:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/automation/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:automation:autonomous
   type: directory
   label: autonomous
@@ -1558,12 +1532,6 @@ nodes:
   path: _codeql_detected_source_root/core
   properties:
     label_zh: 子系統
-- id: dir:_codeql_detected_source_root:core:main_system
-  type: directory
-  label: main_system
-  path: _codeql_detected_source_root/core/main_system
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:core:slsa_provenance
   type: directory
   label: slsa_provenance
@@ -1571,45 +1539,24 @@ nodes:
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:core:project_factory
+<<<<<<< HEAD
   type: directory
   label: project_factory
   path: _codeql_detected_source_root/core/project_factory
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:core:training_system
+=======
+>>>>>>> origin/alert-autofix-37
   type: directory
-  label: training_system
-  path: _codeql_detected_source_root/core/training_system
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:mcp_servers_enhanced
-  type: directory
-  label: mcp_servers_enhanced
-  path: _codeql_detected_source_root/core/mcp_servers_enhanced
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:tech_stack
-  type: directory
-  label: tech_stack
-  path: _codeql_detected_source_root/core/tech_stack
+  label: project_factory
+  path: _codeql_detected_source_root/core/project_factory
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:core:validators
   type: directory
   label: validators
   path: _codeql_detected_source_root/core/validators
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:yaml_module_system
-  type: directory
-  label: yaml_module_system
-  path: _codeql_detected_source_root/core/yaml_module_system
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:execution_architecture
-  type: directory
-  label: execution_architecture
-  path: _codeql_detected_source_root/core/execution_architecture
   properties:
     label_zh: 目錄
 - id: file:_codeql_detected_source_root:core:plugin_system.py
@@ -1634,24 +1581,6 @@ nodes:
   type: directory
   label: hlp_executor
   path: _codeql_detected_source_root/core/hlp_executor
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:monitoring_system
-  type: directory
-  label: monitoring_system
-  path: _codeql_detected_source_root/core/monitoring_system
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:cloud_agent_delegation
-  type: directory
-  label: cloud_agent_delegation
-  path: _codeql_detected_source_root/core/cloud_agent_delegation
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/core/_scratch
   properties:
     label_zh: 目錄
 - id: file:_codeql_detected_source_root:core:auto_governance_hub.py
@@ -1684,36 +1613,12 @@ nodes:
   path: _codeql_detected_source_root/core/hallucination_detector.py
   properties:
     label_zh: 模組
-- id: dir:_codeql_detected_source_root:core:ci_error_handler
-  type: directory
-  label: ci_error_handler
-  path: _codeql_detected_source_root/core/ci_error_handler
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:virtual_experts
-  type: directory
-  label: virtual_experts
-  path: _codeql_detected_source_root/core/virtual_experts
-  properties:
-    label_zh: 目錄
 - id: file:_codeql_detected_source_root:core:ai_decision_engine.py
   type: module
   label: ai_decision_engine.py
   path: _codeql_detected_source_root/core/ai_decision_engine.py
   properties:
     label_zh: 模組
-- id: dir:_codeql_detected_source_root:core:ai_constitution
-  type: directory
-  label: ai_constitution
-  path: _codeql_detected_source_root/core/ai_constitution
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:core:execution_engine
-  type: directory
-  label: execution_engine
-  path: _codeql_detected_source_root/core/execution_engine
-  properties:
-    label_zh: 目錄
 - id: file:_codeql_detected_source_root:core:context_understanding_engine.py
   type: module
   label: context_understanding_engine.py
@@ -1976,12 +1881,6 @@ nodes:
   type: directory
   label: 17-sociological
   path: _codeql_detected_source_root/governance/17-sociological
-  properties:
-    label_zh: 目錄
-- id: dir:_codeql_detected_source_root:governance:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/governance/_scratch
   properties:
     label_zh: 目錄
 - id: dir:_codeql_detected_source_root:governance:22-aesthetic
@@ -2692,12 +2591,6 @@ nodes:
   path: _codeql_detected_source_root/infra
   properties:
     label_zh: 目錄
-- id: dir:_codeql_detected_source_root:infra:_scratch
-  type: directory
-  label: _scratch
-  path: _codeql_detected_source_root/infra/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:_codeql_detected_source_root:infra:config
   type: config
   label: config
@@ -2746,12 +2639,6 @@ nodes:
   path: _codeql_detected_source_root/island-ai/examples
   properties:
     label_zh: 目錄
-- id: file:_codeql_detected_source_root:island-ai:jest.config.js
-  type: module
-  label: jest.config.js
-  path: _codeql_detected_source_root/island-ai/jest.config.js
-  properties:
-    label_zh: 模組
 - id: dir:_codeql_detected_source_root:island-ai:src
   type: directory
   label: src
@@ -2810,12 +2697,6 @@ nodes:
   type: directory
   label: deploy
   path: services/mcp/deploy
-  properties:
-    label_zh: 目錄
-- id: dir:services:_scratch
-  type: directory
-  label: _scratch
-  path: services/_scratch
   properties:
     label_zh: 目錄
 - id: dir:services:agents
@@ -3910,12 +3791,6 @@ nodes:
   path: tools/cli/src
   properties:
     label_zh: 目錄
-- id: dir:tools:_scratch
-  type: directory
-  label: _scratch
-  path: tools/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:tools:utilities
   type: directory
   label: utilities
@@ -4354,12 +4229,6 @@ nodes:
   path: automation/self_awareness_report.py
   properties:
     label_zh: 模組
-- id: dir:automation:_scratch
-  type: directory
-  label: _scratch
-  path: automation/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:automation:autonomous
   type: directory
   label: autonomous
@@ -4816,42 +4685,6 @@ nodes:
   path: core
   properties:
     label_zh: 子系統
-- id: dir:core:main_system
-  type: directory
-  label: main_system
-  path: core/main_system
-  properties:
-    label_zh: 目錄
-- id: file:core:main_system:automation_pipeline.py
-  type: module
-  label: automation_pipeline.py
-  path: core/main_system/automation_pipeline.py
-  properties:
-    label_zh: 模組
-- id: file:core:main_system:phase_orchestrator.py
-  type: module
-  label: phase_orchestrator.py
-  path: core/main_system/phase_orchestrator.py
-  properties:
-    label_zh: 模組
-- id: file:core:main_system:system_bootstrap.py
-  type: module
-  label: system_bootstrap.py
-  path: core/main_system/system_bootstrap.py
-  properties:
-    label_zh: 模組
-- id: file:core:main_system:__init__.py
-  type: module
-  label: __init__.py
-  path: core/main_system/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:core:main_system:synergymesh_core.py
-  type: module
-  label: synergymesh_core.py
-  path: core/main_system/synergymesh_core.py
-  properties:
-    label_zh: 模組
 - id: dir:core:slsa_provenance
   type: directory
   label: slsa_provenance
@@ -4895,6 +4728,7 @@ nodes:
   properties:
     label_zh: 模組
 - id: dir:core:project_factory
+<<<<<<< HEAD
   type: directory
   label: project_factory
   path: core/project_factory
@@ -4943,105 +4777,53 @@ nodes:
   properties:
     label_zh: 模組
 - id: dir:core:training_system
+=======
+>>>>>>> origin/alert-autofix-37
   type: directory
-  label: training_system
-  path: core/training_system
+  label: project_factory
+  path: core/project_factory
   properties:
     label_zh: 目錄
-- id: file:core:training_system:example_library.py
+- id: file:core:project_factory:factory.py
   type: module
-  label: example_library.py
-  path: core/training_system/example_library.py
+  label: factory.py
+  path: core/project_factory/factory.py
   properties:
     label_zh: 模組
-- id: file:core:training_system:skills_training.py
+- id: file:core:project_factory:cli.py
   type: module
-  label: skills_training.py
-  path: core/training_system/skills_training.py
+  label: cli.py
+  path: core/project_factory/cli.py
   properties:
     label_zh: 模組
-- id: file:core:training_system:__init__.py
+- id: file:core:project_factory:validator.py
+  type: module
+  label: validator.py
+  path: core/project_factory/validator.py
+  properties:
+    label_zh: 模組
+- id: file:core:project_factory:templates.py
+  type: module
+  label: templates.py
+  path: core/project_factory/templates.py
+  properties:
+    label_zh: 模組
+- id: file:core:project_factory:spec.py
+  type: module
+  label: spec.py
+  path: core/project_factory/spec.py
+  properties:
+    label_zh: 模組
+- id: file:core:project_factory:generator.py
+  type: module
+  label: generator.py
+  path: core/project_factory/generator.py
+  properties:
+    label_zh: 模組
+- id: file:core:project_factory:__init__.py
   type: module
   label: __init__.py
-  path: core/training_system/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:core:training_system:knowledge_base.py
-  type: module
-  label: knowledge_base.py
-  path: core/training_system/knowledge_base.py
-  properties:
-    label_zh: 模組
-- id: dir:core:mcp_servers_enhanced
-  type: directory
-  label: mcp_servers_enhanced
-  path: core/mcp_servers_enhanced
-  properties:
-    label_zh: 目錄
-- id: file:core:mcp_servers_enhanced:realtime_connector.py
-  type: module
-  label: realtime_connector.py
-  path: core/mcp_servers_enhanced/realtime_connector.py
-  properties:
-    label_zh: 模組
-- id: file:core:mcp_servers_enhanced:tool_registry.py
-  type: module
-  label: tool_registry.py
-  path: core/mcp_servers_enhanced/tool_registry.py
-  properties:
-    label_zh: 模組
-- id: file:core:mcp_servers_enhanced:workflow_orchestrator.py
-  type: module
-  label: workflow_orchestrator.py
-  path: core/mcp_servers_enhanced/workflow_orchestrator.py
-  properties:
-    label_zh: 模組
-- id: file:core:mcp_servers_enhanced:mcp_server_manager.py
-  type: module
-  label: mcp_server_manager.py
-  path: core/mcp_servers_enhanced/mcp_server_manager.py
-  properties:
-    label_zh: 模組
-- id: file:core:mcp_servers_enhanced:__init__.py
-  type: module
-  label: __init__.py
-  path: core/mcp_servers_enhanced/__init__.py
-  properties:
-    label_zh: 模組
-- id: dir:core:tech_stack
-  type: directory
-  label: tech_stack
-  path: core/tech_stack
-  properties:
-    label_zh: 目錄
-- id: file:core:tech_stack:multi_agent_coordinator.py
-  type: module
-  label: multi_agent_coordinator.py
-  path: core/tech_stack/multi_agent_coordinator.py
-  properties:
-    label_zh: 模組
-- id: file:core:tech_stack:python_bridge.py
-  type: module
-  label: python_bridge.py
-  path: core/tech_stack/python_bridge.py
-  properties:
-    label_zh: 模組
-- id: file:core:tech_stack:framework_integrations.py
-  type: module
-  label: framework_integrations.py
-  path: core/tech_stack/framework_integrations.py
-  properties:
-    label_zh: 模組
-- id: file:core:tech_stack:architecture_config.py
-  type: module
-  label: architecture_config.py
-  path: core/tech_stack/architecture_config.py
-  properties:
-    label_zh: 模組
-- id: file:core:tech_stack:__init__.py
-  type: module
-  label: __init__.py
-  path: core/tech_stack/__init__.py
+  path: core/project_factory/__init__.py
   properties:
     label_zh: 模組
 - id: dir:core:validators
@@ -5078,96 +4860,6 @@ nodes:
   type: module
   label: __init__.py
   path: core/validators/__init__.py
-  properties:
-    label_zh: 模組
-- id: dir:core:yaml_module_system
-  type: directory
-  label: yaml_module_system
-  path: core/yaml_module_system
-  properties:
-    label_zh: 目錄
-- id: file:core:yaml_module_system:policy_gate.py
-  type: module
-  label: policy_gate.py
-  path: core/yaml_module_system/policy_gate.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:yaml_schema_validator.py
-  type: module
-  label: yaml_schema_validator.py
-  path: core/yaml_module_system/yaml_schema_validator.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:yaml_module_definition.py
-  type: module
-  label: yaml_module_definition.py
-  path: core/yaml_module_system/yaml_module_definition.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:ci_verification_pipeline.py
-  type: module
-  label: ci_verification_pipeline.py
-  path: core/yaml_module_system/ci_verification_pipeline.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:slsa_compliance.py
-  type: module
-  label: slsa_compliance.py
-  path: core/yaml_module_system/slsa_compliance.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:audit_trail.py
-  type: module
-  label: audit_trail.py
-  path: core/yaml_module_system/audit_trail.py
-  properties:
-    label_zh: 模組
-- id: file:core:yaml_module_system:__init__.py
-  type: module
-  label: __init__.py
-  path: core/yaml_module_system/__init__.py
-  properties:
-    label_zh: 模組
-- id: dir:core:execution_architecture
-  type: directory
-  label: execution_architecture
-  path: core/execution_architecture
-  properties:
-    label_zh: 目錄
-- id: file:core:execution_architecture:function_calling.py
-  type: module
-  label: function_calling.py
-  path: core/execution_architecture/function_calling.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_architecture:mcp_integration.py
-  type: module
-  label: mcp_integration.py
-  path: core/execution_architecture/mcp_integration.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_architecture:tool_system.py
-  type: module
-  label: tool_system.py
-  path: core/execution_architecture/tool_system.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_architecture:agent_orchestration.py
-  type: module
-  label: agent_orchestration.py
-  path: core/execution_architecture/agent_orchestration.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_architecture:langchain_integration.py
-  type: module
-  label: langchain_integration.py
-  path: core/execution_architecture/langchain_integration.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_architecture:__init__.py
-  type: module
-  label: __init__.py
-  path: core/execution_architecture/__init__.py
   properties:
     label_zh: 模組
 - id: file:core:plugin_system.py
@@ -5332,96 +5024,6 @@ nodes:
   path: core/hlp_executor/partial_rollback.py
   properties:
     label_zh: 模組
-- id: dir:core:monitoring_system
-  type: directory
-  label: monitoring_system
-  path: core/monitoring_system
-  properties:
-    label_zh: 目錄
-- id: file:core:monitoring_system:intelligent_monitoring.py
-  type: module
-  label: intelligent_monitoring.py
-  path: core/monitoring_system/intelligent_monitoring.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:observability_platform.py
-  type: module
-  label: observability_platform.py
-  path: core/monitoring_system/observability_platform.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:auto_remediation.py
-  type: module
-  label: auto_remediation.py
-  path: core/monitoring_system/auto_remediation.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:smart_anomaly_detector.py
-  type: module
-  label: smart_anomaly_detector.py
-  path: core/monitoring_system/smart_anomaly_detector.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:auto_diagnosis.py
-  type: module
-  label: auto_diagnosis.py
-  path: core/monitoring_system/auto_diagnosis.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:__init__.py
-  type: module
-  label: __init__.py
-  path: core/monitoring_system/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:core:monitoring_system:self_learning.py
-  type: module
-  label: self_learning.py
-  path: core/monitoring_system/self_learning.py
-  properties:
-    label_zh: 模組
-- id: dir:core:cloud_agent_delegation
-  type: directory
-  label: cloud_agent_delegation
-  path: core/cloud_agent_delegation
-  properties:
-    label_zh: 目錄
-- id: file:core:cloud_agent_delegation:load_balancer.py
-  type: module
-  label: load_balancer.py
-  path: core/cloud_agent_delegation/load_balancer.py
-  properties:
-    label_zh: 模組
-- id: file:core:cloud_agent_delegation:task_router.py
-  type: module
-  label: task_router.py
-  path: core/cloud_agent_delegation/task_router.py
-  properties:
-    label_zh: 模組
-- id: file:core:cloud_agent_delegation:delegation_manager.py
-  type: module
-  label: delegation_manager.py
-  path: core/cloud_agent_delegation/delegation_manager.py
-  properties:
-    label_zh: 模組
-- id: file:core:cloud_agent_delegation:cloud_provider_adapter.py
-  type: module
-  label: cloud_provider_adapter.py
-  path: core/cloud_agent_delegation/cloud_provider_adapter.py
-  properties:
-    label_zh: 模組
-- id: file:core:cloud_agent_delegation:__init__.py
-  type: module
-  label: __init__.py
-  path: core/cloud_agent_delegation/__init__.py
-  properties:
-    label_zh: 模組
-- id: dir:core:_scratch
-  type: directory
-  label: _scratch
-  path: core/_scratch
-  properties:
-    label_zh: 目錄
 - id: file:core:auto_governance_hub.py
   type: module
   label: auto_governance_hub.py
@@ -5440,12 +5042,6 @@ nodes:
   path: core/advisory-database
   properties:
     label_zh: 目錄
-- id: file:core:advisory-database:jest.config.js
-  type: module
-  label: jest.config.js
-  path: core/advisory-database/jest.config.js
-  properties:
-    label_zh: 模組
 - id: dir:core:advisory-database:src
   type: directory
   label: src
@@ -5524,172 +5120,10 @@ nodes:
   path: core/hallucination_detector.py
   properties:
     label_zh: 模組
-- id: dir:core:ci_error_handler
-  type: directory
-  label: ci_error_handler
-  path: core/ci_error_handler
-  properties:
-    label_zh: 目錄
-- id: file:core:ci_error_handler:fix_status_tracker.py
-  type: module
-  label: fix_status_tracker.py
-  path: core/ci_error_handler/fix_status_tracker.py
-  properties:
-    label_zh: 模組
-- id: file:core:ci_error_handler:auto_fix_engine.py
-  type: module
-  label: auto_fix_engine.py
-  path: core/ci_error_handler/auto_fix_engine.py
-  properties:
-    label_zh: 模組
-- id: file:core:ci_error_handler:issue_manager.py
-  type: module
-  label: issue_manager.py
-  path: core/ci_error_handler/issue_manager.py
-  properties:
-    label_zh: 模組
-- id: file:core:ci_error_handler:ci_error_analyzer.py
-  type: module
-  label: ci_error_analyzer.py
-  path: core/ci_error_handler/ci_error_analyzer.py
-  properties:
-    label_zh: 模組
-- id: file:core:ci_error_handler:__init__.py
-  type: module
-  label: __init__.py
-  path: core/ci_error_handler/__init__.py
-  properties:
-    label_zh: 模組
-- id: dir:core:virtual_experts
-  type: directory
-  label: virtual_experts
-  path: core/virtual_experts
-  properties:
-    label_zh: 目錄
-- id: file:core:virtual_experts:expert_team.py
-  type: module
-  label: expert_team.py
-  path: core/virtual_experts/expert_team.py
-  properties:
-    label_zh: 模組
-- id: file:core:virtual_experts:expert_base.py
-  type: module
-  label: expert_base.py
-  path: core/virtual_experts/expert_base.py
-  properties:
-    label_zh: 模組
-- id: file:core:virtual_experts:domain_experts.py
-  type: module
-  label: domain_experts.py
-  path: core/virtual_experts/domain_experts.py
-  properties:
-    label_zh: 模組
-- id: file:core:virtual_experts:__init__.py
-  type: module
-  label: __init__.py
-  path: core/virtual_experts/__init__.py
-  properties:
-    label_zh: 模組
 - id: file:core:ai_decision_engine.py
   type: module
   label: ai_decision_engine.py
   path: core/ai_decision_engine.py
-  properties:
-    label_zh: 模組
-- id: dir:core:ai_constitution
-  type: directory
-  label: ai_constitution
-  path: core/ai_constitution
-  properties:
-    label_zh: 目錄
-- id: file:core:ai_constitution:adaptive_guidelines.py
-  type: module
-  label: adaptive_guidelines.py
-  path: core/ai_constitution/adaptive_guidelines.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:fundamental_laws.py
-  type: module
-  label: fundamental_laws.py
-  path: core/ai_constitution/fundamental_laws.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:policy_as_prompt.py
-  type: module
-  label: policy_as_prompt.py
-  path: core/ai_constitution/policy_as_prompt.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:operational_rules.py
-  type: module
-  label: operational_rules.py
-  path: core/ai_constitution/operational_rules.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:constitution_engine.py
-  type: module
-  label: constitution_engine.py
-  path: core/ai_constitution/constitution_engine.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:__init__.py
-  type: module
-  label: __init__.py
-  path: core/ai_constitution/__init__.py
-  properties:
-    label_zh: 模組
-- id: file:core:ai_constitution:guardrails.py
-  type: module
-  label: guardrails.py
-  path: core/ai_constitution/guardrails.py
-  properties:
-    label_zh: 模組
-- id: dir:core:execution_engine
-  type: directory
-  label: execution_engine
-  path: core/execution_engine
-  properties:
-    label_zh: 目錄
-- id: file:core:execution_engine:verification_engine.py
-  type: module
-  label: verification_engine.py
-  path: core/execution_engine/verification_engine.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:connector_manager.py
-  type: module
-  label: connector_manager.py
-  path: core/execution_engine/connector_manager.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:rollback_manager.py
-  type: module
-  label: rollback_manager.py
-  path: core/execution_engine/rollback_manager.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:capability_registry.py
-  type: module
-  label: capability_registry.py
-  path: core/execution_engine/capability_registry.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:action_executor.py
-  type: module
-  label: action_executor.py
-  path: core/execution_engine/action_executor.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:execution_engine.py
-  type: module
-  label: execution_engine.py
-  path: core/execution_engine/execution_engine.py
-  properties:
-    label_zh: 模組
-- id: file:core:execution_engine:__init__.py
-  type: module
-  label: __init__.py
-  path: core/execution_engine/__init__.py
   properties:
     label_zh: 模組
 - id: file:core:context_understanding_engine.py
@@ -6248,6 +5682,12 @@ nodes:
   type: directory
   label: examples
   path: governance/examples
+  properties:
+    label_zh: 設定
+- id: file:governance:30-integration:dimension.yaml
+  type: config
+  label: dimension.yaml
+  path: governance/30-integration/dimension.yaml
   properties:
     label_zh: 設定
 - id: file:governance:30-integration:dimension.yaml
@@ -7310,14 +6750,17 @@ nodes:
   type: config
   label: dimension.yaml
   path: governance/17-sociological/dimension.yaml
+<<<<<<< HEAD
   properties:
     label_zh: 設定
 - id: dir:governance:_scratch
   type: directory
   label: _scratch
   path: governance/_scratch
+=======
+>>>>>>> origin/alert-autofix-37
   properties:
-    label_zh: 目錄
+    label_zh: 設定
 - id: dir:governance:22-aesthetic
   type: directory
   label: 22-aesthetic
@@ -10066,12 +9509,6 @@ nodes:
   path: infra
   properties:
     label_zh: 目錄
-- id: dir:infra:_scratch
-  type: directory
-  label: _scratch
-  path: infra/_scratch
-  properties:
-    label_zh: 目錄
 - id: dir:infra:config
   type: config
   label: config
@@ -10286,12 +9723,6 @@ nodes:
   type: module
   label: multi-agent-collaboration.ts
   path: island-ai/examples/multi-agent-collaboration.ts
-  properties:
-    label_zh: 模組
-- id: file:island-ai:jest.config.js
-  type: module
-  label: jest.config.js
-  path: island-ai/jest.config.js
   properties:
     label_zh: 模組
 - id: dir:island-ai:src
@@ -10762,9 +10193,6 @@ edges:
 - source: dir:apps:web-backend
   target: dir:apps:web-backend:analyzers
   type: contains
-- source: dir:apps
-  target: dir:apps:_scratch
-  type: contains
 - source: system:unmanned-island
   target: dir:_codeql_detected_source_root
   type: contains
@@ -10875,9 +10303,6 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:apps
   target: dir:_codeql_detected_source_root:apps:web-backend
-  type: contains
-- source: dir:_codeql_detected_source_root:apps
-  target: dir:_codeql_detected_source_root:apps:_scratch
   type: contains
 - source: dir:_codeql_detected_source_root
   target: dir:_codeql_detected_source_root:_codeql_detected_source_root
@@ -11036,9 +10461,6 @@ edges:
   target: dir:_codeql_detected_source_root:services:mcp
   type: contains
 - source: dir:_codeql_detected_source_root:services
-  target: dir:_codeql_detected_source_root:services:_scratch
-  type: contains
-- source: dir:_codeql_detected_source_root:services
   target: dir:_codeql_detected_source_root:services:agents
   type: contains
 - source: dir:_codeql_detected_source_root:services
@@ -11147,9 +10569,6 @@ edges:
   target: dir:_codeql_detected_source_root:tools:cli
   type: contains
 - source: dir:_codeql_detected_source_root:tools
-  target: dir:_codeql_detected_source_root:tools:_scratch
-  type: contains
-- source: dir:_codeql_detected_source_root:tools
   target: dir:_codeql_detected_source_root:tools:utilities
   type: contains
 - source: dir:_codeql_detected_source_root:tools
@@ -11246,9 +10665,6 @@ edges:
   target: file:_codeql_detected_source_root:automation:self_awareness_report.py
   type: contains
 - source: dir:_codeql_detected_source_root:automation
-  target: dir:_codeql_detected_source_root:automation:_scratch
-  type: contains
-- source: dir:_codeql_detected_source_root:automation
   target: dir:_codeql_detected_source_root:automation:autonomous
   type: contains
 - source: dir:_codeql_detected_source_root:automation
@@ -11336,13 +10752,11 @@ edges:
   target: dir:_codeql_detected_source_root:core
   type: contains
 - source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:main_system
-  type: contains
-- source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:slsa_provenance
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:project_factory
+<<<<<<< HEAD
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:training_system
@@ -11352,15 +10766,11 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:tech_stack
+=======
+>>>>>>> origin/alert-autofix-37
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:validators
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:yaml_module_system
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:execution_architecture
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: file:_codeql_detected_source_root:core:plugin_system.py
@@ -11373,15 +10783,6 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: dir:_codeql_detected_source_root:core:hlp_executor
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:monitoring_system
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:cloud_agent_delegation
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:_scratch
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: file:_codeql_detected_source_root:core:auto_governance_hub.py
@@ -11399,19 +10800,7 @@ edges:
   target: file:_codeql_detected_source_root:core:hallucination_detector.py
   type: contains
 - source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:ci_error_handler
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:virtual_experts
-  type: contains
-- source: dir:_codeql_detected_source_root:core
   target: file:_codeql_detected_source_root:core:ai_decision_engine.py
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:ai_constitution
-  type: contains
-- source: dir:_codeql_detected_source_root:core
-  target: dir:_codeql_detected_source_root:core:execution_engine
   type: contains
 - source: dir:_codeql_detected_source_root:core
   target: file:_codeql_detected_source_root:core:context_understanding_engine.py
@@ -11541,12 +10930,15 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:index
+<<<<<<< HEAD
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:17-sociological
+=======
+>>>>>>> origin/alert-autofix-37
   type: contains
 - source: dir:_codeql_detected_source_root:governance
-  target: dir:_codeql_detected_source_root:governance:_scratch
+  target: dir:_codeql_detected_source_root:governance:17-sociological
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:22-aesthetic
@@ -11616,6 +11008,9 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: dir:_codeql_detected_source_root:governance:11-tools-systems
+  type: contains
+- source: dir:_codeql_detected_source_root:governance
+  target: file:_codeql_detected_source_root:governance:governance.yaml
   type: contains
 - source: dir:_codeql_detected_source_root:governance
   target: file:_codeql_detected_source_root:governance:governance.yaml
@@ -11903,9 +11298,6 @@ edges:
   target: dir:_codeql_detected_source_root:infra
   type: contains
 - source: dir:_codeql_detected_source_root:infra
-  target: dir:_codeql_detected_source_root:infra:_scratch
-  type: contains
-- source: dir:_codeql_detected_source_root:infra
   target: dir:_codeql_detected_source_root:infra:config
   type: contains
 - source: dir:_codeql_detected_source_root:infra
@@ -11928,9 +11320,6 @@ edges:
   type: contains
 - source: dir:_codeql_detected_source_root:island-ai
   target: dir:_codeql_detected_source_root:island-ai:examples
-  type: contains
-- source: dir:_codeql_detected_source_root:island-ai
-  target: file:_codeql_detected_source_root:island-ai:jest.config.js
   type: contains
 - source: dir:_codeql_detected_source_root:island-ai
   target: dir:_codeql_detected_source_root:island-ai:src
@@ -11961,9 +11350,6 @@ edges:
   type: contains
 - source: dir:services:mcp
   target: dir:services:mcp:deploy
-  type: contains
-- source: dir:services
-  target: dir:services:_scratch
   type: contains
 - source: dir:services
   target: dir:services:agents
@@ -12512,9 +11898,6 @@ edges:
   target: dir:tools:cli:src
   type: contains
 - source: dir:tools
-  target: dir:tools:_scratch
-  type: contains
-- source: dir:tools
   target: dir:tools:utilities
   type: contains
 - source: dir:tools:utilities
@@ -12732,9 +12115,6 @@ edges:
   type: contains
 - source: dir:automation
   target: file:automation:self_awareness_report.py
-  type: contains
-- source: dir:automation
-  target: dir:automation:_scratch
   type: contains
 - source: dir:automation
   target: dir:automation:autonomous
@@ -12965,24 +12345,6 @@ edges:
   target: dir:core
   type: contains
 - source: dir:core
-  target: dir:core:main_system
-  type: contains
-- source: dir:core:main_system
-  target: file:core:main_system:automation_pipeline.py
-  type: contains
-- source: dir:core:main_system
-  target: file:core:main_system:phase_orchestrator.py
-  type: contains
-- source: dir:core:main_system
-  target: file:core:main_system:system_bootstrap.py
-  type: contains
-- source: dir:core:main_system
-  target: file:core:main_system:__init__.py
-  type: contains
-- source: dir:core:main_system
-  target: file:core:main_system:synergymesh_core.py
-  type: contains
-- source: dir:core
   target: dir:core:slsa_provenance
   type: contains
 - source: dir:core:slsa_provenance
@@ -13005,6 +12367,7 @@ edges:
   type: contains
 - source: dir:core
   target: dir:core:project_factory
+<<<<<<< HEAD
   type: contains
 - source: dir:core:project_factory
   target: file:core:project_factory:factory.py
@@ -13029,54 +12392,29 @@ edges:
   type: contains
 - source: dir:core
   target: dir:core:training_system
+=======
+>>>>>>> origin/alert-autofix-37
   type: contains
-- source: dir:core:training_system
-  target: file:core:training_system:example_library.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:factory.py
   type: contains
-- source: dir:core:training_system
-  target: file:core:training_system:skills_training.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:cli.py
   type: contains
-- source: dir:core:training_system
-  target: file:core:training_system:__init__.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:validator.py
   type: contains
-- source: dir:core:training_system
-  target: file:core:training_system:knowledge_base.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:templates.py
   type: contains
-- source: dir:core
-  target: dir:core:mcp_servers_enhanced
+- source: dir:core:project_factory
+  target: file:core:project_factory:spec.py
   type: contains
-- source: dir:core:mcp_servers_enhanced
-  target: file:core:mcp_servers_enhanced:realtime_connector.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:generator.py
   type: contains
-- source: dir:core:mcp_servers_enhanced
-  target: file:core:mcp_servers_enhanced:tool_registry.py
-  type: contains
-- source: dir:core:mcp_servers_enhanced
-  target: file:core:mcp_servers_enhanced:workflow_orchestrator.py
-  type: contains
-- source: dir:core:mcp_servers_enhanced
-  target: file:core:mcp_servers_enhanced:mcp_server_manager.py
-  type: contains
-- source: dir:core:mcp_servers_enhanced
-  target: file:core:mcp_servers_enhanced:__init__.py
-  type: contains
-- source: dir:core
-  target: dir:core:tech_stack
-  type: contains
-- source: dir:core:tech_stack
-  target: file:core:tech_stack:multi_agent_coordinator.py
-  type: contains
-- source: dir:core:tech_stack
-  target: file:core:tech_stack:python_bridge.py
-  type: contains
-- source: dir:core:tech_stack
-  target: file:core:tech_stack:framework_integrations.py
-  type: contains
-- source: dir:core:tech_stack
-  target: file:core:tech_stack:architecture_config.py
-  type: contains
-- source: dir:core:tech_stack
-  target: file:core:tech_stack:__init__.py
+- source: dir:core:project_factory
+  target: file:core:project_factory:__init__.py
   type: contains
 - source: dir:core
   target: dir:core:validators
@@ -13095,51 +12433,6 @@ edges:
   type: contains
 - source: dir:core:validators
   target: file:core:validators:__init__.py
-  type: contains
-- source: dir:core
-  target: dir:core:yaml_module_system
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:policy_gate.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:yaml_schema_validator.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:yaml_module_definition.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:ci_verification_pipeline.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:slsa_compliance.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:audit_trail.py
-  type: contains
-- source: dir:core:yaml_module_system
-  target: file:core:yaml_module_system:__init__.py
-  type: contains
-- source: dir:core
-  target: dir:core:execution_architecture
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:function_calling.py
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:mcp_integration.py
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:tool_system.py
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:agent_orchestration.py
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:langchain_integration.py
-  type: contains
-- source: dir:core:execution_architecture
-  target: file:core:execution_architecture:__init__.py
   type: contains
 - source: dir:core
   target: file:core:plugin_system.py
@@ -13223,51 +12516,6 @@ edges:
   target: file:core:hlp_executor:partial_rollback.py
   type: contains
 - source: dir:core
-  target: dir:core:monitoring_system
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:intelligent_monitoring.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:observability_platform.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:auto_remediation.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:smart_anomaly_detector.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:auto_diagnosis.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:__init__.py
-  type: contains
-- source: dir:core:monitoring_system
-  target: file:core:monitoring_system:self_learning.py
-  type: contains
-- source: dir:core
-  target: dir:core:cloud_agent_delegation
-  type: contains
-- source: dir:core:cloud_agent_delegation
-  target: file:core:cloud_agent_delegation:load_balancer.py
-  type: contains
-- source: dir:core:cloud_agent_delegation
-  target: file:core:cloud_agent_delegation:task_router.py
-  type: contains
-- source: dir:core:cloud_agent_delegation
-  target: file:core:cloud_agent_delegation:delegation_manager.py
-  type: contains
-- source: dir:core:cloud_agent_delegation
-  target: file:core:cloud_agent_delegation:cloud_provider_adapter.py
-  type: contains
-- source: dir:core:cloud_agent_delegation
-  target: file:core:cloud_agent_delegation:__init__.py
-  type: contains
-- source: dir:core
-  target: dir:core:_scratch
-  type: contains
-- source: dir:core
   target: file:core:auto_governance_hub.py
   type: contains
 - source: dir:core
@@ -13275,9 +12523,6 @@ edges:
   type: contains
 - source: dir:core
   target: dir:core:advisory-database
-  type: contains
-- source: dir:core:advisory-database
-  target: file:core:advisory-database:jest.config.js
   type: contains
 - source: dir:core:advisory-database
   target: dir:core:advisory-database:src
@@ -13319,88 +12564,7 @@ edges:
   target: file:core:hallucination_detector.py
   type: contains
 - source: dir:core
-  target: dir:core:ci_error_handler
-  type: contains
-- source: dir:core:ci_error_handler
-  target: file:core:ci_error_handler:fix_status_tracker.py
-  type: contains
-- source: dir:core:ci_error_handler
-  target: file:core:ci_error_handler:auto_fix_engine.py
-  type: contains
-- source: dir:core:ci_error_handler
-  target: file:core:ci_error_handler:issue_manager.py
-  type: contains
-- source: dir:core:ci_error_handler
-  target: file:core:ci_error_handler:ci_error_analyzer.py
-  type: contains
-- source: dir:core:ci_error_handler
-  target: file:core:ci_error_handler:__init__.py
-  type: contains
-- source: dir:core
-  target: dir:core:virtual_experts
-  type: contains
-- source: dir:core:virtual_experts
-  target: file:core:virtual_experts:expert_team.py
-  type: contains
-- source: dir:core:virtual_experts
-  target: file:core:virtual_experts:expert_base.py
-  type: contains
-- source: dir:core:virtual_experts
-  target: file:core:virtual_experts:domain_experts.py
-  type: contains
-- source: dir:core:virtual_experts
-  target: file:core:virtual_experts:__init__.py
-  type: contains
-- source: dir:core
   target: file:core:ai_decision_engine.py
-  type: contains
-- source: dir:core
-  target: dir:core:ai_constitution
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:adaptive_guidelines.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:fundamental_laws.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:policy_as_prompt.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:operational_rules.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:constitution_engine.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:__init__.py
-  type: contains
-- source: dir:core:ai_constitution
-  target: file:core:ai_constitution:guardrails.py
-  type: contains
-- source: dir:core
-  target: dir:core:execution_engine
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:verification_engine.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:connector_manager.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:rollback_manager.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:capability_registry.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:action_executor.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:execution_engine.py
-  type: contains
-- source: dir:core:execution_engine
-  target: file:core:execution_engine:__init__.py
   type: contains
 - source: dir:core
   target: file:core:context_understanding_engine.py
@@ -13672,11 +12836,17 @@ edges:
 - source: dir:governance:20-information
   target: file:governance:20-information:dimension.yaml
   type: contains
+- source: dir:governance:20-information
+  target: file:governance:20-information:dimension.yaml
+  type: contains
 - source: dir:governance
   target: dir:governance:examples
   type: contains
 - source: dir:governance:examples
   target: file:governance:examples:api_contract_example.py
+  type: contains
+- source: dir:governance:30-integration
+  target: file:governance:30-integration:dimension.yaml
   type: contains
 - source: dir:governance:30-integration
   target: file:governance:30-integration:dimension.yaml
@@ -14202,15 +13372,21 @@ edges:
   type: contains
 - source: dir:governance:index
   target: dir:governance:index:scripts
+<<<<<<< HEAD
+  type: contains
+- source: dir:governance
+  target: dir:governance:17-sociological
+=======
+>>>>>>> origin/alert-autofix-37
+  type: contains
+- source: dir:governance:17-sociological
+  target: file:governance:17-sociological:dimension.yaml
   type: contains
 - source: dir:governance
   target: dir:governance:17-sociological
   type: contains
 - source: dir:governance:17-sociological
   target: file:governance:17-sociological:dimension.yaml
-  type: contains
-- source: dir:governance
-  target: dir:governance:_scratch
   type: contains
 - source: dir:governance
   target: dir:governance:22-aesthetic
@@ -15593,9 +14769,6 @@ edges:
   target: dir:infra
   type: contains
 - source: dir:infra
-  target: dir:infra:_scratch
-  type: contains
-- source: dir:infra
   target: dir:infra:config
   type: contains
 - source: dir:infra:config
@@ -15702,9 +14875,6 @@ edges:
   type: contains
 - source: dir:island-ai:examples
   target: file:island-ai:examples:multi-agent-collaboration.ts
-  type: contains
-- source: dir:island-ai
-  target: file:island-ai:jest.config.js
   type: contains
 - source: dir:island-ai
   target: dir:island-ai:src
@@ -15836,6 +15006,7 @@ edges:
   target: config:config:unified-config-index.yaml
   type: configures
 statistics:
+<<<<<<< HEAD
   total_nodes: 1753
   total_edges: 1752
   nodes_by_type:
@@ -15843,12 +15014,25 @@ statistics:
     directory: 756
     config: 518
     module: 429
+=======
+  total_nodes: 1645
+  total_edges: 1644
+  nodes_by_type:
+    system: 1
+    directory: 718
+    config: 518
+    module: 359
+>>>>>>> origin/alert-autofix-37
     subsystem: 24
     document: 9
     capability: 15
     component: 1
   edges_by_type:
+<<<<<<< HEAD
     contains: 1733
+=======
+    contains: 1625
+>>>>>>> origin/alert-autofix-37
     provides: 15
     configures: 4
 meta:

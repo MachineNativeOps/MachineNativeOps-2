@@ -389,7 +389,6 @@ builder.register("custom-microservice")
 生成的專案會自動通過以下驗證：
 
 #### 1. 語言規範 Language Policy
-
 ```yaml
 ✓ Python: 版本 >= 3.11
 ✓ TypeScript: 嚴格模式啟用
@@ -398,21 +397,18 @@ builder.register("custom-microservice")
 ```
 
 #### 2. 安全標準 Security Standards
-
 ```yaml
 ✓ 無高危漏洞依賴 ✓ Dockerfile 安全最佳實踐 ✓ Secrets 不硬編碼 ✓ RBAC 權限最小化
 ✓ 網絡策略正確配置
 ```
 
 #### 3. 架構約束 Architecture Constraints
-
 ```yaml
 ✓ 層級邊界清晰 (ai-constitution.yaml) ✓ 依賴方向正確 ✓ 接口定義完整 ✓
 錯誤處理完善
 ```
 
 #### 4. CI/CD 標準 CI/CD Standards
-
 ```yaml
 ✓ 所有階段配置完整 ✓ 測試覆蓋率達標 ✓ 安全掃描集成 ✓ 自動化部署流程
 ```

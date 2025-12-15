@@ -26,12 +26,10 @@ describe('Auto-Assignment System', () => {
         priority: 'HIGH',
         description: 'API endpoint returning 500 errors',
         errorMessage: 'Internal Server Error in /api/users',
-        affectedFiles: ['src/api/users.ts']
+        affectedFiles: ['src/api/users.ts'],
       };
 
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const response = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(response.status).toBe(201);
       expect(response.body.success).toBe(true);
@@ -48,12 +46,10 @@ describe('Auto-Assignment System', () => {
         type: 'SECURITY',
         priority: 'CRITICAL',
         description: 'Security breach detected',
-        errorMessage: 'Unauthorized access attempt'
+        errorMessage: 'Unauthorized access attempt',
       };
 
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const response = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(response.status).toBe(201);
       expect(response.body.success).toBe(true);
@@ -66,12 +62,10 @@ describe('Auto-Assignment System', () => {
         type: 'FRONTEND_ERROR',
         priority: 'MEDIUM',
         description: 'React component rendering issue',
-        affectedFiles: ['src/components/UserProfile.tsx']
+        affectedFiles: ['src/components/UserProfile.tsx'],
       };
 
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const response = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(response.status).toBe(201);
       expect(response.body.data.assignment.primaryOwner.specialties).toContain('react');
@@ -82,12 +76,10 @@ describe('Auto-Assignment System', () => {
         type: 'DATABASE_ISSUE',
         priority: 'HIGH',
         description: 'Database connection timeout',
-        errorMessage: 'Connection pool exhausted'
+        errorMessage: 'Connection pool exhausted',
       };
 
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const response = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(response.status).toBe(201);
       expect(response.body.data.assignment.secondaryOwner).toBeDefined();
@@ -97,12 +89,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'INVALID_TYPE',
         priority: 'HIGH',
-        description: 'Test incident'
+        description: 'Test incident',
       };
 
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const response = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -110,12 +100,10 @@ describe('Auto-Assignment System', () => {
     });
 
     it('should return 400 for missing required fields', async () => {
-      const response = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send({
-          type: 'BACKEND_API'
-          // missing priority and description
-        });
+      const response = await request(app).post('/api/v1/assignment/assign').send({
+        type: 'BACKEND_API',
+        // missing priority and description
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -128,18 +116,15 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'PERFORMANCE',
         priority: 'MEDIUM',
-        description: 'Slow API response times'
+        description: 'Slow API response times',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
       // Then get its status
-      const response = await request(app)
-        .get(`/api/v1/assignment/status/${assignmentId}`);
+      const response = await request(app).get(`/api/v1/assignment/status/${assignmentId}`);
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -148,8 +133,7 @@ describe('Auto-Assignment System', () => {
     });
 
     it('should return 404 for non-existent assignment', async () => {
-      const response = await request(app)
-        .get('/api/v1/assignment/status/non-existent-id');
+      const response = await request(app).get('/api/v1/assignment/status/non-existent-id');
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
@@ -162,12 +146,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'INFRASTRUCTURE',
         priority: 'LOW',
-        description: 'Server disk space warning'
+        description: 'Server disk space warning',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
@@ -186,12 +168,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'BACKEND_API',
         priority: 'HIGH',
-        description: 'API endpoint not responding'
+        description: 'API endpoint not responding',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
@@ -208,12 +188,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'FRONTEND_ERROR',
         priority: 'MEDIUM',
-        description: 'Button click not working'
+        description: 'Button click not working',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
@@ -230,12 +208,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'BACKEND_API',
         priority: 'HIGH',
-        description: 'Test incident'
+        description: 'Test incident',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
@@ -250,8 +226,7 @@ describe('Auto-Assignment System', () => {
 
   describe('GET /api/v1/assignment/workload', () => {
     it('should return workload statistics', async () => {
-      const response = await request(app)
-        .get('/api/v1/assignment/workload');
+      const response = await request(app).get('/api/v1/assignment/workload');
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -265,12 +240,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'BACKEND_API',
         priority: 'MEDIUM',
-        description: 'API performance issue'
+        description: 'API performance issue',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
       const originalOwnerId = createResponse.body.data.assignment.primaryOwner.id;
@@ -291,12 +264,10 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'BACKEND_API',
         priority: 'MEDIUM',
-        description: 'Test incident'
+        description: 'Test incident',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
@@ -314,17 +285,14 @@ describe('Auto-Assignment System', () => {
       const incident = {
         type: 'SECURITY',
         priority: 'HIGH',
-        description: 'Potential security vulnerability'
+        description: 'Potential security vulnerability',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       const assignmentId = createResponse.body.data.assignment.id;
 
-      const response = await request(app)
-        .post(`/api/v1/assignment/escalate/${assignmentId}`);
+      const response = await request(app).post(`/api/v1/assignment/escalate/${assignmentId}`);
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -333,8 +301,7 @@ describe('Auto-Assignment System', () => {
     });
 
     it('should return 404 for non-existent assignment', async () => {
-      const response = await request(app)
-        .post('/api/v1/assignment/escalate/non-existent-id');
+      const response = await request(app).post('/api/v1/assignment/escalate/non-existent-id');
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
@@ -343,8 +310,7 @@ describe('Auto-Assignment System', () => {
 
   describe('GET /api/v1/assignment/all', () => {
     it('should return all assignments', async () => {
-      const response = await request(app)
-        .get('/api/v1/assignment/all');
+      const response = await request(app).get('/api/v1/assignment/all');
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -356,8 +322,7 @@ describe('Auto-Assignment System', () => {
 
   describe('GET /api/v1/assignment/report', () => {
     it('should return performance report', async () => {
-      const response = await request(app)
-        .get('/api/v1/assignment/report');
+      const response = await request(app).get('/api/v1/assignment/report');
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -376,12 +341,10 @@ describe('Auto-Assignment System', () => {
         type: 'BACKEND_API',
         priority: 'HIGH',
         description: 'Complete lifecycle test',
-        errorMessage: 'Test error'
+        errorMessage: 'Test error',
       };
 
-      const createResponse = await request(app)
-        .post('/api/v1/assignment/assign')
-        .send(incident);
+      const createResponse = await request(app).post('/api/v1/assignment/assign').send(incident);
 
       expect(createResponse.status).toBe(201);
       const assignmentId = createResponse.body.data.assignment.id;
@@ -411,8 +374,7 @@ describe('Auto-Assignment System', () => {
       expect(resolveResponse.body.data.status).toBe('RESOLVED');
 
       // 5. Verify final state
-      const finalResponse = await request(app)
-        .get(`/api/v1/assignment/status/${assignmentId}`);
+      const finalResponse = await request(app).get(`/api/v1/assignment/status/${assignmentId}`);
 
       expect(finalResponse.status).toBe(200);
       expect(finalResponse.body.data.acknowledgedAt).toBeDefined();
@@ -424,25 +386,20 @@ describe('Auto-Assignment System', () => {
       const incidents = [
         { type: 'FRONTEND_ERROR', priority: 'HIGH', description: 'Issue 1' },
         { type: 'BACKEND_API', priority: 'MEDIUM', description: 'Issue 2' },
-        { type: 'DATABASE_ISSUE', priority: 'LOW', description: 'Issue 3' }
+        { type: 'DATABASE_ISSUE', priority: 'LOW', description: 'Issue 3' },
       ];
 
       const responses = await Promise.all(
-        incidents.map(incident =>
-          request(app)
-            .post('/api/v1/assignment/assign')
-            .send(incident)
-        )
+        incidents.map((incident) => request(app).post('/api/v1/assignment/assign').send(incident))
       );
 
-      responses.forEach(response => {
+      responses.forEach((response) => {
         expect(response.status).toBe(201);
         expect(response.body.success).toBe(true);
       });
 
       // Verify all assignments exist
-      const allResponse = await request(app)
-        .get('/api/v1/assignment/all');
+      const allResponse = await request(app).get('/api/v1/assignment/all');
 
       expect(allResponse.body.count).toBeGreaterThanOrEqual(3);
     });

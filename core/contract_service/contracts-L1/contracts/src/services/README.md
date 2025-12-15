@@ -8,7 +8,6 @@ are framework-agnostic and can be tested independently of the HTTP layer.
 ## Responsibilities
 
 ✅ **Services SHOULD:**
-
 - Implement all business logic and rules
 - Orchestrate workflows and operations
 - Validate business constraints
@@ -17,7 +16,6 @@ are framework-agnostic and can be tested independently of the HTTP layer.
 - Be framework-agnostic (no Express/HTTP dependencies)
 
 ❌ **Services SHOULD NOT:**
-
 - Access HTTP objects (Request/Response)
 - Handle HTTP status codes
 - Format responses for HTTP
@@ -68,7 +66,6 @@ export class SomeService {
 **Purpose:** Core engine for intelligent responsibility assignment.
 
 **Key Methods:**
-
 - `assignResponsibility(incident)` - Assign incident to team member
 - `analyzeProblemType(incident)` - Analyze and categorize problem
 - `identifyRelevantTeams(problemType)` - Find teams for problem type
@@ -80,7 +77,6 @@ export class SomeService {
 - `getAllAssignments()` - Get all assignments
 
 **Dependencies:**
-
 - `ResponsibilityMatrix`
 - `WorkloadBalancer`
 
@@ -89,7 +85,6 @@ export class SomeService {
 **Purpose:** Governance and compliance tracking for assignments.
 
 **Key Methods:**
-
 - `validateAssignment(assignment)` - Validate assignment compliance
 - `trackAssignment(assignment)` - Track assignment for governance
 - `getComplianceReport()` - Generate compliance report
@@ -100,7 +95,6 @@ export class SomeService {
 **Purpose:** Maps problem types to responsible teams and members.
 
 **Key Methods:**
-
 - `identifyRelevantTeams(problemType)` - Get teams for problem
 - `getTeamStructure(teamName)` - Get team details
 - `getSpecialties(teamName)` - Get team specialties
@@ -111,7 +105,6 @@ export class SomeService {
 **Purpose:** Balances workload across team members.
 
 **Key Methods:**
-
 - `selectOptimalAssignee(members, incident)` - Choose best member
 - `calculateExpertiseMatch(member, incident)` - Match expertise
 - `calculateAvailability(member)` - Check member availability
@@ -127,7 +120,6 @@ export class SomeService {
 **Purpose:** Manages incident escalation workflows.
 
 **Key Methods:**
-
 - `createEscalation(incident, reason)` - Create new escalation
 - `getEscalation(id)` - Get escalation details
 - `updateStatus(id, status)` - Update escalation status
@@ -142,7 +134,6 @@ export class SomeService {
 **Purpose:** Handles Sigstore attestation creation and verification.
 
 **Key Methods:**
-
 - `createAttestation(subject, predicate)` - Create signed attestation
 - `verifyAttestation(attestation)` - Verify attestation signature
 - `signWithSigstore(data)` - Sign data with Sigstore
@@ -150,16 +141,24 @@ export class SomeService {
 
 #### ProvenanceService (`provenance.ts`)
 
-**Purpose:** Manages build provenance tracking.
+**Purpose:** Manages build provenance tracking with security controls.
 
 **Key Methods:**
-
 - `createAttestation(filePath, builder)` - Create build attestation
 - `verifyAttestation(attestation)` - Verify build attestation
 - `importAttestation(data)` - Import external attestation
 - `exportAttestation(id)` - Export attestation
-- `getFileDigest(filePath)` - Calculate file digest
+- `generateFileDigest(filePath)` - Calculate file digest with path validation
 - `buildSLSAProvenance(file, builder)` - Build SLSA provenance
+
+**Private Methods:**
+- `resolveSafePath(userInputPath)` - Validate paths against SAFE_ROOT
+**Security Enhancements (PR #351):**
+- **Policy SEC-PATH-001**: Path traversal prevention using SAFE_ROOT validation
+- **Environment Variable**: `SAFE_ROOT_PATH` defines allowed directory for file operations
+- **Path Validation**: Uses `realpath()` and `relative()` to prevent directory traversal
+- **Reference**: `governance/10-policy/base-policies/security-policies.yaml#SEC-PATH-001`
+- **Documentation**: `docs/security/PR351_SECURITY_ENHANCEMENTS.md`
 
 ## Best Practices
 
@@ -388,7 +387,6 @@ describe('UserService', () => {
 ## Adding a New Service
 
 1. **Create the service file:**
-
 ```typescript
 // services/example.service.ts
 import { ExampleInput, ExampleOutput } from '../models/example.model';
@@ -427,8 +425,7 @@ export class ExampleService {
 }
 ```
 
-1. **Create tests:**
-
+2. **Create tests:**
 ```typescript
 // __tests__/example.service.test.ts
 import { ExampleService } from '../services/example.service';
@@ -450,8 +447,7 @@ describe('ExampleService', () => {
 });
 ```
 
-1. **Use in controller:**
-
+3. **Use in controller:**
 ```typescript
 // controllers/example.controller.ts
 import { ExampleService } from '../services/example.service';

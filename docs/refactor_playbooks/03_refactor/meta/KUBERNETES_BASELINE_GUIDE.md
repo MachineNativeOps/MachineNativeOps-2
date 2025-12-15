@@ -20,14 +20,14 @@ operational standards for Kubernetes clusters.
 
 ### Optional / 可選條件
 
-1. **Policy Engines:**
+4. **Policy Engines:**
    - OPA Gatekeeper v3.14.0
    - Kyverno v1.11.0
    - Conftest v0.47.0
-2. **Service Mesh:** Istio v1.18+ (for network policies)
-3. **Quantum Backend:** IBM Quantum or AWS Braket (for quantum orchestration)
-4. **Monitoring:** Prometheus + Grafana
-5. **Secret Management:** HashiCorp Vault
+5. **Service Mesh:** Istio v1.18+ (for network policies)
+6. **Quantum Backend:** IBM Quantum or AWS Braket (for quantum orchestration)
+7. **Monitoring:** Prometheus + Grafana
+8. **Secret Management:** HashiCorp Vault
 
 ---
 
@@ -93,7 +93,6 @@ kubectl create namespace valid-service-dev  # Should succeed
 ```
 
 **Expected Resources:**
-
 - ✅ Namespace: `intelligent-hyperautomation-baseline`
 - ✅ ConfigMaps: `namespace-governance-policy`, `capability-registry-schema`
 - ✅ Service: `capability-registry-service`
@@ -123,14 +122,12 @@ kubectl get configmap pod-security-standards -n intelligent-hyperautomation-base
 ```
 
 **Expected Resources:**
-
 - ✅ ConfigMap: `security-baseline-policy`
 - ✅ Roles: `developer-restricted`, `ci-cd-deployer`
 - ✅ Secret: `encryption-key-rotation-schedule`
 - ✅ ConfigMap: `pod-security-standards`
 
 **Test RBAC:**
-
 ```bash
 # Create test service account
 kubectl create serviceaccount test-developer -n intelligent-hyperautomation-baseline
@@ -167,13 +164,11 @@ kubectl get configmap cluster-capacity-planning -n intelligent-hyperautomation-b
 ```
 
 **Expected Resources:**
-
 - ✅ ResourceQuota: `baseline-resource-quota`
 - ✅ LimitRange: `baseline-limit-range`
 - ✅ ConfigMaps: `resource-allocation-policy`, `cluster-capacity-planning`
 
 **Test Resource Limits:**
-
 ```bash
 # Try to create a pod exceeding limits (should fail)
 kubectl run test-pod --image=nginx --requests='cpu=100,memory=100Gi' -n intelligent-hyperautomation-baseline
@@ -203,14 +198,17 @@ kubectl describe networkpolicy baseline-allow-same-namespace -n intelligent-hype
 ```
 
 **Expected Resources:**
+<<<<<<< HEAD
 
 - ✅ NetworkPolicies: `baseline-default-deny-all`,
   `baseline-allow-same-namespace`, `baseline-allow-dns`,
   `baseline-api-gateway-ingress`
+=======
+- ✅ NetworkPolicies: `baseline-default-deny-all`, `baseline-allow-same-namespace`, `baseline-allow-dns`, `baseline-api-gateway-ingress`
+>>>>>>> origin/alert-autofix-37
 - ✅ ConfigMaps: `network-segmentation-policy`, `network-observability-config`
 
 **Test Network Isolation:**
-
 ```bash
 # Create test pods
 kubectl run test-pod-1 --image=nginx -n intelligent-hyperautomation-baseline
@@ -244,15 +242,18 @@ kubectl get clusterrole compliance-attestation-reader
 ```
 
 **Expected Resources:**
+<<<<<<< HEAD
 
 - ✅ ConfigMaps: `compliance-framework-baseline`,
   `merkle-tree-attestation-config`
+=======
+- ✅ ConfigMaps: `compliance-framework-baseline`, `merkle-tree-attestation-config`
+>>>>>>> origin/alert-autofix-37
 - ✅ CronJob: `compliance-attestation-job` (runs every 6 hours)
 - ✅ ServiceAccount: `compliance-attestation-sa`
 - ✅ ClusterRole + ClusterRoleBinding
 
 **Trigger Manual Attestation:**
-
 ```bash
 # Create a manual job from the CronJob
 kubectl create job --from=cronjob/compliance-attestation-job manual-attestation-1 -n intelligent-hyperautomation-baseline
@@ -285,7 +286,6 @@ kubectl get role quantum-job-executor -n intelligent-hyperautomation-baseline
 ```
 
 **Expected Resources:**
-
 - ✅ ConfigMaps: `quantum-orchestration-baseline`, `quantum-execution-scripts`
 - ✅ Service: `quantum-orchestration-service`
 - ✅ ServiceAccount: `quantum-orchestrator-sa`
@@ -346,7 +346,6 @@ kubectl get policyreport --all-namespaces
 **Symptom:** Resource creation hangs or times out
 
 **Solution:**
-
 ```bash
 # Check webhook service
 kubectl get svc -n intelligent-hyperautomation-baseline
@@ -364,7 +363,6 @@ kubectl delete validatingwebhookconfigurations <webhook-name>
 **Symptom:** Resources rejected by admission controller
 
 **Solution:**
-
 ```bash
 # Check constraint details
 kubectl get constraints
@@ -382,7 +380,6 @@ kubectl logs -n gatekeeper-system deployment/gatekeeper-controller-manager
 **Symptom:** Pods fail to schedule due to quota
 
 **Solution:**
-
 ```bash
 # Check quota usage
 kubectl describe resourcequota -n <namespace>
@@ -400,7 +397,6 @@ kubectl edit resourcequota baseline-resource-quota -n intelligent-hyperautomatio
 **Symptom:** Pods cannot communicate
 
 **Solution:**
-
 ```bash
 # Check network policies
 kubectl get networkpolicy -n <namespace>
@@ -459,24 +455,20 @@ kubectl delete networkpolicy baseline-default-deny-all -n <namespace>
 ### Regular Tasks / 定期任務
 
 **Daily:**
-
 - Monitor compliance attestation CronJob execution
 - Review audit logs for security events
 
 **Weekly:**
-
 - Check resource quota utilization
 - Review network policy violations
 - Update policy engines (if new versions available)
 
 **Monthly:**
-
 - Conduct access reviews
 - Review and rotate encryption keys
 - Update baseline configurations (if needed)
 
 **Quarterly:**
-
 - Penetration testing (for PCI-DSS compliance)
 - External audit preparation (SOC2)
 - Review and update RBAC role matrix
@@ -513,7 +505,7 @@ kubectl apply -f rbac-backup.yaml
 
 ## 📞 Support & Feedback / 支援與回饋
 
-- 📧 **Email:** <platform-team@example.com>
+- 📧 **Email:** platform-team@example.com
 - 💬 **Slack:** #kubernetes-baseline
 - 🐛 **Issues:** GitHub Issues
 - 📖 **Docs:** [DOCUMENTATION_INDEX.md](../../../../DOCUMENTATION_INDEX.md)

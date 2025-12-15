@@ -1,5 +1,4 @@
 # PR #73 全域架構分析與系統級整合報告
-
 # PR #73 Global Architecture Analysis & System-Level Integration Report
 
 > **Generated:** 2025-12-06  
@@ -50,7 +49,6 @@
 ### 1.3 架構假設 / Architecture Assumptions
 
 1. **Skeleton 參考路徑存在**
-
    ```
    unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/skeletons-index.yaml
    ```
@@ -165,18 +163,23 @@ GitHub CI ──▶ arch-governance-validation.yml ──▶ 5 個驗證 jobs
 ### 2.3 衝突、重疊、缺口分析 / Conflict, Overlap, Gap Analysis
 
 #### 衝突 (Conflicts) - 無
-
 - 所有新增檔案使用唯一路徑
 - 無覆蓋現有功能
 
 #### 重疊 (Overlaps) - 最小化
+<<<<<<< HEAD
 
 | 重疊區域 | 現有                             | PR #73                  | 處理方式           |
 | -------- | -------------------------------- | ----------------------- | ------------------ |
+=======
+| 重疊區域 | 現有 | PR #73 | 處理方式 |
+|----------|------|--------|----------|
+>>>>>>> origin/alert-autofix-37
 | 錯誤處理 | `ci-comprehensive-solution.yaml` | `ci-error-handler.yaml` | 引用關聯，擴充功能 |
 | CI 配置  | 各個獨立 workflow                | `ci-agent-config.yaml`  | 統一代理模式       |
 
 #### 缺口 (Gaps) - 已填補
+<<<<<<< HEAD
 
 | 缺口                   | 填補方式                            |
 | ---------------------- | ----------------------------------- |
@@ -184,6 +187,14 @@ GitHub CI ──▶ arch-governance-validation.yml ──▶ 5 個驗證 jobs
 | 缺乏錯誤→行動映射      | 新增 error_to_action_mapping        |
 | 缺乏架構骨架驗證 CI    | 新增 arch-governance-validation.yml |
 | github-script 安全漏洞 | 修復為 env 模式                     |
+=======
+| 缺口 | 填補方式 |
+|------|----------|
+| 缺乏 Stage 0 自動檢查 | 新增 pre-commit/pre-push hooks |
+| 缺乏錯誤→行動映射 | 新增 error_to_action_mapping |
+| 缺乏架構骨架驗證 CI | 新增 arch-governance-validation.yml |
+| github-script 安全漏洞 | 修復為 env 模式 |
+>>>>>>> origin/alert-autofix-37
 
 ### 2.4 設計模式一致性分析 / Design Pattern Consistency
 

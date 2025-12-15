@@ -1,10 +1,8 @@
 # Knowledge Graph Builder - Refactor Action Plan
-
 # 知識圖譜構建器 - 重構行動計畫
 
 **計畫日期 (Plan Date)**: 2025-12-07  
 **前置文檔 (Previous Documents)**:
-
 - `01_deconstruction/kg-builder_deconstruction.md` ✅
 - `02_integration/kg-builder_integration.md` ✅  
   **執行範圍 (Execution Scope)**: P0/P1/P2 prioritized file operations  
@@ -42,7 +40,6 @@ Island 系統的正式目錄結構中。整合遵循「最小變更原則」，�
 | **P0** | `docs/ARCHITECTURE/storage-architecture.md`        | 新建     | 三層存儲架構影響數據持久化策略         |
 
 **詳細行動**:
-
 ```bash
 # P0-1.1: 創建插件架構模式文檔
 CREATE docs/ARCHITECTURE/plugin-architecture-pattern.md
@@ -65,7 +62,6 @@ CREATE docs/ARCHITECTURE/storage-architecture.md
 
 **預估時間**: 4-6 小時  
 **驗收標準**:
-
 - ✅ 所有文檔通過 Markdown lint (`npm run docs:lint`)
 - ✅ 文檔包含 Mermaid 圖表
 - ✅ 文檔被添加到 `DOCUMENTATION_INDEX.md`
@@ -81,7 +77,6 @@ CREATE docs/ARCHITECTURE/storage-architecture.md
 | **P0** | `governance/policies/data-privacy-policy.yaml`        | 新建     | 數據隱私合規，法律要求               |
 
 **詳細行動**:
-
 ```bash
 # P0-2.1: 創建插件規範 JSON Schema
 CREATE governance/schemas/plugin-specification.schema.json
@@ -104,7 +99,6 @@ CREATE governance/policies/data-privacy-policy.yaml
 
 **預估時間**: 4-5 小時  
 **驗收標準**:
-
 - ✅ JSON Schema 通過 `ajv validate` 驗證
 - ✅ YAML 策略通過 `yamllint` 驗證
 - ✅ Schema 被引用在 `governance/schemas/README.md`
@@ -119,7 +113,6 @@ CREATE governance/policies/data-privacy-policy.yaml
 | **P0** | `config/system-module-map.yaml`                       | 擴展     | 註冊 knowledge_processing 模組 |
 
 **詳細行動**:
-
 ```bash
 # P0-3.1: 創建插件規範模板
 CREATE config/templates/plugin-specification-template.yaml
@@ -140,7 +133,6 @@ EXTEND config/system-module-map.yaml
 
 **預估時間**: 3-4 小時  
 **驗收標準**:
-
 - ✅ 模板 YAML 通過 `yamllint` 驗證
 - ✅ system-module-map.yaml 通過 schema 驗證
 - ✅ 模板包含完整的註釋說明
@@ -157,7 +149,6 @@ EXTEND config/system-module-map.yaml
 | **P1** | `tools/validate-ontology.py`    | 新建     | OWL 本體一致性驗證               |
 
 **詳細行動**:
-
 ```bash
 # P1-1.1: 創建插件規範驗證工具
 CREATE tools/validate-plugin-spec.py
@@ -181,7 +172,6 @@ CREATE tools/validate-ontology.py
 
 **預估時間**: 6-8 小時  
 **驗收標準**:
-
 - ✅ 工具通過 `pytest` 測試（覆蓋率 >= 70%）
 - ✅ 工具通過 `pylint` 和 `mypy` 檢查
 - ✅ 包含 `--help` 文檔和使用示例
@@ -195,7 +185,6 @@ CREATE tools/validate-ontology.py
 | **P1** | `tools/cli/plugin-registry-cli.py` | 新建     | 插件註冊、查詢、更新 CLI |
 
 **詳細行動**:
-
 ```bash
 # P1-2.1: 創建插件註冊 CLI
 CREATE tools/cli/plugin-registry-cli.py
@@ -212,7 +201,6 @@ CREATE tools/cli/plugin-registry-cli.py
 
 **預估時間**: 6-8 小時  
 **驗收標準**:
-
 - ✅ CLI 通過功能測試（register, list, show, update, validate）
 - ✅ CLI 包含豐富的錯誤提示與幫助信息
 - ✅ CLI 支持 `--json` 輸出格式
@@ -227,7 +215,6 @@ CREATE tools/cli/plugin-registry-cli.py
 | **P1** | `docs/ARCHITECTURE/vector-alignment-strategy.md` | 新建     | 向量嵌入策略文檔     |
 
 **詳細行動**:
-
 ```bash
 # P1-3.1: 創建批流處理文檔
 CREATE docs/ARCHITECTURE/batch-stream-processing.md
@@ -244,7 +231,6 @@ CREATE docs/ARCHITECTURE/vector-alignment-strategy.md
 
 **預估時間**: 4-5 小時  
 **驗收標準**:
-
 - ✅ 文檔包含清晰的架構圖
 - ✅ 文檔通過 Markdown lint
 - ✅ 文檔被添加到 `DOCUMENTATION_INDEX.md`
@@ -260,7 +246,6 @@ CREATE docs/ARCHITECTURE/vector-alignment-strategy.md
 | **P1** | `config/quality/quality-control-config.yaml`    | 新建     | 質量控制配置     |
 
 **詳細行動**:
-
 ```bash
 # P1-4.1: 創建向量對齊配置
 CREATE config/ai-models/vector-alignment-config.yaml
@@ -283,7 +268,6 @@ CREATE config/quality/quality-control-config.yaml
 
 **預估時間**: 4-5 小時  
 **驗收標準**:
-
 - ✅ 所有 YAML 通過 `yamllint` 驗證
 - ✅ 配置文件包含完整的註釋
 - ✅ 配置文件在 `config/README.md` 中註冊
@@ -301,7 +285,6 @@ CREATE config/quality/quality-control-config.yaml
 | **P2** | `infrastructure/kubernetes/templates/redis-cluster-config.yaml`           | 新建     | Redis 集群配置     |
 
 **詳細行動**:
-
 ```bash
 # P2-1.1: 創建知識處理器部署模板
 CREATE infrastructure/kubernetes/templates/knowledge-processor-deployment.yaml
@@ -325,7 +308,6 @@ CREATE infrastructure/kubernetes/templates/redis-cluster-config.yaml
 
 **預估時間**: 6-8 小時  
 **驗收標準**:
-
 - ✅ 所有模板通過 `kubectl apply --dry-run=client`
 - ✅ 模板通過 `kubeval` 或 `kubeconform` 驗證
 - ✅ 模板包含 README 說明如何使用
@@ -341,7 +323,6 @@ CREATE infrastructure/kubernetes/templates/redis-cluster-config.yaml
 | **P2** | `knowledge/entity-resolution-rules/similarity-rules.yaml`      | 新建     | 實體解析規則      |
 
 **詳細行動**:
-
 ```bash
 # P2-2.1: 創建 KG 構建工作流
 CREATE knowledge/processing-workflows/kg-construction-workflow.yaml
@@ -364,7 +345,6 @@ CREATE knowledge/entity-resolution-rules/similarity-rules.yaml
 
 **預估時間**: 5-6 小時  
 **驗收標準**:
-
 - ✅ 工作流通過驗證器驗證
 - ✅ 模式庫包含至少 10 個示例模式
 - ✅ 規則庫包含完整的註釋說明
@@ -379,7 +359,6 @@ CREATE knowledge/entity-resolution-rules/similarity-rules.yaml
 | **P2** | `docs/refactor_playbooks/03_refactor/meta/CI_INTEGRATION.md` | 擴展     | 添加插件驗證 CI 說明 |
 
 **詳細行動**:
-
 ```bash
 # P2-3.1: 創建知識處理 CI workflow
 CREATE .github/workflows/knowledge-processing-ci.yml
@@ -398,7 +377,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/CI_INTEGRATION.md
 
 **預估時間**: 4-5 小時  
 **驗收標準**:
-
 - ✅ Workflow 在測試 PR 中成功運行
 - ✅ Workflow 正確檢測到插件規範錯誤
 - ✅ CI_INTEGRATION.md 更新完成
@@ -413,7 +391,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/CI_INTEGRATION.md
 | **P2** | `docs/refactor_playbooks/03_refactor/meta/PLUGIN_ARCHITECTURE_EXAMPLES.md` | 新建     | 插件架構示例     |
 
 **詳細行動**:
-
 ```bash
 # P2-4.1: 創建性能基準測試工具
 CREATE tools/benchmark-knowledge-processor.py
@@ -435,7 +412,6 @@ CREATE docs/refactor_playbooks/03_refactor/meta/PLUGIN_ARCHITECTURE_EXAMPLES.md
 
 **預估時間**: 6-8 小時  
 **驗收標準**:
-
 - ✅ 基準測試工具能成功運行
 - ✅ 基準測試報告格式清晰
 - ✅ 示例文檔包含至少 3 個完整示例
@@ -450,7 +426,6 @@ CREATE docs/refactor_playbooks/03_refactor/meta/PLUGIN_ARCHITECTURE_EXAMPLES.md
 | **P2** | `governance/policies/knowledge-processing-rules.yaml` | 新建     | 知識處理質量規則      |
 
 **詳細行動**:
-
 ```bash
 # P2-5.1: 創建合規聲明策略
 CREATE governance/policies/compliance-attestation.yaml
@@ -467,7 +442,6 @@ CREATE governance/policies/knowledge-processing-rules.yaml
 
 **預估時間**: 3-4 小時  
 **驗收標準**:
-
 - ✅ 策略通過 `yamllint` 驗證
 - ✅ 策略在 `governance/policies/README.md` 中註冊
 - ✅ 策略包含完整的註釋說明
@@ -482,7 +456,6 @@ CREATE governance/policies/knowledge-processing-rules.yaml
 | **P2** | `docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md` | 擴展     | 添加 KG 相關 AI 提示   |
 
 **詳細行動**:
-
 ```bash
 # P2-6.1: 擴展 AI 自動修復工具
 EXTEND tools/ai-auto-fix.py
@@ -504,7 +477,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md
 
 **預估時間**: 5-6 小時  
 **驗收標準**:
-
 - ✅ 新功能通過單元測試
 - ✅ AI 提示模板可直接使用
 - ✅ 文檔包含使用示例
@@ -564,7 +536,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md
 ### 4.1 清理條件 (Cleanup Conditions)
 
 #### 階段 1: P0 完成後（立即可清理）
-
 ```yaml
 可清理內容:
   - ✅ 架構概念（已遷移到 docs/ARCHITECTURE/）
@@ -581,7 +552,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md
 ```
 
 #### 階段 2: P1 完成後（可部分清理）
-
 ```yaml
 可清理內容:
   - ✅ 處理管線配置（已遷移到 config/processing/）
@@ -594,7 +564,6 @@ EXTEND docs/refactor_playbooks/03_refactor/meta/AI_PROMPTS.md
 ```
 
 #### 階段 3: P2 完成後（完全標記為歷史）
-
 ```yaml
 可清理內容:
   - ✅ Kubernetes 部署配置（已遷移到 infrastructure/kubernetes/）
@@ -729,7 +698,6 @@ Phase 4:
 ### 6.2 回滾計畫 (Rollback Plan)
 
 #### P0 回滾
-
 ```bash
 # 如果 P0 出現問題，回滾步驟:
 git revert <P0-commit-sha>
@@ -738,7 +706,6 @@ git revert <P0-commit-sha>
 ```
 
 #### P1 回滾
-
 ```bash
 # 如果 P1 工具出現缺陷，回滾步驟:
 git revert <P1-commit-sha>
@@ -747,7 +714,6 @@ git revert <P1-commit-sha>
 ```
 
 #### P2 回滾
-
 ```bash
 # 如果 P2 CI 集成出現問題，回滾步驟:
 # 1. 禁用新 workflow
@@ -843,7 +809,6 @@ Week 3:
 ### 9.1 文件創建模板參考 (File Creation Template Reference)
 
 #### 架構文檔模板
-
 ```markdown
 # [Component Name] Architecture
 
@@ -874,7 +839,6 @@ Approved
 ```
 
 #### 治理策略模板
-
 ```yaml
 # ===================================================================
 # [Policy Name]
@@ -1016,8 +980,12 @@ Island 系統正式結構的完整遷移路徑。透過 P0/P1/P2 三級優先順
 
 **重構計畫完成時間 (Refactor Plan Completed)**: 2025-12-07T10:19:24Z  
 **前置文檔 (Previous)**:
+<<<<<<< HEAD
 
 - `01_deconstruction/kg-builder_deconstruction.md` ✅
+=======
+- `01_deconstruction/kg-builder_deconstruction.md` ✅  
+>>>>>>> origin/alert-autofix-37
 - `02_integration/kg-builder_integration.md` ✅  
   **執行狀態 (Execution Status)**: ⏳ Ready for P0 Execution  
   **總體狀態 (Overall Status)**: ✅ Refactor Planning Complete - Awaiting

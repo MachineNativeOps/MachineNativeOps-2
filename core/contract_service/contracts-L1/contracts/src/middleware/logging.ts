@@ -138,7 +138,7 @@ export const loggingMiddleware = (req: Request, res: Response, next: NextFunctio
     traceId,
     method: req.method,
     url: req.url,
-    userAgent: (typeof req.get === 'function' && req.get('user-agent')) || 'unknown',
+    userAgent: (typeof req.get === 'function' ? req.get('user-agent') : undefined) || 'unknown',
     ip: req.ip || req.socket?.remoteAddress || 'unknown',
     timestamp: new Date().toISOString(),
   };
@@ -152,22 +152,21 @@ export const loggingMiddleware = (req: Request, res: Response, next: NextFunctio
   } else {
     console.log(
       'Request:',
-      `${requestLog.method} ${requestLog.url} [${traceId}] ip=${requestLog.ip}`
+      `${requestLog.method} ${requestLog.url} [${traceId}] [ip:${requestLog.ip}]`
     );
   }
 
   res.on('finish', () => {
     const duration = Date.now() - startTime;
     const responseLog = { ...requestLog, duration, statusCode: res.statusCode };
-    const summary = `${responseLog.method} ${responseLog.url} ${responseLog.statusCode} ${duration}ms [${traceId}] ip=${responseLog.ip}`;
+    const logMessage = `${responseLog.method} ${responseLog.url} ${responseLog.statusCode} ${duration}ms [${traceId}]`;
+
     if (res.statusCode >= 500) {
-      console.error('Request completed with error:', responseLog);
-      console.log('Request completed:', summary);
+      console.error('Request completed with error:', logMessage);
     } else if (res.statusCode >= 400) {
-      console.warn('Request completed with client error:', responseLog);
-      console.log('Request completed:', summary);
+      console.warn('Request completed with client error:', logMessage);
     } else {
-      console.log('Request completed:', summary);
+      console.log('Request completed:', logMessage);
     }
   });
 

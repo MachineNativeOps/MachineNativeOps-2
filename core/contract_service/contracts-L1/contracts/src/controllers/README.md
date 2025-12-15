@@ -8,7 +8,6 @@ handle HTTP request/response cycle and orchestrate service calls.
 ## Responsibilities
 
 ✅ **Controllers SHOULD:**
-
 - Extract and validate data from HTTP requests
 - Call appropriate service methods
 - Format and send HTTP responses
@@ -16,7 +15,6 @@ handle HTTP request/response cycle and orchestrate service calls.
 - Use middleware for input validation
 
 ❌ **Controllers SHOULD NOT:**
-
 - Contain business logic
 - Access database directly
 - Perform complex calculations
@@ -63,7 +61,6 @@ export class SomeController {
 ### AssignmentController (`assignment.ts`)
 
 **Endpoints:**
-
 - `POST /api/v1/assignment/assign` - Create new assignment
 - `POST /api/v1/assignment/status/:id` - Update assignment status
 - `GET /api/v1/assignment/status/:id` - Get assignment status
@@ -74,14 +71,12 @@ export class SomeController {
 - `GET /api/v1/assignment/report` - Get performance report
 
 **Services Used:**
-
 - `AutoAssignmentEngine`
 - `ResponsibilityGovernance`
 
 ### EscalationController (`escalation.ts`)
 
 **Endpoints:**
-
 - `POST /api/v1/escalation/create` - Create escalation
 - `GET /api/v1/escalation/:escalationId` - Get escalation details
 - `GET /api/v1/escalation/incident/:incidentId` - Get escalations by incident
@@ -92,13 +87,11 @@ export class SomeController {
 - `GET /api/v1/escalation/statistics` - Get escalation statistics
 
 **Services Used:**
-
 - `EscalationEngine`
 
 ### ProvenanceController (`provenance.ts`)
 
 **Endpoints:**
-
 - `POST /api/v1/provenance/attestations` - Create attestation
 - `POST /api/v1/provenance/verify` - Verify attestation
 - `POST /api/v1/provenance/import` - Import attestation
@@ -106,14 +99,12 @@ export class SomeController {
 - `GET /api/v1/provenance/export/:id` - Export attestation
 
 **Services Used:**
-
 - `ProvenanceService`
 - `AttestationService`
 
 ### SLSAController (`slsa.ts`)
 
 **Endpoints:**
-
 - `POST /api/v1/slsa/attestations` - Create SLSA attestation
 - `POST /api/v1/slsa/verify` - Verify SLSA attestation
 - `POST /api/v1/slsa/digest` - Generate digest
@@ -121,7 +112,6 @@ export class SomeController {
 - `POST /api/v1/slsa/summary` - Get attestation summary
 
 **Services Used:**
-
 - `SLSAAttestationService`
 
 ## Best Practices
@@ -218,7 +208,6 @@ create = async (req: any, res: any) => {
 ## Adding a New Controller
 
 1. **Create the controller file:**
-
 ```typescript
 // controllers/example.ts
 import { Request, Response } from 'express';
@@ -243,8 +232,7 @@ export class ExampleController {
 }
 ```
 
-1. **Register routes:**
-
+2. **Register routes:**
 ```typescript
 // routes.ts
 import { ExampleController } from './controllers/example';
@@ -254,8 +242,7 @@ const exampleController = new ExampleController();
 router.post('/api/v1/examples', exampleController.create);
 ```
 
-1. **Add validation middleware:**
-
+3. **Add validation middleware:**
 ```typescript
 import { validateBody } from './middleware/validation';
 import { createExampleSchema } from './models/example.model';
@@ -267,8 +254,7 @@ router.post(
 );
 ```
 
-1. **Write tests:**
-
+4. **Write tests:**
 ```typescript
 // __tests__/example-controller.test.ts
 describe('ExampleController', () => {

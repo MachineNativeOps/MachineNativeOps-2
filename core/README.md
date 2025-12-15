@@ -68,6 +68,11 @@ core/
    - `safety_mechanisms/` - 安全機制實作
    - `slsa_provenance/` - SLSA 供應鏈安全
    - `advisory-database/` - 安全諮詢和漏洞資料庫
+   - **🆕 Security Enhancements (PR #351)**:
+     - SEC-PATH-001: Path traversal prevention (`contract_service/contracts-L1`)
+     - SEC-LOG-001: Secure logging with sensitive data redaction
+     - SEC-CRYPTO-001: Strong cryptographic algorithms (SHA-256+)
+     - Reference: [Security Enhancements Doc](../docs/security/PR351_SECURITY_ENHANCEMENTS.md)
 
 5. **Integration 整合**
    - `unified_integration/` - 統一系統整合層

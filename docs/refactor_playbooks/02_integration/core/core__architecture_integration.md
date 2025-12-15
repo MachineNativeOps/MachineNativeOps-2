@@ -214,7 +214,6 @@ core/
 ### 3.3 Import 路徑變更
 
 **Before (舊)**:
-
 ```python
 # 外部服務直接 import 內部實作
 from core.ai_decision_engine import DecisionEngine
@@ -223,7 +222,6 @@ from core.island_ai_runtime.runtime import Runtime
 ```
 
 **After (新)**:
-
 ```python
 # 透過公開 API import
 from core import DecisionEngine, CognitiveProcessor, Runtime
@@ -234,7 +232,6 @@ from core.island_ai_runtime import Runtime
 ```
 
 **Shim Layer (過渡期)**:
-
 ```python
 # core/ai_decision_engine.py (保留作為 shim)
 import warnings
@@ -315,7 +312,6 @@ __version__ = '3.0.0'
 #### Level 2: 子模組公開 API
 
 **`core/ai_engines/__init__.py`**:
-
 ```python
 """AI Engines Module"""
 
@@ -327,7 +323,6 @@ __all__ = ['DecisionEngine', 'ContextEngine', 'HallucinationDetector']
 ```
 
 **`core/unified_integration/__init__.py`**:
-
 ```python
 """Unified Integration Layer"""
 
@@ -525,19 +520,16 @@ class IAgentFramework(ABC):
 ### 4.3 API 版本化策略
 
 **版本規則**:
-
 - **Major (3.x.x)**: Breaking changes
 - **Minor (x.1.x)**: New features, backward compatible
 - **Patch (x.x.1)**: Bug fixes, backward compatible
 
 **Deprecation Policy**:
-
 1. 在版本 N 標記為 `@deprecated`
 2. 在版本 N+1 發出 `DeprecationWarning`
 3. 在版本 N+2 移除
 
 **範例**:
-
 ```python
 import warnings
 
@@ -616,7 +608,6 @@ architecture_constraints:
 **解決方案**: 引入 `core/interfaces/`
 
 **Before**:
-
 ```python
 # unified_integration/cognitive_processor.py
 from core.island_ai_runtime.runtime import Runtime  # 依賴 runtime
@@ -626,7 +617,6 @@ from core.unified_integration.service_registry import ServiceRegistry  # 依賴�
 ```
 
 **After**:
-
 ```python
 # core/interfaces/runtime_interface.py
 class IRuntime(ABC):
@@ -672,9 +662,7 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: 建立新架構的骨架
 
 **任務**:
-
 1. 建立新目錄結構
-
    ```bash
    mkdir -p core/{interfaces,ai_engines,governance,quality_assurance}
    mkdir -p core/unified_integration/{configuration,orchestration}
@@ -691,7 +679,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 4. 建立各子模組的 `README.md`
 
 **驗收**:
-
 - [ ] 所有新目錄建立完成
 - [ ] 介面定義完成並通過 mypy 檢查
 - [ ] README 覆蓋所有子模組
@@ -717,7 +704,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - `auto_governance_hub.py` → `governance/hub.py`
 
 4. **每個檔案遷移流程**:
-
    ```bash
    # 1. 複製到新位置
    cp core/ai_decision_engine.py core/ai_engines/decision/engine.py
@@ -738,7 +724,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    ```
 
 **驗收**:
-
 - [ ] 所有檔案遷移完成
 - [ ] Shim layer 正常運作
 - [ ] 測試覆蓋率 ≥ 70%
@@ -749,7 +734,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: 重組 `unified_integration/` 內部結構
 
 **任務**:
-
 1. 建立 `configuration/` 子模組
    - 移動 `configuration_manager.py`
    - 移動 `configuration_optimizer.py`
@@ -769,7 +753,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - 實作 `IServiceRegistry` 介面
 
 **驗收**:
-
 - [ ] 子模組建立完成
 - [ ] 複雜度達標
 - [ ] 介面實作完成
@@ -780,7 +763,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: `island_ai_runtime/` 依賴介面而非實作
 
 **任務**:
-
 1. 更新 `runtime.py`
    - 實作 `IRuntime` 介面
    - 降低複雜度 (17 → ≤ 15)
@@ -793,7 +775,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - 目標覆蓋率: 75%
 
 **驗收**:
-
 - [ ] 介面實作完成
 - [ ] 循環依賴已打破
 - [ ] 測試覆蓋率 ≥ 75%
@@ -803,9 +784,7 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: JavaScript → TypeScript
 
 **任務**:
-
 1. 遷移 `advisory-database/src/*.js` (7 個檔案)
-
    ```bash
    for file in core/advisory-database/src/*.js; do
      mv "$file" "${file%.js}.ts"
@@ -824,7 +803,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - Jest 測試覆蓋率 > 80%
 
 **驗收**:
-
 - [ ] 所有 .js 檔案遷移為 .ts
 - [ ] TypeScript 編譯通過 (`tsc --noEmit`)
 - [ ] 測試覆蓋率 > 80%
@@ -834,7 +812,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: 明確公開 API 邊界
 
 **任務**:
-
 1. 填充 `core/__init__.py`
    - Export 主要類別/函式
    - 設定版本號
@@ -843,7 +820,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - 明確 `__all__`
 
 3. 掃描並更新下游使用者
-
    ```bash
    grep -r "from core\\.ai_decision_engine" services/
    # 提供遷移建議
@@ -854,7 +830,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - 部署到內部文件網站
 
 **驗收**:
-
 - [ ] `core/__init__.py` 完成
 - [ ] API 文檔生成
 - [ ] 下游服務遷移指南完成
@@ -864,27 +839,22 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
 **目標**: 確保品質指標達標
 
 **任務**:
-
 1. 執行完整測試套件
-
    ```bash
    pytest core/ --cov=core --cov-report=html
    ```
 
 2. 執行語言治理掃描
-
    ```bash
    npm run governance:check
    ```
 
 3. 執行 Semgrep 掃描
-
    ```bash
    semgrep --config auto core/
    ```
 
 4. 執行複雜度分析
-
    ```bash
    radon cc core/ -a -nb
    ```
@@ -894,7 +864,6 @@ class ServiceRegistry(IServiceRegistry):  # 實作介面
    - 監控效能指標
 
 **驗收**:
-
 - [ ] 測試覆蓋率 ≥ 80%
 - [ ] 語言違規 = 0
 - [ ] Semgrep HIGH = 0
@@ -1065,7 +1034,6 @@ def test_api_signature_unchanged():
 **測試場景**:
 
 1. **AI 決策流程**
-
    ```python
    def test_ai_decision_flow():
        engine = DecisionEngine()
@@ -1081,7 +1049,6 @@ def test_api_signature_unchanged():
    ```
 
 2. **服務註冊與發現**
-
    ```python
    def test_service_registry_flow():
        registry = ServiceRegistry()
@@ -1095,7 +1062,6 @@ def test_api_signature_unchanged():
    ```
 
 3. **安全機制觸發**
-
    ```python
    def test_circuit_breaker_flow():
        breaker = CircuitBreaker(threshold=3)

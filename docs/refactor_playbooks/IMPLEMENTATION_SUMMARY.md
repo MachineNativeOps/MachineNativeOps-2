@@ -14,7 +14,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 ### 1. 核心生成器 (`tools/generate-refactor-playbook.py`)
 
 **特色：**
-
 - ✅ 完整的 System Prompt（定義 AI 角色為架構師 + 語言治理負責人 + 安全顧問）
 - ✅ 動態 User Prompt 模板（整合所有治理數據）
 - ✅ 支援單一 cluster 或批量生成
@@ -22,7 +21,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 - ✅ Stub 模式（無需 LLM 即可生成基本 playbook）
 
 **System Prompt 設計：**
-
 ```
 角色定義：
 - 首席軟體架構師（負責整體架構與模組邊界）
@@ -36,7 +34,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 ```
 
 **User Prompt 結構：**
-
 1. Cluster 基本資訊（名稱、分數）
 2. 語言治理違規列表
 3. Hotspot 檔案分析
@@ -45,7 +42,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 6. 全局 AI 建議摘要
 
 **輸出格式：**
-
 ```markdown
 ## 1. Cluster 概覽
 
@@ -76,7 +72,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 | AI 建議         | `governance/ai-refactor-suggestions.md`     | 全局重構策略   |
 
 **資料解析能力：**
-
 - ✅ Markdown 報告解析（提取違規項目）
 - ✅ JSON 數據過濾（按 cluster 篩選）
 - ✅ 分數計算與排序
@@ -85,7 +80,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 ### 3. 生成的 Playbooks
 
 **8 個 Cluster Playbooks：**
-
 1. `core__playbook.md` - 核心平台層（Score: 75）
 2. `services__playbook.md` - 服務層（Score: 82）
 3. `automation__playbook.md` - 自動化層（Score: 60）
@@ -96,7 +90,6 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 8. `infrastructure__playbook.md` - 基礎設施層（Score: 40）
 
 **每個 Playbook 包含：**
-
 - 📊 當前狀態概覽（違規數、hotspot 數、安全問題數）
 - 🔍 詳細問題盤點（分類、排序、附風險說明）
 - 🎯 重構策略建議（語言層級、目錄結構、遷移路徑）
@@ -135,13 +128,11 @@ System 的各個目錄群集（cluster）自動生成結構化、可執行的重
 **GitHub Actions Workflow:** `.github/workflows/update-refactor-playbooks.yml`
 
 **觸發條件：**
-
 - ⏰ 每日自動執行（00:00 UTC）
 - 🔄 治理數據變更時
 - 🖱️ 手動觸發（workflow_dispatch）
 
 **執行流程：**
-
 ```yaml
 1. Checkout repository 2. Setup Python 3.10 3. Install dependencies (pyyaml) 4.
 Generate refactor playbooks 5. Check for changes 6. Commit and push (if changes
@@ -151,13 +142,11 @@ detected) 7. Create workflow summary
 ### 5. 文檔系統
 
 **主要文檔：**
-
 - ✅ `docs/refactor_playbooks/README.md` - 使用指南（3.5KB）
 - ✅ `docs/refactor_playbooks/IMPLEMENTATION_SUMMARY.md` - 本文件
 - ✅ 更新 `DOCUMENTATION_INDEX.md` - 新增重構 Playbooks 章節
 
 **README 涵蓋內容：**
-
 - 📚 什麼是 Refactor Playbook
 - 🚀 如何使用（生成、執行、整合）
 - 📊 資料來源說明
@@ -169,20 +158,17 @@ detected) 7. Create workflow summary
 ## 📊 實作統計
 
 **程式碼規模：**
-
 - `generate-refactor-playbook.py`: 600+ 行
 - System/User Prompt 模板: 完整 Markdown 格式
 - 支援功能：資料載入、解析、過濾、生成、LLM 整合
 
 **生成檔案：**
-
 - 8 個 cluster playbooks
 - 1 個 README
 - 1 個 CI workflow
 - 6 個示範資料檔案
 
 **文檔更新：**
-
 - `DOCUMENTATION_INDEX.md`: 新增 2 個章節
 - 新增完整使用範例與指令
 
@@ -344,7 +330,6 @@ generate_cluster_prompt() / generate_playbook_stub()
 ### 更新 Prompt 模板
 
 編輯 `tools/generate-refactor-playbook.py`:
-
 ```python
 SYSTEM_PROMPT = """..."""  # 更新 System Prompt
 USER_PROMPT_TEMPLATE = """..."""  # 更新 User Prompt

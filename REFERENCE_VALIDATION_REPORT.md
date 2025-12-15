@@ -121,39 +121,37 @@ files exist in their correct locations.**
 ## Reference Integrity Checks
 
 ### ✅ Configuration References
+<<<<<<< HEAD
 
 - `config/system-manifest.yaml` → References `workflow_system` section
   (line 179)
+=======
+- `config/system-manifest.yaml` → References `workflow_system` section (line 179)
+>>>>>>> origin/alert-autofix-37
 - `config/unified-config-index.yaml` → References workflow governance
 - All policy files exist in `governance/policies/workflow/`
 
 ### ✅ Service References
-
 - `services/agents/` → All 7 agent services present
 - `services/watchdog/` → Watchdog service present
 - `config/agents/` → All agent configurations present (profiles, team, schemas)
 
 ### ✅ Pipeline References
-
 - `automation/pipelines/instant_execution_pipeline.py` → Exists
 - `config/instant-execution-pipeline.yaml` → Exists
 - `scripts/run-instant-execution.sh` → Exists
 
 ### ✅ Tool References
-
 - `tools/ai/governance_engine.py` → Exists
 - `tools/automation/engines/baseline_validation_engine.py` → Exists
 - `tools/generators/` → All 3 generators exist
 
 ### ✅ Deployment References
-
 - `deployment/docker/Dockerfile.workflow` → Exists
 - `docker-compose.yml` → Contains workflow profile (line 86-114)
 
 ### ✅ Documentation Cross-References
-
 All documentation files reference each other correctly:
-
 - Main README references integration summaries
 - Integration guides reference API and deployment docs
 - Phoenix Agent docs reference recovery playbooks
@@ -164,21 +162,24 @@ All documentation files reference each other correctly:
 ## Namespace Alignment
 
 ### ✅ Configuration Namespace
+<<<<<<< HEAD
 
 - Old: `config/main-configuration.yaml` → Merged into
   `config/system-manifest.yaml`
 - Old: `config/behavior-contracts.yaml` → Moved to
   `governance/policies/workflow/`
+=======
+- Old: `config/main-configuration.yaml` → Merged into `config/system-manifest.yaml`
+- Old: `config/behavior-contracts.yaml` → Moved to `governance/policies/workflow/`
+>>>>>>> origin/alert-autofix-37
 - Old: `config/validation-rules.yaml` → Moved to `governance/policies/workflow/`
 - Old: `config/virtual-experts.yaml` → Moved to `config/agents/team/`
 
 ### ✅ Service Namespace
-
 - All agents consolidated under `services/agents/`
 - All configurations consolidated under `config/agents/`
 
 ### ✅ Deployment Namespace
-
 - Old: Root `Dockerfile.workflow` → Moved to `deployment/docker/`
 - Old: Root `docker-compose.workflow.yml` → Integrated into `docker-compose.yml`
 

@@ -6,10 +6,14 @@
 
 ## Executive Summary
 
+<<<<<<< HEAD
 After thorough investigation, the 7 failing workflows all have
 **"startup_failure"** conclusions, meaning they fail before any jobs execute.
 This is NOT caused by:
 
+=======
+After thorough investigation, the 7 failing workflows all have **"startup_failure"** conclusions, meaning they fail before any jobs execute. This is NOT caused by:
+>>>>>>> origin/alert-autofix-37
 - ❌ YAML syntax errors (all files validated)
 - ❌ Repository code issues
 - ❌ Test failures
@@ -40,7 +44,6 @@ issues** at the workflow runtime level.
 ### 3. Common Pattern Analysis
 
 All failing workflows share these characteristics:
-
 1. **startup_failure** conclusion
 2. No jobs executed
 3. Failures occur immediately after push
@@ -98,14 +101,17 @@ jobs:
 ### 02-test.yml Analysis
 
 **Current Configuration**:
-
 - Has `detect-changes` job with path filters
 - All test jobs depend on `detect-changes`
 - Test jobs only run if specific file types changed
 
+<<<<<<< HEAD
 **Hypothesis**: If this PR only modifies documentation/workflow files, NO code
 paths trigger, so:
 
+=======
+**Hypothesis**: If this PR only modifies documentation/workflow files, NO code paths trigger, so:
+>>>>>>> origin/alert-autofix-37
 1. `detect-changes` runs and outputs all `false`
 2. All test jobs are skipped (condition not met)
 3. Workflow completes with no successful jobs
@@ -141,7 +147,6 @@ changes.
    - Remove any parameters added incorrectly in Phase 2
 
 4. **Add Workflow Status Job**
-
    ```yaml
    jobs:
      workflow-status:
@@ -154,13 +159,10 @@ changes.
 ### Implementation Plan
 
 #### Step 1: Add Status Check Jobs (All Workflows)
-
 Add a minimal job that always runs to prevent startup_failure.
 
 #### Step 2: Fix Path Filters (test/build workflows)
-
 Update path filters to include:
-
 ```yaml
 paths:
   - '**/*.ts'
@@ -169,9 +171,7 @@ paths:
 ```
 
 #### Step 3: Fix Conditional Logic
-
 Ensure at least one job path always executes:
-
 ```yaml
 jobs:
   # Always runs
@@ -187,9 +187,7 @@ jobs:
 ```
 
 #### Step 4: Verify Reusable Workflow Calls
-
 Check each reusable workflow call for:
-
 - Parameter names match
 - Required parameters provided
 - No extra parameters
@@ -197,7 +195,6 @@ Check each reusable workflow call for:
 ## Expected Outcomes
 
 After implementing fixes:
-
 - ✅ Zero "startup_failure" workflows
 - ✅ At least one job executes in every workflow
 - ✅ Clear success/failure status for each workflow
@@ -206,7 +203,6 @@ After implementing fixes:
 ## Files to Modify
 
 ### High Priority (Failing Workflows)
-
 1. `.github/workflows/02-test.yml` - Add status job, fix path filters
 2. `.github/workflows/03-build.yml` - Add status job, fix path filters
 3. `.github/workflows/core-services-ci.yml` - Verify reusable workflow calls
@@ -218,7 +214,6 @@ After implementing fixes:
 7. `.github/workflows/language-check.yml` - Verify reusable workflow calls
 
 ### Medium Priority (Prevention)
-
 - Add status jobs to all remaining workflows
 - Standardize path filter patterns
 - Document workflow trigger conditions
@@ -226,14 +221,12 @@ After implementing fixes:
 ## Validation Plan
 
 ### Before Fixes
-
 ```
 Status: 7 failing, 4 cancelled, 2 skipped
 Issue: startup_failure on multiple workflows
 ```
 
 ### After Fixes
-
 ```
 Expected: 0 failing workflows
 Acceptable: Some jobs skipped (but workflow succeeds)
@@ -241,7 +234,6 @@ Success Criteria: No "startup_failure" conclusions
 ```
 
 ### Testing Approach
-
 1. Fix one workflow at a time
 2. Push and verify it passes
 3. Move to next workflow

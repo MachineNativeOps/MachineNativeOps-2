@@ -30,8 +30,22 @@ def test_governance_structure_exists(governance_root):
 
 def test_dimensions_exist(governance_root, baseline):
     """Test that all dimension directories exist"""
+<<<<<<< HEAD
     # Note: 10-stakeholder moved to _legacy/10-stakeholder (2025-12-12)
     # Now using 10-policy for layered governance framework
+=======
+    expected_dims = [
+        "00-vision-strategy", "01-architecture", "02-decision",
+        "03-change", "04-risk", "05-compliance", "06-security",
+        "07-audit", "08-process", "09-performance", "10-stakeholder",
+        "11-tools-systems", "12-culture-capability", 
+        "13-metrics-reporting", "14-improvement"
+    ]
+    
+    for dim in expected_dims:
+        dim_path = governance_root / dim
+        assert dim_path.exists(), f"Dimension {dim} does not exist"
+>>>>>>> origin/alert-autofix-37
 
     missing = baseline.missing_items(governance_root, baseline.REQUIRED_DIMENSIONS)
     assert not missing, f"Missing dimensions: {missing}"

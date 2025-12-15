@@ -9,9 +9,13 @@ files
 
 ## 📋 Overview
 
+<<<<<<< HEAD
 Phase 3 implements the automation and observability layer for Governance-as-Code
 (GaC), enabling:
 
+=======
+Phase 3 implements the automation and observability layer for Governance-as-Code (GaC), enabling:
+>>>>>>> origin/alert-autofix-37
 - **GitOps**: Automated deployment and drift detection
 - **OPA Gatekeeper**: Real-time policy enforcement
 - **Monitoring**: Compliance dashboards and alerts
@@ -22,7 +26,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
 ## 📁 Generated Resources
 
 ### GitOps Configuration (`gitops/`)
-
 1. **`applicationset.yaml`** - Argo CD ApplicationSet
    - Auto-deploys CRDs and instances
    - Self-healing enabled
@@ -37,7 +40,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
    - Namespace: governance
 
 ### OPA Gatekeeper (`gatekeeper/`)
-
 1. **`constrainttemplate-vision.yaml`** - ConstraintTemplate for VisionStatement
    - Validates required fields
    - Enforces traceability annotations
@@ -52,7 +54,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
    - Enables validation tracing
 
 ### Monitoring (`monitoring/`)
-
 1. **`prometheus-rules.yaml`** - Prometheus alerts and recording rules
    - **Alerts**: Resource missing, CRD unhealthy, policy violations, sync
      failures
@@ -66,7 +67,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
    - **Table**: Strategic documents coverage
 
 ### CI/CD Workflows (`.github/workflows/`)
-
 1. **`gac-validation.yml`** - PR validation workflow
    - YAML syntax validation
    - File count verification
@@ -83,7 +83,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
 ## 🚀 Deployment
 
 ### Prerequisites
-
 - Kubernetes cluster (v1.20+)
 - Argo CD installed
 - OPA Gatekeeper installed
@@ -92,7 +91,6 @@ Phase 3 implements the automation and observability layer for Governance-as-Code
 ### Step 1: Deploy CRDs & Instances (GitOps)
 
 **Option A: Using Argo CD ApplicationSet**
-
 ```bash
 # Deploy ApplicationSet
 kubectl apply -f gitops/applicationset.yaml
@@ -106,7 +104,6 @@ argocd app sync gac-governance-instances
 ```
 
 **Option B: Using Kustomize directly**
-
 ```bash
 # Deploy CRDs
 kubectl apply -k gitops/kustomization-crds.yaml
@@ -177,7 +174,6 @@ gh workflow run gac-validation.yml
 ## 🔍 Verification
 
 ### GitOps Verification
-
 ```bash
 # Check Argo CD apps
 argocd app list | grep gac-
@@ -192,7 +188,6 @@ argocd app get gac-governance-instances
 ```
 
 ### Gatekeeper Verification
-
 ```bash
 # Check ConstraintTemplates
 kubectl get constrainttemplates
@@ -217,7 +212,6 @@ EOF
 ```
 
 ### Monitoring Verification
-
 ```bash
 # Check Prometheus rules
 kubectl get prometheusrules -n monitoring | grep governance
@@ -234,7 +228,6 @@ kubectl port-forward -n monitoring svc/prometheus 9090:9090
 ```
 
 ### CI/CD Verification
-
 ```bash
 # Check workflows
 gh workflow list | grep gac-
@@ -265,28 +258,24 @@ gh run view <run-id> --log
 ## 🎯 Phase 3 Achievements
 
 ### GitOps Integration ✅
-
 - ✅ Argo CD ApplicationSet for auto-deployment
 - ✅ Kustomizations for CRDs and instances
 - ✅ Self-healing and auto-pruning enabled
 - ✅ Drift detection configured
 
 ### OPA Gatekeeper ✅
-
 - ✅ ConstraintTemplate for VisionStatement
 - ✅ Constraint instances deployed
 - ✅ Admission control enabled
 - ✅ Policy enforcement verified
 
 ### Monitoring & Observability ✅
-
 - ✅ 5 Prometheus alerts configured
 - ✅ 4 recording rules for metrics
 - ✅ Grafana dashboard with 7 panels
 - ✅ Real-time compliance tracking
 
 ### CI/CD Integration ✅
-
 - ✅ PR validation workflow
 - ✅ Auto-sync on strategic YAML changes
 - ✅ Automated resource regeneration
@@ -297,21 +286,18 @@ gh run view <run-id> --log
 ## 🔄 Agent Handoff
 
 ### From Phase 2
-
 - ✅ Received 9 CRDs
 - ✅ Received 9 K8s instances
 - ✅ Received 9 OPA policies
 - ✅ Received generation and validation scripts
 
 ### This Agent (Phase 3)
-
 - ✅ Implemented GitOps (Argo CD)
 - ✅ Deployed OPA Gatekeeper
 - ✅ Configured monitoring (Prometheus + Grafana)
 - ✅ Automated CI/CD pipelines
 
 ### To Next Agent (Phase 4 - Optional)
-
 - 📝 Consider AI-driven policy generation
 - 📝 Implement automated compliance reports
 - 📝 Add self-healing for policy violations
@@ -331,7 +317,6 @@ gh run view <run-id> --log
 ## 🎓 Usage Examples
 
 ### Example 1: Deploy with GitOps
-
 ```bash
 # Deploy ApplicationSet
 kubectl apply -f gitops/applicationset.yaml
@@ -345,7 +330,6 @@ kubectl get visionstatements -n governance
 ```
 
 ### Example 2: Test Policy Enforcement
-
 ```bash
 # Try creating invalid resource
 kubectl apply -f - <<EOF
@@ -364,7 +348,6 @@ EOF
 ```
 
 ### Example 3: View Compliance Dashboard
-
 ```bash
 # Port-forward Grafana
 kubectl port-forward -n monitoring svc/grafana 3000:3000
@@ -374,7 +357,6 @@ kubectl port-forward -n monitoring svc/grafana 3000:3000
 ```
 
 ### Example 4: Trigger Auto-Sync
-
 ```bash
 # Edit strategic YAML
 vim governance/00-vision-strategy/vision-statement.yaml
@@ -443,7 +425,6 @@ git push
 ✅ **100% Ready for Production Deployment**
 
 **Next Steps**:
-
 1. Review `DEPLOYMENT.md` for deployment options
 2. Choose deployment method based on infrastructure
 3. Deploy to Kubernetes cluster

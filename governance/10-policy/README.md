@@ -38,7 +38,7 @@ scope:
 ├── framework.yaml                      # PaC framework configuration
 ├── base-policies/
 │   ├── architecture-policies.yaml      # 架構設計策略
-│   ├── security-policies.yaml          # 安全策略
+│   ├── security-policies.yaml          # 安全策略 (🆕 PR #351: SEC-PATH-001, SEC-LOG-001, SEC-CRYPTO-001)
 │   ├── compliance-policies.yaml        # 合規策略
 │   └── quality-policies.yaml           # 品質策略
 ├── domain-policies/
@@ -61,6 +61,24 @@ scope:
 ```
 
 ## 🔑 Key Features | 核心功能
+
+### 🆕 Security Enhancements (PR #351)
+
+**新增三大安全策略**：
+- **SEC-PATH-001**: Path Traversal Prevention - 路徑遍歷防護
+  - SAFE_ROOT 驗證機制
+  - realpath() + relative() 雙重檢查
+  - 環境變數配置 (SAFE_ROOT_PATH)
+- **SEC-LOG-001**: Secure Logging Practices - 安全日誌實踐
+  - 敏感資料自動遮蔽 ([REDACTED])
+  - 結構化日誌強制執行
+  - 禁止明文記錄密碼/密鑰/Token
+- **SEC-CRYPTO-001**: Strong Cryptographic Algorithms - 強密碼演算法
+  - SHA-256+ 強制執行
+  - 禁用 MD5/SHA-1
+  - 密碼雜湊使用 bcrypt/argon2id
+
+📚 **完整文檔**: [docs/security/PR351_SECURITY_ENHANCEMENTS.md](../../docs/security/PR351_SECURITY_ENHANCEMENTS.md)
 
 ### 1. 多層級規則管理
 

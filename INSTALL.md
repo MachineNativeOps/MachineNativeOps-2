@@ -54,7 +54,6 @@ Docker
 ### 方式 1: 使用 EXE 安裝程式（推薦）
 
 1. **下載安裝程式**
-
    ```
    下載: SynergyMesh-Governance-setup.exe
    ```
@@ -117,7 +116,6 @@ brew upgrade synergymesh-governance
 ### 方式 2: 使用 DMG 安裝程式
 
 1. **下載 DMG**
-
    ```bash
    # 下載: SynergyMesh-Governance-1.0.0.dmg
    ```
@@ -127,7 +125,6 @@ brew upgrade synergymesh-governance
    - 將 `SynergyMesh-Governance.app` 拖拽到 `Applications` 資料夾
 
 3. **首次啟動**
-
    ```bash
    # 如遇到安全提示，請前往：
    # 系統偏好設定 > 安全性與隱私 > 點擊"仍要打開"
@@ -392,13 +389,11 @@ synergymesh <command> --help
 ### Windows
 
 **問題：安裝時提示「需要管理員權限」**
-
 ```
 解決：右鍵點擊安裝程式，選擇「以系統管理員身分執行」
 ```
 
 **問題：找不到 Python/Node.js**
-
 ```
 解決：確保 Python 和 Node.js 已添加到 PATH 環境變數
 控制台 > 系統 > 進階系統設定 > 環境變數
@@ -407,7 +402,6 @@ synergymesh <command> --help
 ### macOS
 
 **問題：無法打開應用程式（安全限制）**
-
 ```bash
 # 解決：允許未識別的開發者
 sudo spctl --master-disable
@@ -417,7 +411,6 @@ xattr -d com.apple.quarantine /Applications/SynergyMesh-Governance.app
 ```
 
 **問題：Homebrew 安裝失敗**
-
 ```bash
 # 更新 Homebrew
 brew update
@@ -429,7 +422,6 @@ brew cleanup
 ### Linux
 
 **問題：AppImage 無法執行**
-
 ```bash
 # 安裝 FUSE
 sudo apt install fuse libfuse2  # Debian/Ubuntu
@@ -440,7 +432,6 @@ sudo modprobe fuse
 ```
 
 **問題：缺少依賴**
-
 ```bash
 # Debian/Ubuntu
 sudo apt update
@@ -453,7 +444,6 @@ sudo yum install python3 nodejs
 ### Docker
 
 **問題：容器無法啟動**
-
 ```bash
 # 查看日誌
 docker logs synergymesh-governance
@@ -470,10 +460,16 @@ docker-compose up -d
 
 ## 📞 獲取幫助 | Get Help
 
+<<<<<<< HEAD
 - **文檔**: <https://github.com/SynergyMesh-admin/SynergyMesh/tree/main/docs>
 - **Issues**: <https://github.com/SynergyMesh-admin/SynergyMesh/issues>
 - **Discussions**:
   <https://github.com/SynergyMesh-admin/SynergyMesh/discussions>
+=======
+- **文檔**: https://github.com/SynergyMesh-admin/SynergyMesh/tree/main/docs
+- **Issues**: https://github.com/SynergyMesh-admin/SynergyMesh/issues
+- **Discussions**: https://github.com/SynergyMesh-admin/SynergyMesh/discussions
+>>>>>>> origin/alert-autofix-37
 
 ---
 

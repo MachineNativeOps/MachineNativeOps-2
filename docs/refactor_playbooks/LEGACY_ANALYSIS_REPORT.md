@@ -1,6 +1,10 @@
 # Legacy Scratch Refactor Playbook System - Analysis Report
+<<<<<<< HEAD
 
 # \_legacy_scratch 重構劇本系統 - 完整分析報告
+=======
+# _legacy_scratch 重構劇本系統 - 完整分析報告
+>>>>>>> origin/alert-autofix-37
 
 **Generated:** 2025-12-06  
 **Source:** `docs/refactor_playbooks/_legacy_scratch/refactor_readme.txt`
@@ -38,7 +42,6 @@ Island System 語言治理與架構重構的核心控制平面。
 ### 1. Three-Phase Refactor System（三階段重構系統）
 
 #### Phase 1: Deconstruction（解構）
-
 **目的**：分析舊世界的架構、程式碼、語言堆疊和反模式
 
 ```
@@ -51,13 +54,11 @@ Island System 語言治理與架構重構的核心控制平面。
 ```
 
 **關鍵概念**：
-
 - 舊資產不保留實體檔案，只保留索引記錄
 - 每個舊資產有唯一 ID，記錄來源、描述、原因
 - 解構劇本描述「為什麼」需要重構
 
 #### Phase 2: Integration（集成）
-
 **目的**：設計新世界的組合方式
 
 ```
@@ -69,14 +70,12 @@ Island System 語言治理與架構重構的核心控制平面。
 ```
 
 **關鍵概念**：
-
 - 定義語言層級策略
 - 設計模組邊界與 API 契約
 - 規劃跨 cluster 的接線方案
 - 建立目標架構藍圖
 
 #### Phase 3: Refactor（重構）
-
 **目的**：將設計轉換為可執行的重構計畫
 
 ```
@@ -102,7 +101,6 @@ Island System 語言治理與架構重構的核心控制平面。
 ```
 
 **關鍵概念**：
-
 - P0/P1/P2 優先級行動清單
 - 明確 Auto-Fix Bot 可處理範圍
 - 驗收條件與成功指標

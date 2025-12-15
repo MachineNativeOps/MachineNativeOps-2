@@ -245,7 +245,7 @@ describe('WorkloadBalancer', () => {
 
     it('should handle partial metric updates', () => {
       const memberId = 'member-2';
-      
+
       balancer.updateWorkloadMetrics(memberId, { activeAssignments: 3 });
       const metrics = balancer.getWorkloadMetrics(memberId);
 
@@ -258,7 +258,7 @@ describe('WorkloadBalancer', () => {
     it('should return empty map initially', () => {
       const newBalancer = new WorkloadBalancer();
       const allMetrics = newBalancer.getAllWorkloadMetrics();
-      
+
       expect(allMetrics).toBeInstanceOf(Map);
       expect(allMetrics.size).toBe(0);
     });
@@ -268,7 +268,7 @@ describe('WorkloadBalancer', () => {
       balancer.updateWorkloadMetrics('member-2', { activeAssignments: 5 });
 
       const allMetrics = balancer.getAllWorkloadMetrics();
-      
+
       expect(allMetrics).toBeInstanceOf(Map);
       expect(allMetrics.size).toBe(2);
       expect(allMetrics.has('member-1')).toBe(true);
@@ -277,10 +277,10 @@ describe('WorkloadBalancer', () => {
 
     it('should return independent copy of metrics', () => {
       balancer.updateWorkloadMetrics('member-1', { activeAssignments: 3 });
-      
+
       const metrics1 = balancer.getAllWorkloadMetrics();
       const metrics2 = balancer.getAllWorkloadMetrics();
-      
+
       // Modifying one shouldn't affect the other
       expect(metrics1).not.toBe(metrics2);
       expect(metrics1.size).toBe(metrics2.size);
@@ -334,7 +334,7 @@ describe('WorkloadBalancer', () => {
       // Verify some distribution occurred (not all to one person)
       const counts = Array.from(assignmentCounts.values());
       const uniqueCounts = new Set(counts);
-      
+
       // At least some members should have been assigned
       expect(counts.filter((c) => c > 0).length).toBeGreaterThan(0);
     });

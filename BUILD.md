@@ -43,14 +43,12 @@ npm --version      # 需要 8+
 ### 環境準備
 
 **必需工具**:
-
 - Python 3.10+ ([下載](https://www.python.org/downloads/))
 - Node.js 18+ ([下載](https://nodejs.org/))
 - Visual Studio Build Tools
   ([下載](https://visualstudio.microsoft.com/downloads/))
 
 **可選工具**（用於完整構建）:
-
 - PyInstaller: `pip install pyinstaller`
 - NSIS: [下載](https://nsis.sourceforge.io/Download)
 - WiX Toolset: [下載](https://wixtoolset.org/releases/)
@@ -107,7 +105,6 @@ installation:
 ### 環境準備
 
 **必需工具**:
-
 ```bash
 # 安裝 Xcode Command Line Tools
 xcode-select --install
@@ -121,7 +118,6 @@ pip3 install pyinstaller dmgbuild
 ```
 
 **可選工具**（用於完整構建）:
-
 - Apple Developer ID Certificate
 - 公證工具（macOS 10.15+）
 
@@ -196,7 +192,6 @@ brew audit synergymesh-governance
 ### 環境準備
 
 **Debian/Ubuntu**:
-
 ```bash
 sudo apt update
 sudo apt install -y \
@@ -211,7 +206,6 @@ pip3 install pyinstaller
 ```
 
 **RHEL/CentOS/Fedora**:
-
 ```bash
 sudo yum install -y \
   python3 python3-pip python3-devel \
@@ -429,7 +423,6 @@ act
 ### Windows
 
 **PyInstaller 失敗**:
-
 ```batch
 :: 清除快取
 rmdir /s /q build dist
@@ -437,7 +430,6 @@ pyinstaller --clean build-windows.spec
 ```
 
 **MSI 構建失敗**:
-
 ```
 確保 WiX Toolset 已安裝且在 PATH 中
 where candle.exe
@@ -447,7 +439,6 @@ where light.exe
 ### macOS
 
 **簽名失敗**:
-
 ```bash
 # 列出可用證書
 security find-identity -v -p codesigning
@@ -457,7 +448,6 @@ security delete-identity -c "Your Certificate Name"
 ```
 
 **公證失敗**:
-
 ```bash
 # 檢查公證狀態
 xcrun notarytool log <submission-id> --apple-id <email>
@@ -466,7 +456,6 @@ xcrun notarytool log <submission-id> --apple-id <email>
 ### Linux
 
 **AppImage 構建失敗**:
-
 ```bash
 # 手動下載 appimagetool
 wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
@@ -474,7 +463,6 @@ chmod +x appimagetool-x86_64.AppImage
 ```
 
 **缺少依賴**:
-
 ```bash
 # 安裝所有構建依賴
 sudo apt build-dep synergymesh-governance
@@ -483,7 +471,6 @@ sudo apt build-dep synergymesh-governance
 ### Docker
 
 **映像過大**:
-
 ```bash
 # 使用 dive 分析映像層
 dive synergymesh/governance:latest
