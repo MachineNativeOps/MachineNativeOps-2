@@ -1,9 +1,12 @@
 import { createHash, randomUUID } from 'crypto';
-import { readFile, stat } from 'fs/promises';
+import { readFile, stat, realpath } from 'fs/promises';
 import { relative, resolve } from 'path';
-import { realpath } from 'fs/promises';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
+
+// Define safe root directories for file operations to prevent path traversal attacks
+const SAFE_ROOT = resolve(process.cwd());
+const TEMP_ROOT = resolve(tmpdir());
 
 export interface BuildAttestation {
   id: string;
@@ -66,31 +69,52 @@ export interface Dependency {
 export class ProvenanceService {
   private slsaService: SLSAAttestationService;
   // Define the root directory for allowed files. Change as needed for your project needs
-  private static readonly SAFE_ROOT = process.cwd();
+  // Use a fixed absolute path or environment variable for SAFE_ROOT
+  private static readonly SAFE_ROOT = process.env.SAFE_ROOT_PATH
+    ? resolve(process.env.SAFE_ROOT_PATH)
+    : resolve(__dirname, '../../safefiles');
 
   constructor() {
     this.slsaService = new SLSAAttestationService();
   }
 
   /**
-   * Normalize and validate a user supplied file path, ensuring it stays within SAFE_ROOT.
-   * Throws an error if the check fails.
+   * Validate that a file path is safe to access
+   * to prevent directory traversal attacks
    */
-  private async resolveSafePath(userInputPath: string): Promise<string> {
-    // Resolve the user input to an absolute path within SAFE_ROOT
-    const absPath = resolve(ProvenanceService.SAFE_ROOT, userInputPath);
-    const realAbsPath = await realpath(absPath);
-    if (!realAbsPath.startsWith(ProvenanceService.SAFE_ROOT)) {
-      throw new Error('Access to the specified file path is not allowed');
+  private validatePath(filePath: string): string {
+    const resolvedPath = resolve(filePath);
+
+    // Normalize paths for case-insensitive comparison on Windows
+    const normalizedResolved = resolvedPath.toLowerCase();
+    const normalizedSafeRoot = SAFE_ROOT.toLowerCase();
+    const normalizedTempRoot = TEMP_ROOT.toLowerCase();
+    const normalizedSep = sep.toLowerCase();
+
+    // Check if the resolved path is within allowed directories
+    // This prevents both relative path traversal (../) and absolute path attacks
+    const isWithinSafeRoot =
+      normalizedResolved.startsWith(normalizedSafeRoot + normalizedSep) ||
+      normalizedResolved === normalizedSafeRoot;
+    const isWithinTempRoot =
+      normalizedResolved.startsWith(normalizedTempRoot + normalizedSep) ||
+      normalizedResolved === normalizedTempRoot;
+
+    if (!isWithinSafeRoot && !isWithinTempRoot) {
+      throw new Error(
+        `Path traversal detected: ${filePath} attempts to access files outside the safe directory`
+      );
     }
-    return realAbsPath;
+
+    return resolvedPath;
   }
+
   /**
    * 生成文件的 SHA256 摘要
    */
   async generateFileDigest(filePath: string): Promise<string> {
-    const safePath = await this.resolveSafePath(filePath);
-    const content = await readFile(safePath);
+    const validatedPath = this.validatePath(filePath);
+    const content = await readFile(validatedPath);
     const hash = createHash('sha256');
     hash.update(content);
     return `sha256:${hash.digest('hex')}`;
@@ -104,22 +128,24 @@ export class ProvenanceService {
     builder: BuilderInfo,
     metadata: Partial<MetadataInfo> = {}
   ): Promise<BuildAttestation> {
-    const safePath = await this.resolveSafePath(subjectPath);
-    const stats = await stat(safePath);
+    // Validate path to prevent directory traversal attacks
+    const validatedPath = this.validatePath(subjectPath);
+
+    const stats = await stat(validatedPath);
     if (!stats.isFile()) {
       throw new Error(`Subject path must be a file: ${subjectPath}`);
     }
 
-    const content = await readFile(safePath);
+    const content = await readFile(validatedPath);
     const subject = this.slsaService.createSubjectFromContent(
-      relative(process.cwd(), safePath),
+      relative(process.cwd(), validatedPath),
       content
     );
 
     // 生成格式為 att_timestamp_hash 的 ID
     const timestamp = Date.now();
     const hash = createHash('sha256')
-      .update(`${timestamp}${subjectPath}`)
+      .update(`${timestamp}${validatedPath}`)
       .digest('hex')
       .substring(0, 8);
     const attestationId = `att_${timestamp}_${hash}`;
@@ -160,7 +186,7 @@ export class ProvenanceService {
       subject: {
         name: subject.name,
         digest: `sha256:${subject.digest.sha256}`,
-        path: subjectPath,
+        path: validatedPath,
       },
       predicate: {
         type: slsaProvenance.predicateType,
