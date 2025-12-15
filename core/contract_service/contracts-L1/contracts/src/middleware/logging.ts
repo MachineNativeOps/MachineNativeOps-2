@@ -54,14 +54,17 @@ export const loggingMiddleware = (req: Request, res: Response, next: NextFunctio
       body: req.body ? '[BODY_PRESENT]' : '[NO_BODY]',
     });
   } else {
-    console.log('Request:', `${requestLog.method} ${requestLog.url} [${traceId}] [ip:${requestLog.ip}]`);
+    console.log(
+      'Request:',
+      `${requestLog.method} ${requestLog.url} [${traceId}] [ip:${requestLog.ip}]`
+    );
   }
 
   res.on('finish', () => {
     const duration = Date.now() - startTime;
     const responseLog = { ...requestLog, duration, statusCode: res.statusCode };
     const logMessage = `${responseLog.method} ${responseLog.url} ${responseLog.statusCode} ${duration}ms [${traceId}]`;
-    
+
     if (res.statusCode >= 500) {
       console.error('Request completed with error:', logMessage);
     } else if (res.statusCode >= 400) {

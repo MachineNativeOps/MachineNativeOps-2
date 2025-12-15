@@ -1,7 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
-import { readFile, stat } from 'fs/promises';
-import { tmpdir } from 'os';
-import { relative, resolve, sep } from 'path';
+import { readFile, stat, realpath } from 'fs/promises';
+import { relative, resolve } from 'path';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
