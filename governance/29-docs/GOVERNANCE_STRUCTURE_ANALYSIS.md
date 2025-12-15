@@ -1,4 +1,4 @@
-# Governance Structure Analysis of the KeyStonApp Project
+# KeyStonApp Governance Structure Analysis
 
 This document synthesizes an inferred analysis of the `/governance` directory based on structural context (approximately 80+ subdirectories) and open-source governance best practices. It is **speculative** and intended for navigation and improvement planning until full directory content is validated.
 
@@ -23,7 +23,7 @@ This document synthesizes an inferred analysis of the `/governance` directory ba
 
 ## 2. Main Governance Components (Inferred)
 
-- **Decision-Making**: Service-level, RFC-style decisions without clear evidence of a central TSC (Technical Steering Committee); risk of inconsistency and duplication.
+- **Decision-Making**: Service-level, RFC-style decisions without clear evidence of a central Technical Steering Committee (TSC); risk of inconsistency and duplication.
 - **Roles & Responsibilities**: Service maintainers, potential governance council, compliance officers, security stewards, and community managers; missing visible `OWNERS`/`MAINTAINERS` increases ambiguity.
 - **Contribution Guidelines**: Likely fragmented across service folders; discoverability is low without a centralized contributor experience.
 - **Voting Mechanisms**: No visible formal voting framework; decisions may rely on ad-hoc consensus.
@@ -46,7 +46,7 @@ This document synthesizes an inferred analysis of the `/governance` directory ba
 
 1. Add a `governance/README.md` index (owners, purpose, status) covering all subdirectories.
 2. Consolidate redundant directories (e.g., merge overlapping security/compliance/audit areas).
-3. Define a central governing body (TSC/Governance Council) with charter and published minutes.
+3. Define a central governing body (Technical Steering Committee (TSC) or Governance Council) with charter and published minutes.
 4. Standardize policy templates (scope, owner, effective date, review cycle, change history).
 5. Introduce a policy lifecycle (time-bound validity, deprecation announcements, RFC workflow).
 6. Improve discoverability via links from root `README.md`, `CONTRIBUTING.md`, and docs portal.
