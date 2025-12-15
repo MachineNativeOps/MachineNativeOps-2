@@ -158,7 +158,7 @@ export const errorMiddleware = (
     const errorResponse = {
       error: {
         code: err.code,
-        message: ErrorCleanupPatterns.sanitizeMessage(err.message || ''),
+        message: ErrorCleanupPatterns.sanitizeMessage(err.message || UNKNOWN_ERROR_FALLBACK),
         status: err.statusCode,
         traceId: err.traceId,
         timestamp: err.timestamp,
@@ -170,7 +170,9 @@ export const errorMiddleware = (
     }
     res.status(err.statusCode).json(errorResponse);
   } else {
-    const sanitizedMessage = ErrorCleanupPatterns.sanitizeMessage(safeError.message || '');
+    const sanitizedMessage = ErrorCleanupPatterns.sanitizeMessage(
+      safeError.message || UNKNOWN_ERROR_FALLBACK
+    );
     const errorResponse = {
       error: {
         code: ErrorCode.INTERNAL_ERROR,
@@ -189,7 +191,7 @@ export const errorMiddleware = (
     error: {
       name: safeError.name,
       message: ErrorCleanupPatterns.sanitizeMessage(
-        safeError.message || ''
+        safeError.message || UNKNOWN_ERROR_FALLBACK
       ),
       code: isAppError ? err.code : ErrorCode.INTERNAL_ERROR,
       stack: config.NODE_ENV !== 'production' ? safeError.stack : undefined,
