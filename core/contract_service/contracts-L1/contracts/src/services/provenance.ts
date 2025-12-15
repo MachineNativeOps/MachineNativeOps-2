@@ -4,6 +4,8 @@ import { tmpdir } from 'os';
 import * as path from 'path';
 
 import { PathValidator } from '../utils/path-validator';
+import { SelfHealingPathValidator } from '../utils/self-healing-path-validator';
+import { pathValidationEvents, PathValidationEventType } from '../events/path-validation-events';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -19,7 +21,14 @@ const SAFE_ROOT =
  */
 function isPathContained(targetPath: string, rootPath: string): boolean {
   const relative = path.relative(rootPath, targetPath);
-  return !relative.startsWith('..') && !path.isAbsolute(relative);
+  // Ensure the canonical path is inside the root directory or equals the root
+  return (
+    relative === '' // filePath equals the root
+    || (
+      // filePath is a descendant of root
+      !relative.startsWith('..') && !path.isAbsolute(relative)
+    )
+  );
 }
 
 /**
@@ -92,18 +101,27 @@ async function validateAndNormalizePath(
   try {
     const canonicalPath = await realpath(resolvedPath);
 
-    // FINAL GUARD: Path must start with SAFE_ROOT or allowed test directory, comparing canonical (real) paths
-    if (isInTestTmpDir(canonicalPath, systemTmpDir)) {
+    // Verify canonical path is within allowed boundaries
+    // Always enforce path containment within either the test temp dir or safe root
+    if (
+      (process.env.NODE_ENV === 'test' && isInTestTmpDir(canonicalPath, systemTmpDir))
+      || isPathContained(canonicalPath, safeRoot)
+    ) {
       return canonicalPath;
     }
-    // Fallback for non-existent file, use normalized path and re-check boundaries
 
-    if (!isPathContained(canonicalPath, safeRoot)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
-    }
-
-    return canonicalPath;
+    throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
   } catch (error) {
+    // Fallback for non-existent file: Event-driven structure completion mechanism
+    // This triggers the self-healing system to attempt structure recovery
+    pathValidationEvents.emitFallbackTriggered({
+      filePath,
+      resolvedPath,
+      safeRoot,
+      error: error instanceof Error ? error.message : String(error),
+      errorCode: (error as any).code,
+    });
+
     const normalizedPath = path.normalize(resolvedPath);
 
     if (isInTestTmpDir(normalizedPath, systemTmpDir)) {
@@ -181,11 +199,24 @@ export interface Dependency {
 
 export class ProvenanceService {
   private readonly slsaService: SLSAAttestationService;
-  private readonly pathValidator: PathValidator;
+  private readonly pathValidator: PathValidator | SelfHealingPathValidator;
+  private readonly selfHealingEnabled: boolean;
 
-  constructor(pathValidator?: PathValidator) {
+  constructor(pathValidator?: PathValidator | SelfHealingPathValidator, enableSelfHealing = true) {
     this.slsaService = new SLSAAttestationService();
-    this.pathValidator = pathValidator || new PathValidator();
+    this.selfHealingEnabled = enableSelfHealing;
+    
+    // Use self-healing validator by default if enabled
+    if (enableSelfHealing && !pathValidator) {
+      this.pathValidator = new SelfHealingPathValidator({
+        safeRoot: SAFE_ROOT,
+        enableAutoRecovery: true,
+        enableSnapshotting: true,
+        dagEnabled: true,
+      });
+    } else {
+      this.pathValidator = pathValidator || new PathValidator();
+    }
   }
 
   /**
