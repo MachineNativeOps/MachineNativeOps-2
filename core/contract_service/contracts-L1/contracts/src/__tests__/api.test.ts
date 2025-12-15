@@ -43,8 +43,8 @@ describe('Provenance API Endpoints', () => {
           filePath: testFilePath,
           builder: {
             id: 'https://github.com/synergymesh/builder',
-            version: '1.0.0'
-          }
+            version: '1.0.0',
+          },
         });
 
       expect(response.status).toBe(201);
@@ -54,15 +54,15 @@ describe('Provenance API Endpoints', () => {
         subject: {
           name: expect.stringContaining('test-api-'),
           digest: expect.stringMatching(/^sha256:[a-f0-9]{64}$/),
-          path: testFilePath
+          path: testFilePath,
         },
         predicate: {
           type: 'https://slsa.dev/provenance/v1',
           builder: {
             id: 'https://github.com/synergymesh/builder',
-            version: '1.0.0'
-          }
-        }
+            version: '1.0.0',
+          },
+        },
       });
     });
 
@@ -72,8 +72,8 @@ describe('Provenance API Endpoints', () => {
         .send({
           builder: {
             id: 'test-builder',
-            version: '1.0.0'
-          }
+            version: '1.0.0',
+          },
         });
 
       expect(response.status).toBe(400);
@@ -83,11 +83,9 @@ describe('Provenance API Endpoints', () => {
 
     it('should return 400 for missing builder', async () => {
       const app = createTestApp();
-      const response = await request(app)
-        .post('/api/v1/provenance/attestations')
-        .send({
-          filePath: testFilePath
-        });
+      const response = await request(app).post('/api/v1/provenance/attestations').send({
+        filePath: testFilePath,
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -101,8 +99,8 @@ describe('Provenance API Endpoints', () => {
           filePath: '/non/existent/file.txt',
           builder: {
             id: 'test-builder',
-            version: '1.0.0'
-          }
+            version: '1.0.0',
+          },
         });
 
       expect(response.status).toBe(404);
@@ -119,8 +117,8 @@ describe('Provenance API Endpoints', () => {
           filePath: testFilePath,
           builder: {
             id: 'test-builder',
-            version: '1.0.0'
-          }
+            version: '1.0.0',
+          },
         });
 
       const attestation = createResponse.body.data;
@@ -141,8 +139,8 @@ describe('Provenance API Endpoints', () => {
         .send({
           attestation: {
             id: 'invalid',
-            invalid: 'structure'
-          }
+            invalid: 'structure',
+          },
         });
 
       expect(response.status).toBe(200);
@@ -151,9 +149,7 @@ describe('Provenance API Endpoints', () => {
     });
 
     it('should return 400 for missing attestation', async () => {
-      const response = await request(app)
-        .post('/api/v1/provenance/verify')
-        .send({});
+      const response = await request(app).post('/api/v1/provenance/verify').send({});
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -165,8 +161,7 @@ describe('Provenance API Endpoints', () => {
     it('should calculate file digest', async () => {
       // Encode file path for URL
       const encodedPath = encodeURIComponent(testFilePath);
-      const response = await request(app)
-        .get(`/api/v1/provenance/digest/${encodedPath}`);
+      const response = await request(app).get(`/api/v1/provenance/digest/${encodedPath}`);
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
@@ -175,8 +170,7 @@ describe('Provenance API Endpoints', () => {
     });
 
     it('should return 400 for missing filePath', async () => {
-      const response = await request(app)
-        .get('/api/v1/provenance/digest/');
+      const response = await request(app).get('/api/v1/provenance/digest/');
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
@@ -185,8 +179,7 @@ describe('Provenance API Endpoints', () => {
 
     it('should return 404 for non-existent file', async () => {
       const encodedPath = encodeURIComponent('/non/existent/file.txt');
-      const response = await request(app)
-        .get(`/api/v1/provenance/digest/${encodedPath}`);
+      const response = await request(app).get(`/api/v1/provenance/digest/${encodedPath}`);
 
       expect(response.status).toBe(404);
       expect(response.body.success).toBe(false);
@@ -202,19 +195,17 @@ describe('Provenance API Endpoints', () => {
           filePath: testFilePath,
           builder: {
             id: 'test-builder',
-            version: '1.0.0'
-          }
+            version: '1.0.0',
+          },
         });
 
       const attestation = createResponse.body.data;
       const exportedJson = JSON.stringify(attestation, null, 2);
 
       // Import it
-      const importResponse = await request(app)
-        .post('/api/v1/provenance/import')
-        .send({
-          attestationJson: exportedJson
-        });
+      const importResponse = await request(app).post('/api/v1/provenance/import').send({
+        attestationJson: exportedJson,
+      });
 
       expect(importResponse.status).toBe(200);
       expect(importResponse.body.success).toBe(true);
@@ -222,20 +213,16 @@ describe('Provenance API Endpoints', () => {
     });
 
     it('should return 400 for invalid JSON', async () => {
-      const response = await request(app)
-        .post('/api/v1/provenance/import')
-        .send({
-          attestationJson: 'invalid json'
-        });
+      const response = await request(app).post('/api/v1/provenance/import').send({
+        attestationJson: 'invalid json',
+      });
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
     });
 
     it('should return 400 for missing attestationJson', async () => {
-      const response = await request(app)
-        .post('/api/v1/provenance/import')
-        .send({});
+      const response = await request(app).post('/api/v1/provenance/import').send({});
 
       expect(response.status).toBe(400);
       expect(response.body.success).toBe(false);
@@ -245,8 +232,7 @@ describe('Provenance API Endpoints', () => {
 
   describe('GET /api/v1/provenance/export/:id', () => {
     it('should return formatted message for any ID', async () => {
-      const response = await request(app)
-        .get('/api/v1/provenance/export/test-123');
+      const response = await request(app).get('/api/v1/provenance/export/test-123');
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);

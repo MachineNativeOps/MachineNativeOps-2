@@ -1,30 +1,27 @@
-# Dependencies
+# Build outputs
+dist/
 node_modules/
 
-# Build output
-dist/
-build/
-coverage/
+# Generated files
+*.d.ts
+*.js.map
+*.d.ts.map
 
-# Logs
-*.log
-npm-debug.log*
+# Config files
+package-lock.json
+tsconfig.json
 
-# Environment files
-.env
-.env.*
+# Documentation and assets
+*.md
+*.json
+
+# Test snapshots
+**/__snapshots__/
 
 # SBOM and security reports
-sbom.json
 sbom/
+sbom.json
 
-# Lock files
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# CI/CD
-.github/
-
-# Documentation generated files
-*.md.bak
+# Contracts and policy files
+contracts/
+policy/

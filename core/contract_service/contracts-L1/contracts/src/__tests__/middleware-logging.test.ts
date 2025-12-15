@@ -47,11 +47,7 @@ describe('Logging Middleware', () => {
 
   describe('Request Logging', () => {
     it('should log incoming requests', () => {
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(consoleLogSpy).toHaveBeenCalled();
       expect(mockNext).toHaveBeenCalled();
@@ -60,11 +56,7 @@ describe('Logging Middleware', () => {
     it('should log request method', () => {
       mockRequest.method = 'POST';
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       const logCall = consoleLogSpy.mock.calls[0];
       const logMessage = JSON.stringify(logCall);
@@ -75,11 +67,7 @@ describe('Logging Middleware', () => {
     it('should log request URL', () => {
       mockRequest.url = '/api/v1/test';
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       const logCall = consoleLogSpy.mock.calls[0];
       const logMessage = JSON.stringify(logCall);
@@ -94,11 +82,7 @@ describe('Logging Middleware', () => {
         consoleLogSpy.mockClear();
         mockRequest.method = method;
 
-        loggingMiddleware(
-          mockRequest as Request,
-          mockResponse as Response,
-          mockNext
-        );
+        loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
         const logCall = consoleLogSpy.mock.calls[0];
         const logMessage = JSON.stringify(logCall);
@@ -107,11 +91,7 @@ describe('Logging Middleware', () => {
     });
 
     it('should call next middleware', () => {
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(mockNext).toHaveBeenCalledTimes(1);
     });
@@ -119,11 +99,7 @@ describe('Logging Middleware', () => {
 
   describe('Response Logging', () => {
     it('should attach finish listener to response', () => {
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(mockResponse.on).toHaveBeenCalledWith('finish', expect.any(Function));
     });
@@ -138,11 +114,7 @@ describe('Logging Middleware', () => {
         return mockResponse as Response;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(finishCallback).toBeDefined();
 
@@ -165,11 +137,7 @@ describe('Logging Middleware', () => {
         return mockResponse as Response;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       if (finishCallback) {
         consoleLogSpy.mockClear();
@@ -188,11 +156,7 @@ describe('Logging Middleware', () => {
         return undefined;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(mockRequest.get).toHaveBeenCalledWith('user-agent');
     });
@@ -200,11 +164,7 @@ describe('Logging Middleware', () => {
     it('should include IP address in logs', () => {
       mockRequest.ip = '192.168.1.1';
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       const logCall = consoleLogSpy.mock.calls[0];
       const logMessage = JSON.stringify(logCall);
@@ -214,11 +174,7 @@ describe('Logging Middleware', () => {
     it('should handle missing user agent', () => {
       mockRequest.get = jest.fn(() => undefined);
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(mockNext).toHaveBeenCalled();
     });
@@ -226,11 +182,7 @@ describe('Logging Middleware', () => {
     it('should handle missing IP', () => {
       delete mockRequest.ip;
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(mockNext).toHaveBeenCalled();
     });
@@ -248,11 +200,7 @@ describe('Logging Middleware', () => {
         return mockResponse as Response;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       if (finishCallback) {
         consoleWarnSpy.mockClear();
@@ -272,11 +220,7 @@ describe('Logging Middleware', () => {
         return mockResponse as Response;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       if (finishCallback) {
         consoleErrorSpy.mockClear();
@@ -297,11 +241,7 @@ describe('Logging Middleware', () => {
         return mockResponse as Response;
       });
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       // Simulate some time passing
       if (finishCallback) {
@@ -320,11 +260,7 @@ describe('Logging Middleware', () => {
     it('should log health check endpoints', () => {
       mockRequest.url = '/healthz';
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       expect(consoleLogSpy).toHaveBeenCalled();
       expect(mockNext).toHaveBeenCalled();
@@ -334,11 +270,7 @@ describe('Logging Middleware', () => {
       mockRequest.url = '/api/v1/provenance/attestations';
       mockRequest.method = 'POST';
 
-      loggingMiddleware(
-        mockRequest as Request,
-        mockResponse as Response,
-        mockNext
-      );
+      loggingMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
 
       const logCall = consoleLogSpy.mock.calls[0];
       const logMessage = JSON.stringify(logCall);
@@ -357,11 +289,7 @@ describe('Logging Middleware', () => {
           url: `/test/${i}`,
         };
 
-        loggingMiddleware(
-          req as Request,
-          mockResponse as Response,
-          mockNext
-        );
+        loggingMiddleware(req as Request, mockResponse as Response, mockNext);
       }
 
       expect(consoleLogSpy).toHaveBeenCalledTimes(requests);

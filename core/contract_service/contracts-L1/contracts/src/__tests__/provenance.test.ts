@@ -28,8 +28,7 @@ describe('ProvenanceService', () => {
     });
 
     it('should throw error for non-existent file', async () => {
-      await expect(service.generateFileDigest('non-existent-file.txt'))
-        .rejects.toThrow(/ENOENT/);
+      await expect(service.generateFileDigest('/non/existent/file')).rejects.toThrow(/ENOENT/);
     });
 
     it('should reject path traversal attempts', async () => {
@@ -47,7 +46,7 @@ describe('ProvenanceService', () => {
     it('should create valid attestation with required fields', async () => {
       const builder = {
         id: 'https://test.builder.com',
-        version: '1.0.0'
+        version: '1.0.0',
       };
 
       const attestation = await service.createBuildAttestation(testFilePath, builder);
@@ -58,22 +57,22 @@ describe('ProvenanceService', () => {
         subject: {
           name: expect.stringContaining('test-'),
           digest: expect.stringMatching(/^sha256:[a-f0-9]{64}$/),
-          path: testFilePath
+          path: testFilePath,
         },
         predicate: {
           type: 'https://slsa.dev/provenance/v1',
           builder,
           recipe: expect.objectContaining({
-            type: 'https://github.com/synergymesh/build'
+            type: 'https://github.com/synergymesh/build',
           }),
           metadata: expect.objectContaining({
             completeness: {
               parameters: true,
               environment: true,
-              materials: true
-            }
-          })
-        }
+              materials: true,
+            },
+          }),
+        },
       });
     });
 
@@ -81,7 +80,7 @@ describe('ProvenanceService', () => {
       const builder = { id: 'test-builder', version: '1.0.0' };
       const metadata = {
         reproducible: true,
-        buildInvocationId: 'test-build-123'
+        buildInvocationId: 'test-build-123',
       };
 
       const attestation = await service.createBuildAttestation(testFilePath, builder, metadata);
@@ -91,10 +90,12 @@ describe('ProvenanceService', () => {
     });
 
     it('should reject directories', async () => {
-      await expect(service.createBuildAttestation(tmpdir(), {
-        id: 'test-builder',
-        version: '1.0.0'
-      })).rejects.toThrow('Subject path must be a file');
+      await expect(
+        service.createBuildAttestation(tmpdir(), {
+          id: 'test-builder',
+          version: '1.0.0',
+        })
+      ).rejects.toThrow('Subject path must be a file');
     });
   });
 
@@ -123,7 +124,7 @@ describe('ProvenanceService', () => {
         timestamp: new Date().toISOString(),
         subject: {
           name: 'test-artifact',
-          digest: 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+          digest: 'sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         },
         predicate: {
           type: 'https://slsa.dev/provenance/v1',
@@ -133,9 +134,9 @@ describe('ProvenanceService', () => {
             buildStartedOn: new Date().toISOString(),
             buildFinishedOn: new Date().toISOString(),
             completeness: { parameters: true, environment: true, materials: true },
-            reproducible: false
-          }
-        }
+            reproducible: false,
+          },
+        },
       };
 
       const isValid = await service.verifyAttestation(attestation);
@@ -167,14 +168,12 @@ describe('ProvenanceService', () => {
     });
 
     it('should reject invalid JSON', () => {
-      expect(() => service.importAttestation('invalid json'))
-        .toThrow();
+      expect(() => service.importAttestation('invalid json')).toThrow();
     });
 
     it('should reject JSON without required fields', () => {
       const invalidJson = JSON.stringify({ invalid: 'data' });
-      expect(() => service.importAttestation(invalidJson))
-        .toThrow('Invalid attestation format');
+      expect(() => service.importAttestation(invalidJson)).toThrow('Invalid attestation format');
     });
   });
 });

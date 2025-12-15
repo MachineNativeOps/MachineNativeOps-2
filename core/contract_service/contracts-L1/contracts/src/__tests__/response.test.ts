@@ -13,7 +13,7 @@ import {
   sendInternalError,
   getErrorMessage,
   handleControllerError,
-  createTimestamp
+  createTimestamp,
 } from '../middleware/response';
 
 describe('Response Utilities', () => {
@@ -26,7 +26,7 @@ describe('Response Utilities', () => {
     statusMock = jest.fn().mockReturnValue({ json: jsonMock });
     mockResponse = {
       status: statusMock,
-      json: jsonMock
+      json: jsonMock,
     };
   });
 
@@ -45,7 +45,7 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(200);
       expect(jsonMock).toHaveBeenCalledWith({
         success: true,
-        data
+        data,
       });
     });
 
@@ -63,7 +63,7 @@ describe('Response Utilities', () => {
       expect(jsonMock).toHaveBeenCalledWith({
         success: true,
         data,
-        message: 'Created successfully'
+        message: 'Created successfully',
       });
     });
 
@@ -74,7 +74,7 @@ describe('Response Utilities', () => {
       expect(jsonMock).toHaveBeenCalledWith({
         success: true,
         data,
-        count: 2
+        count: 2,
       });
     });
 
@@ -95,7 +95,7 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(500);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Something went wrong'
+        error: 'Something went wrong',
       });
     });
 
@@ -112,7 +112,7 @@ describe('Response Utilities', () => {
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
         error: 'Validation failed',
-        details
+        details,
       });
     });
 
@@ -131,7 +131,7 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(400);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Invalid input'
+        error: 'Invalid input',
       });
     });
 
@@ -142,7 +142,7 @@ describe('Response Utilities', () => {
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
         error: 'Validation error',
-        details
+        details,
       });
     });
   });
@@ -154,7 +154,7 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(404);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'User not found'
+        error: 'User not found',
       });
     });
 
@@ -174,7 +174,7 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(500);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Database connection failed'
+        error: 'Database connection failed',
       });
     });
 
@@ -183,7 +183,7 @@ describe('Response Utilities', () => {
 
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Operation failed'
+        error: 'Operation failed',
       });
     });
   });
@@ -209,7 +209,7 @@ describe('Response Utilities', () => {
     it('should handle ZodError with validation response', () => {
       const schema = z.object({ name: z.string() });
       let zodError: z.ZodError | undefined;
-      
+
       try {
         schema.parse({ name: 123 });
       } catch (error) {
@@ -226,9 +226,9 @@ describe('Response Utilities', () => {
 
     it('should handle Error with not found check', () => {
       const error = new Error('Assignment not found');
-      
+
       handleControllerError(mockResponse as Response, error, {
-        notFoundCheck: (msg) => msg.includes('not found')
+        notFoundCheck: (msg) => msg.includes('not found'),
       });
 
       expect(statusMock).toHaveBeenCalledWith(404);
@@ -236,13 +236,13 @@ describe('Response Utilities', () => {
 
     it('should handle Error without not found check', () => {
       const error = new Error('Database error');
-      
+
       handleControllerError(mockResponse as Response, error);
 
       expect(statusMock).toHaveBeenCalledWith(500);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Database error'
+        error: 'Database error',
       });
     });
 
@@ -252,18 +252,18 @@ describe('Response Utilities', () => {
       expect(statusMock).toHaveBeenCalledWith(500);
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Unknown error occurred'
+        error: 'Unknown error occurred',
       });
     });
 
     it('should use custom fallback message', () => {
       handleControllerError(mockResponse as Response, null, {
-        fallbackMessage: 'Custom error'
+        fallbackMessage: 'Custom error',
       });
 
       expect(jsonMock).toHaveBeenCalledWith({
         success: false,
-        error: 'Custom error'
+        error: 'Custom error',
       });
     });
   });
