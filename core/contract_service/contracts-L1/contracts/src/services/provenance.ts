@@ -3,9 +3,9 @@ import { readFile, stat, realpath } from 'fs/promises';
 import { tmpdir } from 'os';
 import * as path from 'path';
 
+import { pathValidationEvents } from '../events/path-validation-events';
 import { PathValidator } from '../utils/path-validator';
 import { SelfHealingPathValidator } from '../utils/self-healing-path-validator';
-import { pathValidationEvents, PathValidationEventType } from '../events/path-validation-events';
 
 import { SLSAAttestationService, SLSAProvenance, BuildMetadata } from './attestation';
 
@@ -23,11 +23,9 @@ function isPathContained(targetPath: string, rootPath: string): boolean {
   const relative = path.relative(rootPath, targetPath);
   // Ensure the canonical path is inside the root directory or equals the root
   return (
-    relative === '' // filePath equals the root
-    || (
-      // filePath is a descendant of root
-      !relative.startsWith('..') && !path.isAbsolute(relative)
-    )
+    relative === '' || // filePath equals the root
+    // filePath is a descendant of root
+    (!relative.startsWith('..') && !path.isAbsolute(relative))
   );
 }
 
@@ -114,21 +112,13 @@ function resolveFilePath(filePath: string, safeRoot: string, systemTmpDir: strin
 }
 
 /**
- * Validates and normalizes a file path to prevent path traversal attacks.
- * 
- * Security model:
- * 1. Rejects obvious path traversal patterns (null bytes, "..", "//")
- * 2. Resolves paths through resolveFilePath which handles:
- *    - Relative paths: resolved relative to safeRoot
- *    - Absolute paths in test mode within tmpdir: allowed as-is
- *    - Other absolute paths: converted to relative paths within safeRoot
- * 3. Final boundary validation ensures resolved path is within allowed directories
- * 
- * Note: We do NOT reject absolute paths upfront because that would prevent
- * resolveFilePath from properly handling test cases that use tmpdir(). Instead,
- * security is maintained through the final boundary checks using isPathContained,
- * which ensures all resolved paths stay within allowed directories regardless of
- * the input format.
+ * Validates and normalizes a file path with self-healing capabilities.
+ *
+ * This function now integrates event-driven structure completion:
+ * - Emits events on validation failures
+ * - Triggers fallback recovery mechanisms
+ * - Supports DAG-based structure reconstruction
+ * - Maintains structural snapshots for recovery
  *
  * @param filePath - The file path to validate (can be relative or absolute)
  * @param safeRoot - Optional safe root directory override (primarily for testing)
@@ -143,22 +133,31 @@ async function validateAndNormalizePath(
     throw new Error('Invalid file path: Path must be a non-empty string');
   }
 
-  // Reject obvious path traversal patterns
-  if (
-    filePath.includes('\0') ||
-    filePath.split(path.sep).includes('..') ||
-    filePath.includes('//')
-  ) {
-    throw new Error('Invalid file path: Directory traversal is not permitted');
+  // Reject null bytes which can be used for path traversal exploits
+  if (filePath.includes('\0')) {
+    throw new Error('Invalid file path: Null bytes are not permitted.');
+  }
+
+  // Check for directory traversal in path segments BEFORE normalization
+  // This prevents path.normalize() from resolving .. segments before we can check them
+  // Split on both forward and backward slashes to catch all path separator variants
+  const segments = filePath.split(/[/\\]/);
+  if (segments.some((segment) => segment === '..')) {
+    throw new Error('Invalid file path: Directory traversal is not permitted.');
   }
 
   const resolvedPath = resolveFilePath(filePath, safeRoot, systemTmpDir);
 
-  // Determine the path to validate
-    // Strict containment check after realpath
-    const allowedRoot = isInTestTmpDir(pathToValidate, systemTmpDir) ? systemTmpDir : safeRoot;
-    if (!isPathContainedStrict(pathToValidate, allowedRoot)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted (realpath)');
+  try {
+    const canonicalPath = await realpath(resolvedPath);
+
+    // Verify canonical path is within allowed boundaries
+    // Always enforce path containment within either the test temp dir or safe root
+    if (
+      (process.env.NODE_ENV === 'test' && isInTestTmpDir(canonicalPath, systemTmpDir)) ||
+      isPathContained(canonicalPath, safeRoot)
+    ) {
+      return canonicalPath;
     }
   let pathToValidate: string;
 
@@ -166,12 +165,26 @@ async function validateAndNormalizePath(
     // Try to resolve to canonical path (follows symlinks)
     pathToValidate = await realpath(resolvedPath);
   } catch (error) {
-    // If file doesn't exist or can't be resolved, use normalized path
-    pathToValidate = path.resolve(path.normalize(resolvedPath));
-    // Strict containment check after normalization
-    const allowedRoot = isInTestTmpDir(pathToValidate, systemTmpDir) ? systemTmpDir : safeRoot;
-    if (!isPathContainedStrict(pathToValidate, allowedRoot)) {
-      throw new Error('Invalid file path: Access outside of allowed directory is not permitted (normalize fallback)');
+    // Fallback for non-existent file: Event-driven structure completion mechanism
+    // This triggers the self-healing system to attempt structure recovery
+    pathValidationEvents.emitFallbackTriggered({
+      filePath,
+      resolvedPath,
+      safeRoot,
+      error: error instanceof Error ? error.message : String(error),
+      errorCode:
+        error instanceof Error && 'code' in error
+          ? (error as Error & { code: string }).code
+          : undefined,
+    });
+
+    const normalizedPath = path.normalize(resolvedPath);
+
+    if (isInTestTmpDir(normalizedPath, systemTmpDir)) {
+      if (!isPathContained(normalizedPath, systemTmpDir)) {
+        throw new Error('Invalid file path: Access outside of allowed directory is not permitted');
+      }
+      throw error;
     }
     // Path is valid but file doesn't exist - re-throw original error
     throw error;
@@ -246,7 +259,7 @@ export class ProvenanceService {
   constructor(pathValidator?: PathValidator | SelfHealingPathValidator, enableSelfHealing = true) {
     this.slsaService = new SLSAAttestationService();
     this.selfHealingEnabled = enableSelfHealing;
-    
+
     // Use self-healing validator by default if enabled
     if (enableSelfHealing && !pathValidator) {
       this.pathValidator = new SelfHealingPathValidator({
