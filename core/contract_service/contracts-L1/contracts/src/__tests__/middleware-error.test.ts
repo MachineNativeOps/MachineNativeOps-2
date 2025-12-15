@@ -8,23 +8,21 @@ import { errorMiddleware } from '../middleware/error';
 import { createError, AppError, ErrorCode } from '../errors';
 
 // Mock the config module
-jest.mock('../config', () => ({
-  __esModule: true,
-  default: {
+jest.mock('../config', () => {
+  const mockConfigValues = {
     NODE_ENV: 'development',
     PORT: 3000,
     LOG_LEVEL: 'info',
     SERVICE_NAME: 'contracts-l1',
     SERVICE_VERSION: '1.0.0',
-  },
-  config: {
-    NODE_ENV: 'development',
-    PORT: 3000,
-    LOG_LEVEL: 'info',
-    SERVICE_NAME: 'contracts-l1',
-    SERVICE_VERSION: '1.0.0',
-  },
-}));
+  };
+  
+  return {
+    __esModule: true,
+    default: mockConfigValues,
+    config: mockConfigValues,
+  };
+});
 
 describe('Error Middleware', () => {
   let mockRequest: Partial<Request>;
