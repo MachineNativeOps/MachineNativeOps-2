@@ -34,7 +34,11 @@ naming:
     max_qualifiers: 12
     key_pattern: "^[a-z0-9][a-z0-9-]{0,29}$"
     value_pattern: "^[a-zA-Z0-9.:@/+%-]{0,127}$"
-  canonical_regex: "^(team|tenant|dev|test|staging|prod|learn)-[a-z0-9-]{1,56}[a-z0-9]$"
+  canonical_regex: "^(?!.*--)(team|tenant|dev|test|staging|prod|learn|sandbox)-[a-z0-9]+(?:-[a-z0-9]+)*$"
+  canonical_regex_source: "derived from organizational prefixes (team/tenant) + environments list with -- guard"
+  prefix_alignment:
+    allow_environment_prefix: true
+    require_label_match: true
   suffix_map:
     namespace: "ns"
     deployment: "deploy"
@@ -50,6 +54,16 @@ required_labels:
   - app.kubernetes.io/managed-by
 
 urn_template: "urn:axiom:{domain}:{component}:env:{environment}:{version}"
+segment_mapping:
+  domain: "{domain}"
+  component: "{component}"
+  environment: "{environment}"
+  region: "qualifier:region"
+  version: "{version}"
+  suffix: "suffix_map.*"
+segment_mapping_notes:
+  region: "region values are stored under annotations key axiom.io/qualifiers as region=<value>"
+  suffix: "suffix resolution uses suffix_map entries when present"
 annotations:
   canonical_urn: "axiom.io/canonical-urn"
   qualifiers: "axiom.io/qualifiers"

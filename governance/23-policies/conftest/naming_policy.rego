@@ -1,31 +1,58 @@
 package naming
 
-# 命名規範政策 - Namespace 與資源命名驗證
+# 命名規範政策 - Namespace 與資源命名驗證（來源：governance/34-config/naming/canonical-naming-machine-spec.yaml）
 
-# Namespace 命名規則
-deny[msg] {
-  input.kind == "Namespace"
-  not regex.match("^(team|tenant|feature)-[a-z0-9-]+$", input.metadata.name)
-  msg := sprintf("Namespace 名稱 '%s' 不符合規範格式：必須以 team-/tenant-/feature- 開頭，後接小寫字母、數字或連字符", [input.metadata.name])
+canonical_regex := regex_from_spec {
+  canonical_spec := data["canonical-naming-machine-spec"]
+  regex_from_spec := canonical_spec.naming.canonical_regex
+}
+canonical_regex := "^(?!.*--)[a-z0-9-]+$" {
+  not data["canonical-naming-machine-spec"]
 }
 
-# Namespace 必須包含必要標籤
+env_prefixes[prefix] {
+  canonical_spec := data["canonical-naming-machine-spec"]
+  prefixes := canonical_spec.naming.environments
+  prefix := prefixes[_]
+}
+
+# Namespace 命名規則（對齊 canonical-naming-machine-spec.yaml）
 deny[msg] {
   input.kind == "Namespace"
-  not input.metadata.labels["namespace.io/team"]
-  msg := "Namespace 缺少必要標籤：namespace.io/team"
+  not regex.match(canonical_regex, input.metadata.name)
+  msg := sprintf("Namespace 名稱 '%s' 不符合 canonical 格式：需以 team/tenant/dev/test/staging/prod/learn 開頭，僅允許小寫字母、數字與單一連字符，且不可連續 '-'。", [input.metadata.name])
+}
+
+# 若以環境 token 為前綴，需與 environment label 對齊
+deny[msg] {
+  input.kind == "Namespace"
+  regex.match(canonical_regex, input.metadata.name)
+  parts := split(input.metadata.name, "-")
+  prefix := parts[0]
+  env_prefixes[prefix]
+  env := input.metadata.labels["environment"]
+  env
+  env != prefix
+  msg := sprintf("Namespace 前綴 '%s' 必須與 environment 標籤 '%s' 對齊。", [prefix, env])
+}
+
+# Namespace 必須包含必要標籤（canonical required labels）
+deny[msg] {
+  input.kind == "Namespace"
+  not input.metadata.labels["environment"]
+  msg := "Namespace 缺少必要標籤：environment"
 }
 
 deny[msg] {
   input.kind == "Namespace"
-  not input.metadata.labels["namespace.io/environment"]
-  msg := "Namespace 缺少必要標籤：namespace.io/environment"
+  not input.metadata.labels["tenant"]
+  msg := "Namespace 缺少必要標籤：tenant"
 }
 
 deny[msg] {
   input.kind == "Namespace"
-  not input.metadata.labels["namespace.io/lifecycle"]
-  msg := "Namespace 缺少必要標籤：namespace.io/lifecycle"
+  not input.metadata.labels["app.kubernetes.io/managed-by"]
+  msg := "Namespace 缺少必要標籤：app.kubernetes.io/managed-by"
 }
 
 # Deployment 命名規則
