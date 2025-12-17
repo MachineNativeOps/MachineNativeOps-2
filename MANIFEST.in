@@ -18,7 +18,6 @@ include TROUBLESHOOTING.md
 
 # Include configuration files
 include machinenativeops.yaml
-include machine-native-ops.yaml
 include pyproject.toml
 include setup.py
 
