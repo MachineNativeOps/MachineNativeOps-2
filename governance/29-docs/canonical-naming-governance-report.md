@@ -32,7 +32,7 @@
 - **CI**：`conftest`/`yamllint`/`kubeval` 讀取 machine-spec，阻擋不符 regex 或缺標籤的 manifest（`naming_policy.rego` 已改為 canonical regex）。
 - **URN/URI**：Annotations `axiom.io/canonical-urn`、`axiom.io/qualifiers` 由機器生成，確保與 labels 一致。
 - **Prefix/Env 對齊**：若名稱以 machine-spec 定義的環境前綴起始，必須與 `environment` 標籤值一致以避免衝突。
-- **映射檔**：`governance/34-config/naming/namespace-mapping.yaml` 提供舊 namespace → canonical → URN/labels 的轉換表，供遷移腳本/工具套用。
+- **映射檔**：`governance/34-config/naming/namespace-mapping.yaml` 提供舊 namespace → canonical → URN/labels 的轉換表（含 unmanned-island-system、axiom-system、island-ai、uav/ad-production 等），供遷移腳本/工具套用。
 
 ## 🛠️ Migration & Acceptance / 遷移與驗收
 - 遷移策略：`warn-and-plan`，先輸出 `reports/canonical-naming-mapping.csv`（dry-run），標示高/中/低風險。

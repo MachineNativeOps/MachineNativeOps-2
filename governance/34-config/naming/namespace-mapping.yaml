@@ -34,3 +34,45 @@ spec:
         environment: dev
         tenant: platform
         app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: unmanned-island-system
+      canonical_name: prod-unmanned-island-system
+      urn: "urn:axiom:unmanned-island:system:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: axiom-system
+      canonical_name: prod-axiom-system
+      urn: "urn:axiom:axiom:system:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: axiom
+      canonical_name: prod-axiom-core
+      urn: "urn:axiom:axiom:core:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: island-ai
+      canonical_name: prod-island-ai
+      urn: "urn:axiom:island:ai:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: platform
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: uav-production
+      canonical_name: prod-uav
+      urn: "urn:axiom:uav:core:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: robotics
+        app.kubernetes.io/managed-by: axiom-naming-controller
+    - old_name: ad-production
+      canonical_name: prod-ad
+      urn: "urn:axiom:ad:core:env:prod:v1"
+      labels:
+        environment: prod
+        tenant: autonomous-vehicles
+        app.kubernetes.io/managed-by: axiom-naming-controller
