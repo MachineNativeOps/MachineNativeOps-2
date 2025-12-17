@@ -271,6 +271,7 @@ validate_configuration() {
     print_phase "3" "配置验证与整合"
     
     local config_files=(
+        "machinenativeops.yaml"
         "synergymesh.yaml"
         "config/system-manifest.yaml"
         "config/drone-config.yml"
@@ -470,6 +471,7 @@ EOF
 EOF
 
     local config_files=(
+        "machinenativeops.yaml"
         "synergymesh.yaml"
         "config/system-manifest.yaml"
         "config/drone-config.yml"

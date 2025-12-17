@@ -303,7 +303,9 @@ class KnowledgeGraphGenerator:
     
     def _process_config_files(self) -> None:
         """Process main configuration files."""
+        seen_targets: set[Path] = set()
         config_files = [
+            "machinenativeops.yaml",
             "synergymesh.yaml",
             "config/system-manifest.yaml",
             "config/system-module-map.yaml",
@@ -313,6 +315,9 @@ class KnowledgeGraphGenerator:
         for config_path in config_files:
             full_path = self.repo_root / config_path
             if full_path.exists():
+                resolved_path = full_path.resolve()
+                if resolved_path in seen_targets:
+                    continue
                 node_id = f"config:{config_path}".replace("/", ":")
                 self._add_node(
                     node_id=node_id,
@@ -322,6 +327,7 @@ class KnowledgeGraphGenerator:
                     properties={"label_zh": "設定"},
                 )
                 self._add_edge("system:unmanned-island", node_id, "configures")
+                seen_targets.add(resolved_path)
     
     def _generate_statistics(self) -> dict[str, Any]:
         """Generate graph statistics."""

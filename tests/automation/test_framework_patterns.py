@@ -210,22 +210,29 @@ class TestSuiteRunner:
         """Test configuration files existence"""
         try:
             required_configs = [
-                'synergymesh.yaml',
+                'machinenativeops.yaml',
                 'package.json',
                 'pyproject.toml'
             ]
+            legacy_aliases = {}
             
             missing_configs = []
+            legacy_used = []
             for config_file in required_configs:
                 config_path = self.repo_root / config_file
                 if not config_path.exists():
+                    aliases = legacy_aliases.get(config_file, [])
+                    if any((self.repo_root / alias).exists() for alias in aliases):
+                        legacy_used.append(config_file)
+                        continue
                     missing_configs.append(config_file)
             
             if len(missing_configs) == 0:
                 self.log_test_result(
                     "configuration_files",
-                    "PASS",
+                    "INFO" if legacy_used else "PASS",
                     "All required configuration files present"
+                    + (f" (using legacy aliases for: {legacy_used})" if legacy_used else "")
                 )
                 return True
             else:

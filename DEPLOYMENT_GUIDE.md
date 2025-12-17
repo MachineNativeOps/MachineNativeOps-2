@@ -207,14 +207,14 @@ python3 tools/docs/validate_index.py --verbose
 make validate-governance
 
 # 检查 YAML 语法
-python3 -c "import yaml; yaml.safe_load(open('synergymesh.yaml'))"
+python3 -c "import yaml; yaml.safe_load(open('machinenativeops.yaml'))"
 ```
 
 ### 关键配置文件
 
 | 文件 | 用途 |
 |------|------|
-| `synergymesh.yaml` | 统一主配置入口 |
+| `machinenativeops.yaml` | 统一主配置入口 |
 | `config/system-manifest.yaml` | 系统宣告清单 |
 | `config/unified-config-index.yaml` | 统一配置索引 v3.0.0 |
 | `config/system-module-map.yaml` | 模块映射 |
@@ -380,7 +380,7 @@ npm run test
   - [ ] TypeScript 项目已构建
   
 - [ ] **配置验证**
-  - [ ] synergymesh.yaml 语法正确
+  - [ ] machinenativeops.yaml 语法正确
   - [ ] 所有骨架目录存在
   - [ ] go.work 占位符确认
   

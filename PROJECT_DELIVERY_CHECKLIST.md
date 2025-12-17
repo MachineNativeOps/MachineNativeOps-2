@@ -15,7 +15,7 @@
 - [x] `.env.example` - 環境變數範本
 - [x] `.env` - 生產環境設定
 - [x] `package.json` - NPM 配置
-- [x] `synergymesh.yaml` - 主系統配置
+- [x] `machinenativeops.yaml` - 主系統配置
 - [x] `Makefile` - 構建自動化
 - [x] `docker-compose.yml` - 生產容器編排
 - [x] `docker-compose.dev.yml` - 開發容器編排

@@ -458,9 +458,11 @@ class InstantExecutionPipeline:
     def _validate_configurations(self) -> bool:
         """Validate configuration files"""
         try:
+            config_target = REPO_ROOT / "machinenativeops.yaml"
+
             # Check required configs
             required_configs = [
-                REPO_ROOT / "synergymesh.yaml",
+                config_target,
                 REPO_ROOT / "config" / "system-manifest.yaml",
             ]
             
