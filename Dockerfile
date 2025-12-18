@@ -1,174 +1,77 @@
-# ═══════════════════════════════════════════════════════════════════════════════
-#                    SynergyMesh Dockerfile
-#                    Docker 鏡像配置
-# ═══════════════════════════════════════════════════════════════════════════════
+FROM public.ecr.aws/docker/library/python:3.11.14-slim-bookworm
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Base Stage: Common dependencies
-# ─────────────────────────────────────────────────────────────────────────────
-FROM node:25-alpine AS base
+# Set platform for ARM64 compatibility ...
+ARG TARGETPLATFORM=linux/amd64
 
 # Install system dependencies
-RUN apk add --no-cache \
-    python3 \
-    py3-pip \
-    git \
-    curl \
-    bash \
-    && rm -rf /var/cache/apk/*
+COPY apt_packages.txt /tmp/apt_packages.txt
+RUN apt-get update && \
+    apt-get install -y $(grep -v '^#' /tmp/apt_packages.txt | grep -v '^$' | tr '\n' ' ') && \
+    rm -rf /var/lib/apt/lists/* /tmp/apt_packages.txt
 
-# Set working directory
+# Install GitHub CLI
+RUN (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
+    && sudo mkdir -p -m 755 /etc/apt/keyrings \
+    && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+    && cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+    && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+    && sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+    && sudo apt update \
+    && sudo apt install gh -y
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest
+
+# Install noVNC
+RUN git clone https://github.com/novnc/noVNC.git /opt/novnc \
+    && git clone https://github.com/novnc/websockify /opt/novnc/utils/websockify \
+    && ln -s /opt/novnc/vnc_lite.html /opt/novnc/index.html
+
+# Install TTYD
+RUN wget https://github.com/tsl0922/ttyd/releases/download/1.7.7/ttyd.x86_64 && \
+    mv ttyd.x86_64 /usr/local/bin/ttyd && \
+    chmod +x /usr/local/bin/ttyd
+
+# Install Code Server
+RUN curl -fsSL https://code-server.dev/install.sh | sh && mkdir -p /opt/code-server
+
+# Install Claude Code
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
+# Add link protection trusted domains to vscode
+RUN jq '.linkProtectionTrustedDomains += ["https://myninja.ai", "https://betamyninja.ai", "https://gammamyninja.ai"]' /usr/lib/code-server/lib/vscode/product.json > temp.json && mv temp.json /usr/lib/code-server/lib/vscode/product.json
+
+# Copy requirements and install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+# Install Playwright package first
+RUN pip install playwright
+# Then install dependencies and browsers
+RUN playwright install-deps && \
+    playwright install chromium
+
+# Configure pipx for SWE-REX
+RUN python3 -m pip install pipx && \
+    python3 -m pipx ensurepath
+
+# Set up working directory
 WORKDIR /app
+COPY . /app
+COPY nginx.conf /etc/nginx/sites-available/default
+# Set up supervisor configuration
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Copy package files
-COPY package*.json ./
-COPY tsconfig.json ./
+EXPOSE 7788 6080 5901 8000 8080 8888 3222 5000
 
-# ─────────────────────────────────────────────────────────────────────────────
-# Dependencies Stage: Install all dependencies
-# ─────────────────────────────────────────────────────────────────────────────
-FROM base AS dependencies
+# Set up user and their workspace
+RUN groupadd -g 1000 user && \
+    useradd -m -u 1000 -g user user && \
+    mkdir -p /workspace && \
+    chown -R user:user /workspace && \
+    usermod -d /workspace user
 
-# Install Node.js dependencies
-RUN npm ci --only=production
-
-# Copy production dependencies aside
-RUN cp -R node_modules prod_node_modules
-
-# Install all dependencies (including dev)
-RUN npm ci
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Python Stage: Setup Python environment
-# ─────────────────────────────────────────────────────────────────────────────
-FROM base AS python-deps
-
-# Copy Python requirements
-COPY pyproject.toml ./
-
-# Create virtual environment and install dependencies
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel \
-    && pip install --no-cache-dir -e ".[full]" || pip install --no-cache-dir pyyaml pydantic jsonschema
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Build Stage: Build TypeScript application
-# ─────────────────────────────────────────────────────────────────────────────
-FROM dependencies AS build
-
-# Copy source code
-COPY . .
-
-# Build application
-RUN npm run build --if-present
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Development Stage: For local development
-# ─────────────────────────────────────────────────────────────────────────────
-FROM base AS development
-
-# Copy dependencies
-COPY --from=dependencies /app/node_modules ./node_modules
-
-# Copy Python environment
-COPY --from=python-deps /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Copy source code
-COPY . .
-
-# Expose ports
-EXPOSE 3000 3001
-
-# Set environment
-ENV NODE_ENV=development
-ENV SYNERGYMESH_ENV=development
-
-# Start development server
-CMD ["npm", "run", "dev"]
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Test Stage: For running tests
-# ─────────────────────────────────────────────────────────────────────────────
-FROM dependencies AS test
-
-# Copy source code
-COPY . .
-
-# Copy Python environment
-COPY --from=python-deps /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Run tests
-CMD ["npm", "test"]
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Production Stage: Optimized production image
-# ─────────────────────────────────────────────────────────────────────────────
-FROM node:25-alpine AS production
-
-# Install runtime dependencies only
-RUN apk add --no-cache \
-    python3 \
-    py3-pip \
-    curl \
-    tini \
-    && rm -rf /var/cache/apk/*
-
-# Create non-root user
-RUN addgroup -g 1001 -S synergymesh \
-    && adduser -S synergymesh -u 1001 -G synergymesh
-
-# Set working directory
-WORKDIR /app
-
-# Copy production dependencies
-COPY --from=dependencies /app/prod_node_modules ./node_modules
-
-# Copy built application
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/package*.json ./
-
-# Copy Python environment
-COPY --from=python-deps /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-
-# Copy configuration files
-COPY synergymesh.config.yaml ./
-COPY config ./config
-
-# Set ownership
-RUN chown -R synergymesh:synergymesh /app
-
-# Switch to non-root user
-USER synergymesh
-
-# Expose ports
-EXPOSE 3000 3001
-
-# Set environment
-ENV NODE_ENV=production
-ENV SYNERGYMESH_ENV=production
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:3000/health || exit 1
-
-# Use tini as init system
-ENTRYPOINT ["/sbin/tini", "--"]
-
-# Start application
-CMD ["node", "dist/index.js"]
-
-# ─────────────────────────────────────────────────────────────────────────────
-# Labels
-# ─────────────────────────────────────────────────────────────────────────────
-LABEL maintainer="SynergyMesh Team <team@synergymesh.io>"
-LABEL org.opencontainers.image.title="SynergyMesh"
-LABEL org.opencontainers.image.description="無人化自主協同網格系統"
-LABEL org.opencontainers.image.version="1.0.0"
-LABEL org.opencontainers.image.vendor="SynergyMesh"
-LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.source="https://github.com/SynergyMesh/SynergyMesh"
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
