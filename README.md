@@ -1,5 +1,7 @@
 # 🏝️ Unmanned Island System
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6403b6c62f11411982f7be591b8257b5)](https://app.codacy.com/gh/MachineNativeOps/MachineNativeOps?utm_source=github.com&utm_medium=referral&utm_content=MachineNativeOps/MachineNativeOps&utm_campaign=Badge_Grade)
+
 <div align="center">
 
 ![Version](https://img.shields.io/badge/version-4.0.0-blue?style=for-the-badge)
