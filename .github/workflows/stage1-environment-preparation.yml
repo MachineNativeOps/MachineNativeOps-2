@@ -1,0 +1,246 @@
+# =============================================================================
+# 機器自主 AI平台 - 第一阶段环境准备
+# Stage 1: Environment Preparation & Validation
+# =============================================================================
+name: "Stage 1 - Environment Preparation"
+
+on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - "**/*.sh"
+      - "**/*.py"
+      - "config/**"
+      - "scripts/**"
+  push:
+    branches: [main, develop]
+
+env:
+  PLATFORM_VERSION: "v1.0.0"
+  DEPLOYER_SCRIPT: "autonomous-deploy.sh"
+  VALIDATION_TIMEOUT: 600 # seconds
+
+jobs:
+  # =============================================================================
+  # 环境检测与验证
+  # =============================================================================
+  environment-detection:
+    name: "环境检测与系统验证"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      os-type: ${{ steps.os-detection.outputs.os-type }}
+      arch-type: ${{ steps.arch-detection.outputs.arch-type }}
+      tools-available: ${{ steps.tool-check.outputs.available }}
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 操作系统检测
+        id: os-detection
+        run: |
+          echo "检测操作系统环境..."
+          OS_TYPE=$(uname -s | tr '[:upper:]' '[:lower:]')
+          echo "os-type=$OS_TYPE" > $GITHUB_OUTPUT
+          echo "✅ 操作系统: $OS_TYPE"
+
+      - name: 架构检测
+        id: arch-detection
+        run: |
+          echo "检测系统架构..."
+          ARCH_TYPE=$(uname -m)
+          echo "arch-type=$ARCH_TYPE" > $GITHUB_OUTPUT
+          echo "✅ 系统架构: $ARCH_TYPE"
+
+      - name: 基础工具检查
+        id: tool-check
+        run: |
+          echo "验证必需工具可用性..."
+          REQUIRED_TOOLS=("curl" "git" "jq" "python3" "docker" "kubectl")
+          MISSING_TOOLS=()
+          for tool in "${REQUIRED_TOOLS[@]}"; do
+            if command -v $tool &> /dev/null; then
+              echo "✅ $tool 可用"
+            else
+              echo "❌ $tool 缺失"
+              MISSING_TOOLS+=("$tool")
+            fi
+          done
+          if [ ${#MISSING_TOOLS[@]} -eq 0 ]; then
+            echo "available=true" > $GITHUB_OUTPUT
+            echo "✅ 所有必需工具可用"
+          else
+            echo "available=false" > $GITHUB_OUTPUT
+            echo "❌ 缺失工具: ${MISSING_TOOLS[*]}"
+            exit 1
+          fi
+
+      - name: 环境变量验证
+        run: |
+          echo "验证环境变量配置..."
+          REQUIRED_VARS=("PLATFORM_VERSION" "DEPLOYER_SCRIPT")
+          for var in "${REQUIRED_VARS[@]}"; do
+            if [ -z "${!var}" ]; then
+              echo "❌ 环境变量 $var 未设置"
+              exit 1
+            else
+              echo "✅ $var=${!var}"
+            fi
+          done
+
+  # =============================================================================
+  # 脚本语法验证
+  # =============================================================================
+  script-validation:
+    name: "部署脚本语法验证"
+    runs-on: ubuntu-latest
+    needs: environment-detection
+    timeout-minutes: 10
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: Shell脚本语法检查
+        run: |
+          echo "验证Shell脚本语法..."
+          find . -name "*.sh" -type f | while read script; do
+            echo "检查脚本: $script"
+            if bash -n "$script"; then
+              echo "✅ $script 语法正确"
+            else
+              echo "❌ $script 语法错误"
+              exit 1
+            fi
+          done
+
+      - name: Python脚本语法检查
+        run: |
+          echo "验证Python脚本语法..."
+          find . -name "*.py" -type f | while read script; do
+            echo "检查脚本: $script"
+            if python3 -m py_compile "$script"; then
+              echo "✅ $script 语法正确"
+              rm -f "${script}c"
+            else
+              echo "❌ $script 语法错误"
+              exit 1
+            fi
+          done
+
+      - name: 部署脚本功能验证
+        run: |
+          echo "验证主部署脚本功能..."
+          if [ -f "$DEPLOYER_SCRIPT" ]; then
+            echo "✅ 找到部署脚本: $DEPLOYER_SCRIPT"
+            chmod +x "$DEPLOYER_SCRIPT"
+            REQUIRED_FUNCTIONS=("detect_environment" "validate_prerequisites" "deploy_foundation")
+            for func in "${REQUIRED_FUNCTIONS[@]}"; do
+              if grep -q "$func" "$DEPLOYER_SCRIPT"; then
+                echo "✅ 找到函数: $func"
+              else
+                echo "❌ 缺失函数: $func"
+                exit 1
+              fi
+            done
+          else
+            echo "❌ 部署脚本不存在: $DEPLOYER_SCRIPT"
+            exit 1
+          fi
+
+  # =============================================================================
+  # 配置验证
+  # =============================================================================
+  config-validation:
+    name: "配置文件验证"
+    runs-on: ubuntu-latest
+    needs: environment-detection
+    timeout-minutes: 8
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: YAML配置语法检查
+        run: |
+          echo "验证YAML配置文件..."
+          pip install yamllint
+          find . -name "*.yaml" -o -name "*.yml" | while read file; do
+            echo "检查文件: $file"
+            if yamllint "$file"; then
+              echo "✅ $file YAML语法正确"
+            else
+              echo "❌ $file YAML语法错误"
+              exit 1
+            fi
+          done
+
+      - name: JSON配置语法检查
+        run: |
+          echo "验证JSON配置文件..."
+          find . -name "*.json" | while read file; do
+            echo "检查文件: $file"
+            if jq empty "$file" 2>/dev/null; then
+              echo "✅ $file JSON语法正确"
+            else
+              echo "❌ $file JSON语法错误"
+              exit 1
+            fi
+          done
+
+      - name: 环境配置验证
+        run: |
+          echo "验证环境特定配置..."
+          CONFIG_FILES=("config/dev.yaml" "config/prod.yaml" "config/test.yaml")
+          for config in "${CONFIG_FILES[@]}"; do
+            if [ -f "$config" ]; then
+              echo "✅ 找到配置文件: $config"
+            else
+              echo "⚠️ 配置文件缺失: $config"
+            fi
+          done
+
+  # =============================================================================
+  # 最终环境验证报告
+  # =============================================================================
+  environment-report:
+    name: "环境验证报告"
+    runs-on: ubuntu-latest
+    needs: [environment-detection, script-validation, config-validation]
+    if: always()
+    steps:
+      - name: 生成环境报告
+        run: |
+          echo "=========================================="
+          echo " 环境验证报告"
+          echo "=========================================="
+          echo ""
+          echo "📋 环境检测结果:"
+          echo " 操作系统: ${{ needs.environment-detection.outputs.os-type }}"
+          echo " 系统架构: ${{ needs.environment-detection.outputs.arch-type }}"
+          echo " 工具可用性: ${{ needs.environment-detection.outputs.tools-available }}"
+          echo ""
+          echo "📜 脚本验证结果:"
+          echo " 状态: ${{ needs.script-validation.result }}"
+          echo ""
+          echo "⚙️ 配置验证结果:"
+          echo " 状态: ${{ needs.config-validation.result }}"
+          echo ""
+          echo "=========================================="
+          if [[ "${{ needs.environment-detection.result }}" == "success" && \
+                "${{ needs.script-validation.result }}" == "success" && \
+                "${{ needs.config-validation.result }}" == "success" ]]; then
+            echo "🎉 环境验证全部通过"
+            echo "report-status=success" > $GITHUB_OUTPUT
+          else
+            echo "❌ 环境验证失败"
+            echo "report-status=failure" > $GITHUB_OUTPUT
+          fi
+
+      - name: 上传验证报告
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: environment-validation-report
+          path: |
+            ${{ github.workspace }}/**/*.log
+            ${{ github.workspace }}/**/*.txt
+          retention-days: 7
