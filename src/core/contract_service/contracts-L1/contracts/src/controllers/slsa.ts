@@ -54,15 +54,23 @@ export class SLSAController {
       if (validatedInput.subjectPath) {
         // 從文件路徑創建主體
         const fs = await import('fs/promises');
+        const normalizedSubjectPath = path.normalize(validatedInput.subjectPath);
+        if (path.isAbsolute(normalizedSubjectPath)) {
+          throw new PathValidationError();
+        }
         // Normalize and resolve against the SAFE_ROOT
-        const resolvedPath = path.resolve(SAFE_ROOT, validatedInput.subjectPath);
+        const resolvedPath = path.resolve(SAFE_ROOT, normalizedSubjectPath);
         // Ensure the resolved path is within SAFE_ROOT using relative path check
         const relativePath = path.relative(SAFE_ROOT, resolvedPath);
-        if (relativePath.startsWith('..') || path.isAbsolute(relativePath)) {
+        if (
+          relativePath.startsWith('..') ||
+          path.isAbsolute(relativePath) ||
+          (!resolvedPath.startsWith(`${SAFE_ROOT}${path.sep}`) && resolvedPath !== SAFE_ROOT)
+        ) {
           throw new PathValidationError();
         }
         const content = await fs.readFile(resolvedPath);
-        subjects = [this.slsaService.createSubjectFromContent(validatedInput.subjectPath, content)];
+        subjects = [this.slsaService.createSubjectFromContent(normalizedSubjectPath, content)];
       } else {
         // 從摘要創建主體
         subjects = [

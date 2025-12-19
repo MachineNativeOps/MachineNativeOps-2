@@ -98,7 +98,8 @@ class BootstrapContext:
         if self.apply:
             # Security: Only execute scripts from trusted YAML manifests
             # The manifest file should be version-controlled and reviewed
-            subprocess.run(formatted, shell=True, check=True, cwd=self.repo_root)
+            cmd = ["/bin/bash", "-c", formatted]
+            subprocess.run(cmd, check=True, cwd=self.repo_root)
             self.log("[shell] executed block")
         else:
             self.log("[dry-run] shell block:\n" + formatted)
