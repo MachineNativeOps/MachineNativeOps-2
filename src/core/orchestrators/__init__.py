@@ -56,7 +56,15 @@ def _import_kebab_module(module_alias: str, file_name: str, legacy_alias: str | 
         sys.modules[qualified_name] = module
         if legacy_alias:
             sys.modules[legacy_alias] = module
-        spec.loader.exec_module(module)
+        try:
+            spec.loader.exec_module(module)
+        except Exception:
+            # Clear partially-initialized modules from cache on failure
+            if qualified_name in sys.modules:
+                del sys.modules[qualified_name]
+            if legacy_alias and legacy_alias in sys.modules:
+                del sys.modules[legacy_alias]
+            raise
         return module
     return None
 
