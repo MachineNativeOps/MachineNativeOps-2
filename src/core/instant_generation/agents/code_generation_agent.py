@@ -253,21 +253,22 @@ class CodeGenerationAgent(BaseAgent):
     # 代碼生成輔助方法
     def _generate_app_js(self, app_name: str, analysis: Dict[str, Any]) -> str:
         """生成React App組件"""
-        return f"""
+        app_name_capitalized = app_name.title()
+return f"""
 import React from 'react';
 import {{ BrowserRouter as Router, Routes, Route }} from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
 
-function {app_name.title()}() {{
+function {app_name_capitalized}() {{
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={{<Home />}} />
           </Routes>
         </main>
         <Footer />
@@ -276,7 +277,7 @@ function {app_name.title()}() {{
   );
 }}
 
-export default {app_name.title()};
+export default {app_name_capitalized};
 """
     
     def _generate_index_js(self) -> str:
