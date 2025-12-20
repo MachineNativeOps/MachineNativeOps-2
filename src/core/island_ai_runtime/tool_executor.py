@@ -109,6 +109,22 @@ class CodeRunner(Tool):
     def __init__(self, config: ToolConfig | None = None):
         super().__init__(config or ToolConfig(name="code_runner", tool_type=ToolType.CODE_RUNNER))
 
+    def _resolve_working_dir(self, working_dir: str | None) -> str | None:
+        """Normalize and validate working directory against allowed paths."""
+        if working_dir is None:
+            return None
+
+        normalized = os.path.realpath(working_dir)
+        if not self.config.allowed_paths:
+            raise ValueError("Working directory is not allowed")
+
+        for allowed in self.config.allowed_paths:
+            base = os.path.realpath(allowed)
+            if normalized == base or normalized.startswith(base + os.sep):
+                return normalized
+
+        raise ValueError("Working directory is not allowed")
+
     def _build_execution_command(self, lang_config: dict[str, str], temp_file: str) -> list[str]:
         """
         Build a two-element subprocess command array from a validated language configuration.
@@ -134,6 +150,11 @@ class CodeRunner(Tool):
                 status=ExecutionStatus.FAILURE, error=f"Unsupported language: {language}"
             )
 
+        try:
+            safe_working_dir = self._resolve_working_dir(request.working_dir)
+        except ValueError as e:
+            return ExecutionResult(status=ExecutionStatus.BLOCKED, error=str(e))
+
         # 創建臨時文件
         try:
             with tempfile.NamedTemporaryFile(
@@ -149,7 +170,7 @@ class CodeRunner(Tool):
                 capture_output=True,
                 text=True,
                 timeout=request.timeout,
-                cwd=request.working_dir,
+                cwd=safe_working_dir,
             )
 
             return ExecutionResult(
