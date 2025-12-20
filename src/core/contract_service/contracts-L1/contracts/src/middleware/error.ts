@@ -126,7 +126,7 @@ function sanitizeErrorMessage(message: string, isProduction: boolean): string {
  * @param _next - The next middleware function in the Express stack (unused).
  * @returns void
  */
-export function notFoundMiddleware(req: Request, res: Response, _next: NextFunction): void {
+export function notFoundMiddleware(req: Request, res: Response): void {
   res.status(404).json({
     error: {
       message: 'Route not found',
