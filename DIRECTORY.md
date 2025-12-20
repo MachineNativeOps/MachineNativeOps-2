@@ -79,6 +79,7 @@
 - **相關連結**：`docs/DIRECTORY.md`、`Makefile`
 
 ### src/
+
 - **一句話摘要**：核心源碼與服務、自主 / 治理引擎。
 - **我不確定/待釐清**：子模組間的依賴邊界。
 - **相關連結**：`src/DIRECTORY.md`、`governance/`
