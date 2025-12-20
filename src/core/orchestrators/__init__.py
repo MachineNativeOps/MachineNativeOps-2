@@ -96,7 +96,10 @@ language_island_orchestrator = _import_kebab_module(
     "language-island-orchestrator.py",
     legacy_alias="language_island_orchestrator"
 )
-LanguageIslandOrchestrator = language_island_orchestrator.LanguageIslandOrchestrator if language_island_orchestrator else None
+if language_island_orchestrator:
+    LanguageIslandOrchestrator = language_island_orchestrator.LanguageIslandOrchestrator
+else:
+    raise ImportError("Failed to import language-island-orchestrator.py")
 
 
 __all__ = [
