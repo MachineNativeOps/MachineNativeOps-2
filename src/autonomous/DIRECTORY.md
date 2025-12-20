@@ -42,6 +42,7 @@
 | nucleus-orchestrator | - | 核心編排器 | ✅ 已實現 |
 
 **未實現的 3 個骨架**（僅存在於架構定義）：
+
 - **api-governance** - API 治理（設計於 architecture-skeletons/）
 - **testing-governance** - 測試治理（設計於 architecture-skeletons/）
 - **data-governance** - 資料治理（設計於 architecture-skeletons/）
