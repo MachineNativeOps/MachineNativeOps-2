@@ -115,7 +115,10 @@ class CodeRunner(Tool):
         if working_dir is None:
             return None
 
-        normalized = Path(working_dir).resolve()
+        try:
+            normalized = Path(working_dir).resolve(strict=True)
+        except FileNotFoundError:
+            raise ValueError(f"Working directory '{working_dir}' does not exist.")
         if not self.config.allowed_paths:
             raise ValueError(
                 f"Working directory '{normalized}' requires an allowlist; configure allowed_paths."
