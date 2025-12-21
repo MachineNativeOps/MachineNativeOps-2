@@ -98,6 +98,7 @@ gh issue create --title "webhook.py event_name usage clarification needed" --bod
 
 ### 2. 治理機制
 
+
 - 建立 PR 狀態管理規範
 - 定期審查 CI 失敗原因
 - 建立回饋處理流程
