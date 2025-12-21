@@ -98,7 +98,8 @@ class SemanticVersion:
         
         # Compare each identifier
         for i in range(max(len(parts1), len(parts2))):
-            # A larger set of pre-release fields has higher precedence
+            # A larger set of pre-release fields has higher precedence (per SemVer spec)
+            # e.g., "alpha" < "alpha.1"
             if i >= len(parts1):
                 return -1
             if i >= len(parts2):
@@ -117,10 +118,10 @@ class SemanticVersion:
                 if cmp != 0:
                     return -1 if cmp < 0 else 1
             elif is_num1:
-                # Numeric identifiers have lower precedence than non-numeric
+                # Numeric has lower precedence than non-numeric (per SemVer spec)
                 return -1
             elif is_num2:
-                # Non-numeric has higher precedence than numeric
+                # Numeric has lower precedence than non-numeric (per SemVer spec)
                 return 1
             else:
                 # Both non-numeric - compare lexically

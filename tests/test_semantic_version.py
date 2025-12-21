@@ -19,10 +19,10 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v1_1_0 = SemanticVersion(1, 1, 0)
         v2_0_0 = SemanticVersion(2, 0, 0)
 
-        assert v1_0_0 < v1_0_1
-        assert v1_0_1 < v1_1_0
-        assert v1_1_0 < v2_0_0
-        assert v1_0_0 == SemanticVersion(1, 0, 0)
+        self.assertLess(v1_0_0, v1_0_1)
+        self.assertLess(v1_0_1, v1_1_0)
+        self.assertLess(v1_1_0, v2_0_0)
+        self.assertEqual(v1_0_0, SemanticVersion(1, 0, 0))
 
     def test_prerelease_lower_than_normal(self):
         """Test that prerelease versions have lower precedence than normal versions"""
@@ -30,9 +30,9 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_prerelease = SemanticVersion(1, 0, 0, prerelease="alpha")
         v_normal = SemanticVersion(1, 0, 0)
 
-        assert v_prerelease < v_normal
-        assert not v_normal < v_prerelease
-        assert v_prerelease != v_normal
+        self.assertLess(v_prerelease, v_normal)
+        self.assertFalse(v_normal < v_prerelease)
+        self.assertNotEqual(v_prerelease, v_normal)
 
     def test_prerelease_comparison_alpha_beta(self):
         """Test comparison of common prerelease versions"""
@@ -41,9 +41,9 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_rc = SemanticVersion(1, 0, 0, prerelease="rc")
 
         # Lexical ordering: alpha < beta < rc
-        assert v_alpha < v_beta
-        assert v_beta < v_rc
-        assert v_alpha < v_rc
+        self.assertLess(v_alpha, v_beta)
+        self.assertLess(v_beta, v_rc)
+        self.assertLess(v_alpha, v_rc)
 
     def test_prerelease_numeric_comparison(self):
         """Test numeric prerelease identifier comparison"""
@@ -52,9 +52,9 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_alpha10 = SemanticVersion(1, 0, 0, prerelease="alpha.10")
 
         # Numeric comparison: 1 < 2 < 10
-        assert v_alpha1 < v_alpha2
-        assert v_alpha2 < v_alpha10
-        assert v_alpha1 < v_alpha10
+        self.assertLess(v_alpha1, v_alpha2)
+        self.assertLess(v_alpha2, v_alpha10)
+        self.assertLess(v_alpha1, v_alpha10)
 
     def test_prerelease_mixed_numeric_alpha(self):
         """Test mixed numeric and alphanumeric identifiers"""
@@ -62,7 +62,7 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_alpha1 = SemanticVersion(1, 0, 0, prerelease="alpha.1")
 
         # More identifiers = higher precedence
-        assert v_alpha < v_alpha1
+        self.assertLess(v_alpha, v_alpha1)
 
     def test_numeric_lower_than_alphanumeric(self):
         """Test that numeric identifiers have lower precedence than alphanumeric"""
@@ -70,7 +70,7 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_alpha = SemanticVersion(1, 0, 0, prerelease="alpha")
 
         # Numeric < alphanumeric
-        assert v_1 < v_alpha
+        self.assertLess(v_1, v_alpha)
 
     def test_semver_spec_example(self):
         """Test the example from SemVer 2.0.0 spec"""
@@ -89,8 +89,8 @@ class TestSemanticVersionComparison(unittest.TestCase):
 
         # Verify each version is less than the next
         for i in range(len(versions) - 1):
-            assert versions[i] < versions[i + 1], \
-                f"{versions[i]} should be < {versions[i + 1]}"
+            self.assertLess(versions[i], versions[i + 1],
+                f"{versions[i]} should be < {versions[i + 1]}")
 
     def test_equality_with_prerelease(self):
         """Test equality comparison with prereleases"""
@@ -99,9 +99,9 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v3 = SemanticVersion(1, 0, 0, prerelease="beta")
         v4 = SemanticVersion(1, 0, 0)
 
-        assert v1 == v2
-        assert v1 != v3
-        assert v1 != v4
+        self.assertEqual(v1, v2)
+        self.assertNotEqual(v1, v3)
+        self.assertNotEqual(v1, v4)
 
     def test_total_ordering_methods(self):
         """Test that @total_ordering generates correct comparison methods"""
@@ -109,21 +109,21 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v_normal = SemanticVersion(1, 0, 0)
 
         # Test >, >=, <=
-        assert v_normal > v_pre
-        assert v_normal >= v_pre
-        assert v_pre <= v_normal
-        assert not v_pre > v_normal
-        assert not v_pre >= v_normal
-        assert not v_normal <= v_pre
+        self.assertGreater(v_normal, v_pre)
+        self.assertGreaterEqual(v_normal, v_pre)
+        self.assertLessEqual(v_pre, v_normal)
+        self.assertFalse(v_pre > v_normal)
+        self.assertFalse(v_pre >= v_normal)
+        self.assertFalse(v_normal <= v_pre)
 
     def test_parse_and_compare(self):
         """Test parsing version strings and comparing them"""
         v1 = SemanticVersion.parse("1.0.0-alpha")
         v2 = SemanticVersion.parse("1.0.0")
 
-        assert v1 < v2
-        assert v1.prerelease == "alpha"
-        assert v2.prerelease == ""
+        self.assertLess(v1, v2)
+        self.assertEqual(v1.prerelease, "alpha")
+        self.assertEqual(v2.prerelease, "")
 
     def test_build_metadata_ignored_in_comparison(self):
         """Test that build metadata is ignored in version comparison"""
@@ -131,9 +131,9 @@ class TestSemanticVersionComparison(unittest.TestCase):
         v2 = SemanticVersion(1, 0, 0, prerelease="alpha", build="002")
 
         # Build metadata should not affect comparison
-        assert v1 == v2
-        assert not v1 < v2
-        assert not v2 < v1
+        self.assertEqual(v1, v2)
+        self.assertFalse(v1 < v2)
+        self.assertFalse(v2 < v1)
 
 
 if __name__ == "__main__":
