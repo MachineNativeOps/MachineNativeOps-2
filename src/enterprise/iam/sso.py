@@ -378,7 +378,10 @@ class SSOManager:
             # SECURITY WARNING: Signature verification is disabled
             id_token_claims = pyjwt.decode(
                 tokens.id_token,
-                options={"verify_signature": False}
+                key=signing_key.key,
+                algorithms=["RS256", "RS384", "RS512", "ES256", "ES384", "ES512"],
+                audience=config.client_id,
+                issuer=discovery.get("issuer"),
             )
             token_nonce = id_token_claims.get("nonce")
             if token_nonce != nonce:
