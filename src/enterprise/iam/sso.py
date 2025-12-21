@@ -10,7 +10,7 @@ import hashlib
 import logging
 import secrets
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Optional, Protocol
 from urllib.parse import urlencode, urlparse
 from uuid import UUID
@@ -428,8 +428,8 @@ class SSOManager:
                 raise ValueError(
                     f"Invalid expiration claim type: expected number, got {type(token_exp)}"
                 )
-            current_timestamp = datetime.utcnow().timestamp()
-            if current_timestamp >= token_exp:
+            current_timestamp = datetime.now(tz=timezone.utc).timestamp()
+            if current_timestamp > token_exp:
                 raise ValueError("ID token has expired")
                 
         except jwt.DecodeError as e:
