@@ -41,7 +41,7 @@ deleted_files:
 
 ### 🏛️ 第五證據：命名規範遵循 **[若變更根層檔案則必填]**
 - [ ] N/A - 無根層檔案變更
-- [x] ✅ 已遵循 `root.naming-policy.yaml` 規範
+- [ ] ✅ 已遵循 `root.naming-policy.yaml` 規範
 - [ ] ❌ 未遵循命名規範（請說明原因）
 
 ---
@@ -50,38 +50,38 @@ deleted_files:
 
 ### ✅ 二元回應遵循
 
-- [x] ✅ **可完成 / 不可完成** 二元回應
-- [x] ✅ **具體缺失資源清單**
-- [x] ✅ **無模糊語言**
-- [x] ✅ **草稿模式遵循**
+- [ ] ✅ **可完成 / 不可完成** 二元回應
+- [ ] ✅ **具體缺失資源清單**
+- [ ] ✅ **無模糊語言**
+- [ ] ✅ **草稿模式遵循**
 
 ### 🔍 證據鏈驗證
-- [x] ✅ **PR URL 可驗證且可訪問**
-- [x] ✅ **Commit SHA 為完整 40 字元**
-- [x] ✅ **所有檔案變更都有記錄**
-- [x] ✅ **變更內容與任務描述一致**
+- [ ] ✅ **PR URL 可驗證且可訪問**
+- [ ] ✅ **Commit SHA 為完整 40 字元**
+- [ ] ✅ **所有檔案變更都有記錄**
+- [ ] ✅ **變更內容與任務描述一致**
 
 ### 📱 行動裝置友善性
 
-- [x] ✅ **檔案結構易於在手機上驗證**
-- [x] ✅ **重要配置檔案可及性**
-- [x] ✅ **目錄深度合理化**
+- [ ] ✅ **檔案結構易於在手機上驗證**
+- [ ] ✅ **重要配置檔案可及性**
+- [ ] ✅ **目錄深度合理化**
 
 ---
 
 ## 🔄 治理合約檢查
 
 ### 📋 根層治理遵循
-- [x] ✅ 遵循 [`docs/governance/AGENT_DELIVERY_CONTRACT.md`](./docs/governance/AGENT_DELIVERY_CONTRACT.md)
-- [x] ✅ 符合 [`ROOT_ARCHITECTURE.md`](./ROOT_ARCHITECTURE.md) 架構要求
-- [x] ✅ 相容 [`root.governance.yaml`](./root.governance.yaml) 規則
+- [ ] ✅ 遵循 [`docs/governance/AGENT_DELIVERY_CONTRACT.md`](./docs/governance/AGENT_DELIVERY_CONTRACT.md)
+- [ ] ✅ 符合 [`ROOT_ARCHITECTURE.md`](./ROOT_ARCHITECTURE.md) 架構要求
+- [ ] ✅ 相容 [`root.governance.yaml`](./root.governance.yaml) 規則
 
 ### 🤖 AI 行為合約遵循
-- [x] ✅ 遵循 [`.github/AI-BEHAVIOR-CONTRACT.md`](./.github/AI-BEHAVIOR-CONTRACT.md)
-- [x] ✅ 無合約第 1 節違規 (模糊語言)
-- [x] ✅ 無合約第 2 節違規 (二元回應)
-- [x] ✅ 無合約第 3 節違規 (任務拆解)
-- [x] ✅ 無合約第 4 節違規 (草稿模式)
+- [ ] ✅ 遵循 [`.github/AI-BEHAVIOR-CONTRACT.md`](./.github/AI-BEHAVIOR-CONTRACT.md)
+- [ ] ✅ 無合約第 1 節違規 (模糊語言)
+- [ ] ✅ 無合約第 2 節違規 (二元回應)
+- [ ] ✅ 無合約第 3 節違規 (任務拆解)
+- [ ] ✅ 無合約第 4 節違規 (草稿模式)
 
 ---
 
@@ -110,10 +110,10 @@ deleted_files:
 - [ ] ✅ 效能表現符合預期
 
 ### 📋 治理審核
-- [x] ✅ 證據鏈完整且可驗證
-- [x] ✅ AI 合約遵循無違規
+- [ ] ✅ 證據鏈完整且可驗證
+- [ ] ✅ AI 合約遵循無違規
 - [ ] ✅ 文檔更新完整
-- [x] ✅ 行動裝置友善性確認
+- [ ] ✅ 行動裝置友善性確認
 
 ### 🔒 安全審核
 - [ ] ✅ 無安全漏洞引入
