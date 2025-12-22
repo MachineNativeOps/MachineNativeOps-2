@@ -15,6 +15,7 @@ from typing import Any, Protocol
 from urllib.parse import urlencode, urlparse
 from uuid import UUID
 import jwt as pyjwt
+from jwt import PyJWKClient
 
 from enterprise.iam.models import (
     Membership,
@@ -377,7 +378,7 @@ class SSOManager:
         if not jwks_uri:
             raise ValueError("JWKS URI not found in OIDC discovery")
         
-        jwks_client = pyjwt.PyJWKClient(jwks_uri)
+        jwks_client = PyJWKClient(jwks_uri)
         
         try:
             # Get the signing key from JWKS
