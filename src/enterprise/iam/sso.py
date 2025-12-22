@@ -373,19 +373,6 @@ class SSOManager:
             expires_in=token_response.get("expires_in", 3600),
         )
 
-        # Validate ID token signature and nonce to prevent replay attacks
-        # Fetch JWKS for signature verification
-        jwks_uri = discovery.get("jwks_uri")
-        if not jwks_uri:
-            raise ValueError("JWKS URI not found in OIDC discovery")
-        
-        jwks_client = PyJWKClient(jwks_uri)
-        
-        try:
-            # Get the signing key from JWKS
-            signing_key = jwks_client.get_signing_key_from_jwt(tokens.id_token)
-            
-            # Decode and verify JWT signature, audience, and issuer
         # Validate ID token with proper JWT signature verification using JWKS
         try:
             # Get JWKS URI from discovery document
@@ -412,9 +399,6 @@ class SSOManager:
             token_nonce = id_token_claims.get("nonce")
             if token_nonce != nonce:
                 raise ValueError("ID token nonce does not match expected nonce")
-        except pyjwt.DecodeError as e:
-            raise ValueError(f"Failed to decode ID token: {e}")
-                
         except pyjwt.InvalidTokenError as e:
             raise ValueError(f"Invalid ID token: {e}")
 
