@@ -184,25 +184,42 @@ SuperAgent 架構 → AAPS 功能映射:
     → 擴展訊息類型支援
   
   MonitoringAgent (Observe):
-    → 整合 Token 監控
-    → 添加成本追蹤
-    → 實現告警系統
+    → 整合 Token 監控 (Python)
+    → 添加成本追蹤 (Python)
+    → 實現告警系統 (Python)
   
   LearningAgent (Knowledge):
-    → 整合 Prompt 管理
-    → 添加版本控制
-    → 實現 A/B 測試
+    → 整合 Prompt 管理 (TypeScript workspace)
+    → 添加版本控制 (TypeScript)
+    → 實現 A/B 測試 (TypeScript)
   
   SupplyChainAgent (Attestation):
-    → 整合 Artifact 管理
-    → 添加漏洞掃描
-    → 實現 SBOM 生成
+    → 整合 Artifact 管理 (Python)
+    → 添加漏洞掃描 (Python)
+    → 實現 SBOM 生成 (Python)
   
   新增 Agent:
-    ArtifactManagerAgent:
+    ArtifactManagerAgent (Python):
       - 多語言 Artifact 處理
       - 元數據提取與驗證
       - 存儲與檢索管理
+  
+  新增 Services (TypeScript workspaces):
+    src/services/marketplace:
+      - GitHub OAuth 認證
+      - Webhook 處理
+      - 訂閱管理
+    
+    src/services/prompt-management:
+      - Prompt 版本控制
+      - A/B 測試框架
+      - 性能評分系統
+
+Workspace 整合策略:
+  - Python 服務: 整合到現有 Python 模組結構，無需 npm workspace
+  - TypeScript 服務: 作為獨立 npm workspace 添加到 src/services/
+  - 前端組件: 整合到現有 src/apps/web workspace
+  - 共享依賴: 通過 workspace 機制共享，避免重複安裝
 ```
 
 ### 數據流設計
@@ -227,31 +244,68 @@ SuperAgent 架構 → AAPS 功能映射:
 
 ### 目錄結構
 
+**重要說明**: 根據項目的 npm workspace 管理規範，新增的 TypeScript/Node.js 服務必須遵循以下原則：
+
+1. 所有新服務放置在 `src/` 目錄下
+2. TypeScript/Node.js 服務應作為 npm workspace 添加到 `package.json`
+3. Python 服務整合到現有的 Python 模組結構
+4. 前端組件整合到現有的 `src/apps/web` workspace
+
 ```
 machine-native-ops-aaps/
 ├── agents/
 │   ├── super-agent/          # 現有
-│   ├── monitoring-agent/     # 擴展
-│   ├── learning-agent/       # 擴展
-│   ├── supply-chain-agent/   # 擴展
-│   └── artifact-manager/     # 新增
+│   ├── monitoring-agent/     # 擴展 (Python)
+│   ├── learning-agent/       # 擴展 (Python)
+│   ├── supply-chain-agent/   # 擴展 (Python)
+│   └── artifact-manager/     # 新增 (Python)
 │       ├── main.py
 │       ├── metadata_extractor.py
 │       ├── storage_manager.py
 │       └── requirements.txt
-├── services/
-│   ├── token-tracking/       # 新增
-│   │   ├── tracker.py
-│   │   ├── cost_calculator.py
-│   │   └── alert_manager.py
-│   ├── marketplace/          # 新增
-│   │   ├── oauth.py
-│   │   ├── webhooks.py
-│   │   └── subscription.py
-│   └── prompt-management/    # 新增
-│       ├── version_control.py
-│       ├── ab_testing.py
-│       └── performance.py
+├── src/
+│   ├── services/             # 現有目錄，擴展新服務
+│   │   ├── token-tracking/   # 新增 (Python)
+│   │   │   ├── tracker.py
+│   │   │   ├── cost_calculator.py
+│   │   │   └── alert_manager.py
+│   │   ├── marketplace/      # 新增 (TypeScript workspace)
+│   │   │   ├── package.json  # 獨立 npm workspace
+│   │   │   ├── tsconfig.json
+│   │   │   ├── src/
+│   │   │   │   ├── oauth.ts
+│   │   │   │   ├── webhooks.ts
+│   │   │   │   └── subscription.ts
+│   │   │   └── dist/
+│   │   └── prompt-management/ # 新增 (TypeScript workspace)
+│   │       ├── package.json   # 獨立 npm workspace
+│   │       ├── tsconfig.json
+│   │       ├── src/
+│   │       │   ├── version_control.ts
+│   │       │   ├── ab_testing.ts
+│   │       │   └── performance.ts
+│   │       └── dist/
+│   ├── apps/
+│   │   └── web/              # 現有 workspace，擴展新組件
+│   │       ├── src/
+│   │       │   ├── components/
+│   │       │   │   ├── TokenMonitoring.tsx    # 新增
+│   │       │   │   ├── ArtifactManagement.tsx # 新增
+│   │       │   │   ├── TeamManagement.tsx     # 新增
+│   │       │   │   └── PromptEditor.tsx       # 新增
+│   │       │   └── pages/
+│   │       │       └── dashboard/             # 新增儀表板頁面
+│   │       └── package.json
+│   └── api/                  # 現有 API 結構，擴展新路由
+│       ├── routes/
+│       │   ├── auth.py       # 新增
+│       │   ├── artifacts.py  # 新增
+│       │   ├── tokens.py     # 新增
+│       │   ├── teams.py      # 新增
+│       │   └── prompts.py    # 新增
+│       └── middleware/
+│           ├── rbac.py       # 新增
+│           └── webhook_verify.py # 新增
 ├── database/
 │   ├── postgres/
 │   │   ├── schema.sql
@@ -261,25 +315,51 @@ machine-native-ops-aaps/
 │   │   └── materialized_views.sql
 │   └── redis/
 │       └── streams_config.yaml
-├── api/
-│   ├── routes/
-│   │   ├── auth.py
-│   │   ├── artifacts.py
-│   │   ├── tokens.py
-│   │   ├── teams.py
-│   │   └── prompts.py
-│   └── middleware/
-│       ├── rbac.py
-│       └── webhook_verify.py
-└── frontend/
-    ├── dashboard/
-    │   ├── TokenMonitoring.tsx
-    │   ├── ArtifactManagement.tsx
-    │   ├── TeamManagement.tsx
-    │   └── PromptEditor.tsx
-    └── components/
-        └── ui/
 ```
+
+### Workspace 管理配置
+
+需要更新根目錄的 `package.json`，添加新的 TypeScript 服務到 workspaces：
+
+```json
+{
+  "workspaces": [
+    "src/mcp-servers",
+    "src/core/contract_service/contracts-L1/contracts",
+    "src/core/advisory-database",
+    "src/apps/web",
+    "src/ai/src/ai",
+    "src/services/marketplace",
+    "src/services/prompt-management",
+    "archive/unmanned-engineer-ceo/80-skeleton-configs"
+  ]
+}
+```
+
+**註**: 新增的 workspace 路徑為 `src/services/marketplace` 和 `src/services/prompt-management`
+
+**Workspace 整合指引**:
+
+1. **新增 TypeScript 服務時**:
+   - 在 `src/services/<service-name>` 創建目錄
+   - 添加 `package.json` 和 `tsconfig.json`
+   - 更新根 `package.json` 的 workspaces 數組
+   - 運行 `npm install` 重新鏈接 workspaces
+
+2. **新增 Python 服務時**:
+   - 整合到現有 Python 模組結構 (`src/core/` 或 `agents/`)
+   - 更新 `requirements.txt` 或 `pyproject.toml`
+   - 不需要添加到 npm workspaces
+
+3. **前端組件整合**:
+   - 所有 React/TypeScript 組件添加到 `src/apps/web/src/components/`
+   - 利用現有 workspace 的構建配置
+   - 不創建新的獨立 workspace
+
+4. **構建與測試**:
+   - 使用 `npm run build --workspaces` 構建所有 TypeScript 服務
+   - 使用 `npm run test --workspaces` 運行所有測試
+   - 單獨測試: `npm run test -w src/services/marketplace`
 
 ### 配置管理
 
@@ -351,22 +431,48 @@ aaps:
 # 1. 創建新分支
 git checkout -b feature/aaps-marketplace-integration
 
-# 2. 實施核心功能
-# - Token 監控
-# - Artifact 管理基礎
-# - GitHub OAuth
+# 2. 設置 Workspace 結構
+# 2.1 創建 TypeScript 服務目錄
+mkdir -p src/services/marketplace/src
+mkdir -p src/services/prompt-management/src
 
-# 3. 本地測試
+# 2.2 初始化 TypeScript 服務
+cd src/services/marketplace
+npm init -y
+# 配置 tsconfig.json, 添加依賴等
+
+cd ../prompt-management
+npm init -y
+# 配置 tsconfig.json, 添加依賴等
+
+# 2.3 更新根 package.json 的 workspaces
+# 手動編輯或使用編輯器添加新的 workspace 路徑
+
+# 2.4 重新安裝依賴以鏈接 workspaces
+cd ../..  # 返回專案根目錄
+npm install
+
+# 3. 實施核心功能
+# - Token 監控 (Python)
+# - Artifact 管理基礎 (Python)
+# - GitHub OAuth (TypeScript workspace)
+
+# 4. 本地測試
+# 4.1 測試 TypeScript workspaces
+npm run test --workspaces --if-present
+npm run build --workspaces --if-present
+
+# 4.2 測試 Python 服務
 docker-compose up -d
 pytest tests/
 
-# 4. 部署到 Staging
+# 5. 部署到 Staging
 ./scripts/deploy.sh staging
 
-# 5. 驗證功能
+# 6. 驗證功能
 ./scripts/verify-deployment.sh
 
-# 6. 創建 PR
+# 7. 創建 PR
 gh pr create --title "AAPS Marketplace Integration Phase 1"
 ```
 
