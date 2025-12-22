@@ -76,7 +76,7 @@ class SuperAgentCore:
 
     def __init__(self):
         self.incidents: Dict[str, Incident] = {}
-        self.startup_time = datetime.utcnow()
+        self.startup_time = datetime.now()
         self.message_handlers = {
             MessageType.INCIDENT_SIGNAL: self.handle_incident_signal,
             MessageType.RCA_REPORT: self.handle_rca_report,
@@ -96,7 +96,7 @@ class SuperAgentCore:
     
     def get_uptime(self) -> str:
         """Calculate uptime since startup"""
-        uptime_delta = datetime.utcnow() - self.startup_time
+        uptime_delta = datetime.now() - self.startup_time
         total_seconds = int(uptime_delta.total_seconds())
         days = total_seconds // 86400
         hours = (total_seconds % 86400) // 3600
