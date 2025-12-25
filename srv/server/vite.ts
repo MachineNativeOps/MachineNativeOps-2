@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer, type ViteDevServer } from "vite";
+import { basicRateLimit } from "./middleware/rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,7 +33,7 @@ export function serveStatic(app: Express) {
   const { default: express } = require("express");
   app.use(express.static(distPath));
 
-  app.get("*", (_req, res, next) => {
+  app.get("*", basicRateLimit, (_req, res, next) => {
     if (_req.path.startsWith("/api")) {
       return next();
     }

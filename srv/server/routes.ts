@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { getConnector, getAvailableProviders } from "./connectors/index";
 import { planner } from "./services/planner";
 import { executor } from "./services/executor";
+import { basicRateLimit } from "./middleware/rate-limit";
 import type { ApiResponse } from "../shared/types";
 
 const router = Router();
@@ -73,6 +74,7 @@ router.get(
 
 router.post(
   "/api/connections/:provider/start",
+  basicRateLimit,
   asyncHandler(async (req, res) => {
     const { provider } = req.params;
     const connector = getConnector(provider);
@@ -94,6 +96,7 @@ router.post(
 
 router.post(
   "/api/connections/:provider/callback",
+  basicRateLimit,
   asyncHandler(async (req, res) => {
     const { provider } = req.params;
     const { code, state } = req.body;
