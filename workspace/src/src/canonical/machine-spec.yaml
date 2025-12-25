@@ -11,7 +11,6 @@ metadata:
 spec:
   audit:
     enabled: true
-<<<<<<< HEAD
     fields:
     - timestamp
     - resource_type
@@ -43,68 +42,6 @@ spec:
     expires_at: '2025-12-31T23:59:59Z'
     reason: 历史遗留系统，迁移计划中
     resource: legacy-*
-=======
-    format: "urn:machinenativeops:{domain}:{component}:env:{environment}:{version}"
-    examples:
-      - namespace: "team-frontend-prod"
-        urn: "urn:machinenativeops:team:frontend:env:prod:v1"
-      - namespace: "tenant-payment-prod-uswest"
-        urn: "urn:machinenativeops:tenant:payment:env:prod:region:uswest"
-
-    annotation_key: "machinenativeops.io/canonical-urn"
-    description: "所有 Namespace 必须包含 URN annotation"
-
-  # 验证规则（用于 CI/CD、Conftest、Gatekeeper）
-  validation_rules:
-    # 规则 1: Namespace 命名验证
-    - id: "RULE-001"
-      resource_type: "Namespace"
-      field: "metadata.name"
-      rule_type: "regex"
-      pattern: "^(team|tenant|dev|test|staging|prod|learn)-[a-z0-9-]{1,56}[a-z0-9]$"
-      severity: "critical"
-      error_message: "Namespace 名称必须符合 Canonical 命名模式之一"
-      remediation: "使用 team-{domain}-{env}、tenant-{workload}-{env}-{region} 或 env-{app}-{version} 格式"
-
-    # 规则 2: 必需标签验证
-    - id: "RULE-002"
-      resource_type: "Namespace"
-      field: "metadata.labels"
-      rule_type: "required_keys"
-      required_keys: ["environment", "tenant"]
-      severity: "high"
-      error_message: "Namespace 缺少必需标签"
-      exemptions: ["kube-system", "kube-public", "kube-node-lease", "default"]
-
-    # 规则 3: URN annotation 验证
-    - id: "RULE-003"
-      resource_type: "Namespace"
-      field: "metadata.annotations"
-      rule_type: "required_keys"
-      required_keys: ["machinenativeops.io/canonical-urn"]
-      severity: "medium"
-      error_message: "Namespace 缺少 Canonical URN annotation"
-
-    # 规则 4: 保留关键字验证
-    - id: "RULE-004"
-      resource_type: "all"
-      field: "metadata.name"
-      rule_type: "deny_list"
-      denied_values: ["core", "internal", "system", "legacy", "experimental", "kube", "kubernetes"]
-      severity: "critical"
-      error_message: "资源名称不能使用保留关键字"
-
-    # 规则 5: 环境标签值验证
-    - id: "RULE-005"
-      resource_type: "all"
-      field: "metadata.labels.environment"
-      rule_type: "allow_list"
-      allowed_values: ["dev", "test", "staging", "prod", "learn"]
-      severity: "critical"
-      error_message: "environment 标签值必须是标准环境之一"
-
-  # 迁移策略
->>>>>>> main
   migration:
     auto_suggestion:
       algorithm: pattern_matching

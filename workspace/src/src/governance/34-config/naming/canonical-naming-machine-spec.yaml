@@ -44,7 +44,6 @@ naming:
   - domain
   - component
   - environment
-<<<<<<< HEAD
   - region
   - version
   - suffix
@@ -60,12 +59,6 @@ required_labels:
 - environment
 - tenant
 - app.kubernetes.io/managed-by
-=======
-  - tenant
-  - app.kubernetes.io/managed-by
-
-urn_template: "urn:machinenativeops:{domain}:{component}:env:{environment}:{version}"
->>>>>>> main
 segment_mapping:
   component: '{component}'
   domain: '{domain}'
@@ -74,18 +67,9 @@ segment_mapping:
   suffix: suffix_map.*
   version: '{version}'
 segment_mapping_notes:
-<<<<<<< HEAD
   region: region values are stored under annotations key axiom.io/qualifiers as region=<value>
   suffix: suffix resolution uses suffix_map entries when present
 urn_template: urn:axiom:{domain}:{component}:env:{environment}:{version}
-=======
-  region: "region values are stored under annotations key machinenativeops.io/qualifiers as region=<value>"
-  suffix: "suffix resolution uses suffix_map entries when present"
-annotations:
-  canonical_urn: "machinenativeops.io/canonical-urn"
-  qualifiers: "machinenativeops.io/qualifiers"
-
->>>>>>> main
 validation:
   ci:
     conftest_policy: governance/23-policies/conftest/naming_policy.rego

@@ -27,14 +27,9 @@ This document summarizes the extraction of useful logic from 7 legacy files and 
 **Integration Target:** `scripts/k8s/deploy-baselines.sh`
 
 **Key Changes:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - Removed "intelligent-hyperautomation-baseline" namespace →
   `machinenativeops-system`
-=======
-- Removed "intelligent-hyperautomation-baseline" namespace → `machinenativeops-system`
->>>>>>> origin/alert-autofix-37
 =======
 
 - Removed "intelligent-hyperautomation-baseline" namespace → `machinenativeops-system`

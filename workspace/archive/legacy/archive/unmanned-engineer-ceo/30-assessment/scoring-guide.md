@@ -8,13 +8,8 @@
 - **Level D (<4)**：需制定改進計畫。
 
 ## 規則
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 最終評分 = 0.6 _Skill + 0.4_ Trait。
-=======
-- 最終評分 = 0.6 * Skill + 0.4 * Trait。
->>>>>>> origin/alert-autofix-37
 =======
 
 - 最終評分 = 0.6 *Skill + 0.4* Trait。

@@ -1,11 +1,6 @@
 # Legacy Scratch Refactor Playbook System - Analysis Report
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 # \_legacy_scratch 重構劇本系統 - 完整分析報告
-=======
-# _legacy_scratch 重構劇本系統 - 完整分析報告
->>>>>>> origin/alert-autofix-37
 =======
 
 # _legacy_scratch 重構劇本系統 - 完整分析報告

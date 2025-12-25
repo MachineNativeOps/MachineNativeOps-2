@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 advanced_architecture_sync:
   source_patterns:
   - destination: advanced-system-dist/
@@ -32,85 +31,6 @@ audit:
     signature: cosign
     target_files: array
     timestamp: RFC3339
-=======
-# ============================================================================
-# AUTO-FIX-BOT 配置文件 - Enterprise Code Intelligence Platform
-# ============================================================================
-# Project: SynergyMesh - Senior Automation Architect & Code Intelligence Engineer
-# Version: 3.0.0 (Phase 1 Production Ready)
-# Target: 月收入千萬美元企劃 - 第一版落地實作
-# ============================================================================
-
-# ==================== Metadata ====================
-name: "Enterprise Code Intelligence Platform"
-id: machinenativeops-auto-fix-bot
-version: "3.0.0"
-owner:
-  team: platform-governance
-  contacts: ["platform@imachinenativeops.com"]
-  approvers: ["tech-lead", "security-head"]
-
-metadata:
-  created_at: "2025-01-17T12:00:00Z"
-  updated_at: "2025-11-25T14:39:00Z"
-  labels: [auto-fix, governance, policy-enforcement, deep-validation, hyperautomation]
-  compliance_tags: [slsa-l3, in-toto, audit-trail, machinenativeops-free, enterprise-grade]
-  project_structure: machinenativeops
-  architecture_pattern: "智能超自動化治理架構"
-
-description: >
-  企業級自動化代碼分析與修復系統。整合深度可驗證模組、Policy Gate驗證、
-  多層證據生成與審計追蹤。符合碎片化YAML提升為深度可驗證模組的治理原則。
-  支援月收入千萬美元規模的自動化運營。
-
-# ==================== Project Structure Mapping ====================
-project_mapping:
-  config_root: ".config"
-  policies_root: "governance/policies/conftest"
-  governance_root: ".governance"
-  evidence_root: "root-evidence"
-  schemas_root: "schemas"
-  scripts_root: "scripts"
-  templates_root: "templates"
-  docs_root: "docs"
-  mcp_servers_root: "mcp-servers"
-  test_vectors_root: "test-vectors"
-  autofix_root: "config/autofix"
-  agent_root: "agent"
-  hyperautomation_root: "intelligent-hyperautomation"
-  core_root: "advanced-system-src/core"
-
-# ============================================================================
-# 系統設置 (System Settings)
-# ============================================================================
-system:
-  environment: "production"
-  log_level: "INFO"
-  max_workers: 16
-  timeout: 300
-  retry_attempts: 3
-  
-  # 性能配置
-  performance:
-    cache_enabled: true
-    cache_ttl: 3600
-    parallel_analysis: true
-    incremental_analysis: true
-    batch_size: 100
-    
-  # 監控配置
-  monitoring:
-    enabled: true
-    metrics_port: 9090
-    health_check_interval: 30
-    alert_threshold: 0.8
-    distributed_tracing: true
-
-# ============================================================================
-# 代碼分析配置 (Code Analysis Configuration)
-# ============================================================================
-code_analysis:
->>>>>>> main
   enabled: true
   immutable_storage: true
   retention_days: 365
@@ -373,27 +293,12 @@ deep_validation_schema:
     - audit
     metadata_requirements:
       compliance_tags_allowed:
-<<<<<<< HEAD
       - slsa-l3
       - in-toto
       - audit-trail
       - axiom-free
       - deep-validation
       labels_min_count: 2
-=======
-        - slsa-l3
-        - in-toto
-        - audit-trail
-        - machinenativeops-free
-        - deep-validation
-    
-    versioning_requirements:
-      format: "semantic"
-      pattern: "^\\d+\\.\\d+\\.\\d+$"
-      changelog_required: true
-    
-    owner_requirements:
->>>>>>> main
       required_fields:
       - created_at
       - updated_at

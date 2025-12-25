@@ -109,15 +109,10 @@ python3 tools/docs/scan_repo_generate_index.py
 ## 🤔 Q&A
 
 ### Q: 為什麼 docs/GOVERNANCE/ 不應該存在？
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **A**: 根據您的專案設計，治理應該統一在 `./governance/`
 目錄（23維度治理矩陣）。`docs/GOVERNANCE/`
 的存在違反了這個原則，造成「治理在哪裡」的混淆。
-=======
-**A**: 根據您的專案設計，治理應該統一在 `./governance/` 目錄（23維度治理矩陣）。`docs/GOVERNANCE/` 的存在違反了這個原則，造成「治理在哪裡」的混淆。
->>>>>>> origin/alert-autofix-37
 =======
 
 **A**: 根據您的專案設計，治理應該統一在 `./governance/` 目錄（23維度治理矩陣）。`docs/GOVERNANCE/` 的存在違反了這個原則，造成「治理在哪裡」的混淆。

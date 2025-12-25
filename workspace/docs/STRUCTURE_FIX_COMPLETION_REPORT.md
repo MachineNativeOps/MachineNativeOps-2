@@ -151,14 +151,9 @@ docs/
 ## 🎯 治理統一確認
 
 ### 問題根源
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 `docs/GOVERNANCE/` 的存在違反了專案的「治理統一管理」架構原則。治理應該完全在
 `./governance/` 目錄下，作為23維度治理矩陣的一部分。
-=======
-`docs/GOVERNANCE/` 的存在違反了專案的「治理統一管理」架構原則。治理應該完全在 `./governance/` 目錄下，作為23維度治理矩陣的一部分。
->>>>>>> origin/alert-autofix-37
 =======
 
 `docs/GOVERNANCE/` 的存在違反了專案的「治理統一管理」架構原則。治理應該完全在 `./governance/` 目錄下，作為23維度治理矩陣的一部分。
@@ -180,11 +175,7 @@ docs/
 ## 🚀 現代AI效率標準
 
 ### 用戶反饋
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/alert-autofix-37
 =======
 >
 >>>>>>> origin/copilot/sub-pr-402

@@ -4,11 +4,7 @@
     "rootDir": ".",
     "outDir": "./dist",
     "baseUrl": ".",
-<<<<<<< HEAD
     "types": ["node"]
-=======
-    "types": ["node", "vitest/globals"]
->>>>>>> origin/alert-autofix-37
   },
   "include": [
     "**/*.ts",

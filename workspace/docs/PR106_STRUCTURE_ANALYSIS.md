@@ -13,14 +13,9 @@
 ## 📋 執行摘要 (Executive Summary)
 
 ### 英文翻譯 (English Translation)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **原文**: "Development Successfully merging this pull request may close these
 issues."  
-=======
-**原文**: "Development Successfully merging this pull request may close these issues."  
->>>>>>> origin/alert-autofix-37
 =======
 
 **原文**: "Development Successfully merging this pull request may close these issues."  

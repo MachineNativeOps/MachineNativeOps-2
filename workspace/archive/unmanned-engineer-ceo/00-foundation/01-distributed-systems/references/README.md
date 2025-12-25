@@ -1,8 +1,6 @@
 # References: 經典資源
 
 ## 論文 / Papers
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - Lamport, _Time, Clocks, and the Ordering of Events in a Distributed System_.
 - Oki & Liskov, _Viewstamped Replication_.
@@ -12,10 +10,6 @@
 
 - _Designing Data-Intensive Applications_ (Ch 5–9).
 - _Distributed Systems_ (Maarten van Steen, Andrew S. Tanenbaum).
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 - Lamport, *Time, Clocks, and the Ordering of Events in a Distributed System*.
 - Oki & Liskov, *Viewstamped Replication*.
 - Ongaro & Ousterhout, *Raft*.
@@ -24,8 +18,6 @@
 
 - *Designing Data-Intensive Applications* (Ch 5–9).
 - *Distributed Systems* (Maarten van Steen, Andrew S. Tanenbaum).
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 

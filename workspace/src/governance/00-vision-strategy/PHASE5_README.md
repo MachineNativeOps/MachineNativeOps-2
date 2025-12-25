@@ -152,12 +152,7 @@ strategies:
 **執行 / Execution**:
 
 - 模式: SCHEDULED
-<<<<<<< HEAD
-<<<<<<< HEAD
 - 頻率: 每 6 小時 (0 _/6_ \*\*)
-=======
-- 頻率: 每 6 小時 (0 */6 * * *)
->>>>>>> origin/alert-autofix-37
 =======
 - 頻率: 每 6 小時 (0 */6* **)
 >>>>>>> origin/copilot/sub-pr-402

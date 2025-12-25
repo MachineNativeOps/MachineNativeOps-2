@@ -221,27 +221,6 @@ compliance:
     - ISO_27001
     - SOC_2
     - GDPR
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    - SLSA_Level_3
-  
-  audit_frequency: "quarterly"
-  
-  # Security fix tracking from PR #351
-  recent_enhancements:
-    pr_351_security_fixes:
-      date: "2025-12-15"
-      fixes:
-        - "Path traversal prevention in provenance service"
-        - "Clear-text logging of sensitive data eliminated"
-        - "Weak cryptographic algorithms replaced with SHA-256"
-      impact: "Critical security vulnerabilities addressed"
-      governance_updates:
-        - "Added SEC-PATH-001 policy"
-        - "Added SEC-LOG-001 policy"
-        - "Enhanced SEC-CRYPTO-001 policy"
->>>>>>> origin/alert-autofix-37
 
 =======
   

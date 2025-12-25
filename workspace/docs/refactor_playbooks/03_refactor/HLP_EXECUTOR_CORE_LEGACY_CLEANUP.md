@@ -12,14 +12,9 @@
 ## 一、清理時機與條件
 
 ### 清理前提條件
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 在刪除 `docs/refactor_playbooks/_legacy_scratch/README.md`
 之前，必須確認以下所有條件滿足：
-=======
-在刪除 `docs/refactor_playbooks/_legacy_scratch/README.md` 之前，必須確認以下所有條件滿足：
->>>>>>> origin/alert-autofix-37
 =======
 
 在刪除 `docs/refactor_playbooks/_legacy_scratch/README.md` 之前，必須確認以下所有條件滿足：
@@ -216,14 +211,9 @@ ls -la docs/refactor_playbooks/_legacy_scratch/
 - [ ] `config/dependencies.yaml` 包含 HLP 依賴
 
 #### 監控配置完整性
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - [ ] `infrastructure/monitoring/prometheus/servicemonitors/hlp-executor-metrics.yaml`
       存在
-=======
-- [ ] `infrastructure/monitoring/prometheus/servicemonitors/hlp-executor-metrics.yaml` 存在
->>>>>>> origin/alert-autofix-37
 =======
 
 - [ ] `infrastructure/monitoring/prometheus/servicemonitors/hlp-executor-metrics.yaml` 存在

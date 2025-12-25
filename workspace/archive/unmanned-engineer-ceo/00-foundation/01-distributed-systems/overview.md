@@ -7,14 +7,9 @@
 - Island AI Runtime (core/island_ai_runtime) 的治理訊號需在 event-driven 管道中維持順序與溫度。
 
 ## 能力構面 Capability Pillars
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **共識**：Paxos / Raft / Multi-Paxos /
    EPaxos，對應合約服務與 registry 的狀態流。
-=======
-1. **共識**：Paxos / Raft / Multi-Paxos / EPaxos，對應合約服務與 registry 的狀態流。
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **共識**：Paxos / Raft / Multi-Paxos / EPaxos，對應合約服務與 registry 的狀態流。

@@ -1,14 +1,9 @@
 # 高級資料結構與演算法概覽 / Advanced DS & Algorithms Overview
 
 ## 目標 Objectives
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 將高級 DS/Algo 與 SynergyMesh 實戰場景對應（registry、knowledge
   graph、observability）。
-=======
-- 將高級 DS/Algo 與 SynergyMesh 實戰場景對應（registry、knowledge graph、observability）。
->>>>>>> origin/alert-autofix-37
 =======
 
 - 將高級 DS/Algo 與 SynergyMesh 實戰場景對應（registry、knowledge graph、observability）。

@@ -199,14 +199,9 @@ argocd app get governance-00-vision-strategy
 - ❌ Configure GitOps (requires Argo CD / Flux)
 
 **Why**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - Mixed concerns: Strategic docs (completed) vs infrastructure code (separate
   PR)
-=======
-- Mixed concerns: Strategic docs (completed) vs infrastructure code (separate PR)
->>>>>>> origin/alert-autofix-37
 =======
 
 - Mixed concerns: Strategic docs (completed) vs infrastructure code (separate PR)

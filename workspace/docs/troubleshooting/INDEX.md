@@ -49,14 +49,8 @@ example, before handing the repo to another agent):
   `sample`, and automatically writes `reports/self-awareness-sample.md` plus
   `reports/self-awareness-sample.json`.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. Omit `--sample` to perform the full automation chain before deployments; the
    CLI will emit `reports/self-awareness-full.*` with the stricter run.
-=======
-3. Omit `--sample` to perform the full automation chain before deployments; the
-  CLI will emit `reports/self-awareness-full.*` with the stricter run.
->>>>>>> origin/alert-autofix-37
 =======
 1. Omit `--sample` to perform the full automation chain before deployments; the
   CLI will emit `reports/self-awareness-full.*` with the stricter run.

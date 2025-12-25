@@ -12,15 +12,10 @@
 ## 📋 任務回顧 (Task Overview)
 
 ### 原始需求
-<<<<<<< HEAD
 用戶要求:
-<<<<<<< HEAD
 
 1. 翻譯英文: "Development Successfully merging this pull request may close these
    issues."
-=======
-1. 翻譯英文: "Development Successfully merging this pull request may close these issues."
->>>>>>> origin/alert-autofix-37
 =======
 
 用戶要求:
@@ -46,14 +41,9 @@
 ## ✅ PR #110 交付成果 (Deliverables)
 
 ### 1. 翻譯服務 ✅
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **英文**: "Development Successfully merging this pull request may close these
 issues."  
-=======
-**英文**: "Development Successfully merging this pull request may close these issues."  
->>>>>>> origin/alert-autofix-37
 =======
 
 **英文**: "Development Successfully merging this pull request may close these issues."  

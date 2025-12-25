@@ -123,14 +123,9 @@ module.exports = config;
 - `core/advisory-database/package.json`
 
 ### Contracts L1
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - `core/contract_service/contracts-L1/contracts/jest.config.ts` →
   `jest.config.cjs`
-=======
-- `core/contract_service/contracts-L1/contracts/jest.config.ts` → `jest.config.cjs`
->>>>>>> origin/alert-autofix-37
 =======
 
 - `core/contract_service/contracts-L1/contracts/jest.config.ts` → `jest.config.cjs`

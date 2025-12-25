@@ -15,14 +15,9 @@
 分析 PR #110 的完整架構，找出並完成上位代理還未完成的部署任務。
 
 ### 發現 / Findings
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 PR #110 建立了完整的 Governance-as-Code
 (GaC) 三層架構（戰略層、運營層、自動化層），但存在以下部署相關問題：
-=======
-PR #110 建立了完整的 Governance-as-Code (GaC) 三層架構（戰略層、運營層、自動化層），但存在以下部署相關問題：
->>>>>>> origin/alert-autofix-37
 =======
 
 PR #110 建立了完整的 Governance-as-Code (GaC) 三層架構（戰略層、運營層、自動化層），但存在以下部署相關問題：
@@ -303,8 +298,6 @@ argocd app list | grep gac-
 ## 📚 文檔參考 / Documentation References
 
 ### Primary Documentation
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **[DEPLOYMENT.md](governance/00-vision-strategy/DEPLOYMENT.md)** - Complete
   deployment guide
@@ -330,10 +323,6 @@ argocd app list | grep gac-
   Resource generator
 - **[tests/validate-all.sh](governance/00-vision-strategy/tests/validate-all.sh)** -
   Validation script
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 - **[DEPLOYMENT.md](governance/00-vision-strategy/DEPLOYMENT.md)** - Complete deployment guide
 - **[README.md](governance/00-vision-strategy/README.md)** - Overview and quick start
 - **[PROJECT_STATE_SNAPSHOT.md](governance/00-vision-strategy/PROJECT_STATE_SNAPSHOT.md)** - Complete project state
@@ -349,8 +338,6 @@ argocd app list | grep gac-
 - **[tests/deploy-local.sh](governance/00-vision-strategy/tests/deploy-local.sh)** - Local validation script
 - **[tests/generate-resources.sh](governance/00-vision-strategy/tests/generate-resources.sh)** - Resource generator
 - **[tests/validate-all.sh](governance/00-vision-strategy/tests/validate-all.sh)** - Validation script
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -373,14 +360,9 @@ argocd app list | grep gac-
 4. Extended monitoring with SLOs/SLIs
 
 ### Continuous Operations
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - Strategic YAML changes → Auto-regenerate GaC resources → Auto-deploy to
   cluster
-=======
-- Strategic YAML changes → Auto-regenerate GaC resources → Auto-deploy to cluster
->>>>>>> origin/alert-autofix-37
 =======
 
 - Strategic YAML changes → Auto-regenerate GaC resources → Auto-deploy to cluster

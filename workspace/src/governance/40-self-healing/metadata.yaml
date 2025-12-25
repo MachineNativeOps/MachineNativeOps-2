@@ -60,24 +60,17 @@ dimensions:
       - dimension: "28-tests"
         assets:
           - "self-healing-validation.py"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
       - dimension: "30-agents"
         note: "formerly 83-integration - now handles AI Agent Governance"
         assets:
           - "coordination/self-healing-integration.md"
 
-=======
-=======
->>>>>>> origin/copilot/sub-pr-402
           
       - dimension: "83-integration"
         assets:
           - "self-healing-integration.md"
           
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
       - dimension: "39-automation"

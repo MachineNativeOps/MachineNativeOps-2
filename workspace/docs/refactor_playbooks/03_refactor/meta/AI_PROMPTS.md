@@ -31,14 +31,9 @@
 所有 AI 重構提案都必須遵守以下約束（詳細規則見 `PROPOSER_CRITIC_WORKFLOW.md`）：
 
 ### 架構約束 (Architecture Constraints)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ✅ **允許依賴**：從 `config/system-module-map.yaml` 讀取
   `allowed_dependencies`
-=======
-- ✅ **允許依賴**：從 `config/system-module-map.yaml` 讀取 `allowed_dependencies`
->>>>>>> origin/alert-autofix-37
 =======
 
 - ✅ **允許依賴**：從 `config/system-module-map.yaml` 讀取 `allowed_dependencies`
@@ -249,16 +244,9 @@ constraint_compliance:
 
 **調整後的依賴方向：**
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 core/ (foundation) ↑ ✅ depends on: infra/ ↓ ❌ must not depend on: services/,
 apps/
-=======
-core/ (foundation)
-  ↑ ✅ depends on: infra/
-  ↓ ❌ must not depend on: services/, apps/
->>>>>>> origin/alert-autofix-37
 =======
 
 core/ (foundation)
@@ -270,16 +258,9 @@ services/ (mediation)
   ↑ ✅ depends on: core/, infra/
   ↓ ❌ must not depend on: apps/
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 apps/ (presentation) ↑ ✅ depends on: services/, infra/ ↓ ❌ must not depend on:
 core/ (MUST go through services/)
 
-=======
-apps/ (presentation)
-  ↑ ✅ depends on: services/, infra/
-  ↓ ❌ must not depend on: core/ (MUST go through services/)
->>>>>>> origin/alert-autofix-37
 =======
 apps/ (presentation)
   ↑ ✅ depends on: services/, infra/

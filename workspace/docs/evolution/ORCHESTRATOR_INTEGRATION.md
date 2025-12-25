@@ -128,14 +128,9 @@ Generated plans follow this structure:
 # Create security refactor playbooks for affected clusters
 # Apply fixes following playbook guidelines
 ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 ````
 
 ````
-=======
-```
->>>>>>> origin/alert-autofix-37
 =======
 
 ```

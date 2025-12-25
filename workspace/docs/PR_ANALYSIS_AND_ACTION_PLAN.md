@@ -8,14 +8,9 @@
 
 ## 📊 Executive Summary
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 This PR implements an enterprise-grade **Language Governance Dashboard** system
 with:
 
-=======
-This PR implements an enterprise-grade **Language Governance Dashboard** system with:
->>>>>>> origin/alert-autofix-37
 =======
 This PR implements an enterprise-grade **Language Governance Dashboard** system with:
 
@@ -38,25 +33,17 @@ This PR implements an enterprise-grade **Language Governance Dashboard** system 
 - **TypeScript definitions**: Vite environment types
 
 ### 2. Data Generation Tools ✅
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | Tool                                | Purpose                    | Output Files                                               |
 | ----------------------------------- | -------------------------- | ---------------------------------------------------------- |
 | `tools/generate-sankey-data.py`     | Violation flow analysis    | `governance/sankey-data.json`                              |
 | `tools/generate-hotspot-heatmap.py` | Intensity scoring          | `governance/hotspot-data.json`, `docs/HOTSPOT_HEATMAP.md`  |
 | `tools/generate-migration-flow.py`  | Cluster migration tracking | `governance/migration-flow.json`, `docs/MIGRATION_FLOW.md` |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | Tool | Purpose | Output Files |
 |------|---------|--------------|
 | `tools/generate-sankey-data.py` | Violation flow analysis | `governance/sankey-data.json` |
 | `tools/generate-hotspot-heatmap.py` | Intensity scoring | `governance/hotspot-data.json`, `docs/HOTSPOT_HEATMAP.md` |
 | `tools/generate-migration-flow.py` | Cluster migration tracking | `governance/migration-flow.json`, `docs/MIGRATION_FLOW.md` |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -205,12 +192,7 @@ docs/
    - [ ] Link to language governance dashboard
    - [ ] Add policy compliance section
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 2. **governance/policies/\*.md**
-=======
-5. **governance/policies/*.md**
->>>>>>> origin/alert-autofix-37
 =======
 2. **governance/policies/*.md**
 >>>>>>> origin/copilot/sub-pr-402
@@ -228,10 +210,6 @@ docs/
 **Timeline**: Complete within 72 hours
 
 **Items 7-17: Update architecture skeleton overviews** (11 files)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/copilot/sub-pr-402
 
 - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/api-governance/overview.md`
 - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/architecture-stability/overview.md`
@@ -250,25 +228,6 @@ docs/
 - [ ] "Language Governance" subsection
 - [ ] Links to relevant hotspot/violation data
 - [ ] Reference dashboard for real-time monitoring
-<<<<<<< HEAD
-=======
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/api-governance/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/architecture-stability/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/cost-management/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/data-governance/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/docs-governance/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/identity-tenancy/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/knowledge-base/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/nucleus-orchestrator/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/performance-reliability/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/security-observability/overview.md`
-   - [ ] `unmanned-engineer-ceo/70-architecture-skeletons/testing-governance/overview.md`
-   
-   **For each file, add:**
-   - [ ] "Language Governance" subsection
-   - [ ] Links to relevant hotspot/violation data
-   - [ ] Reference dashboard for real-time monitoring
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -276,8 +235,6 @@ docs/
 
 **Timeline**: Complete within 96 hours
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **docs/LANGUAGE_GOVERNANCE_CROSS_REFERENCES.md** (NEW)
    - [ ] Map all governance-related documentation
    - [ ] Link to visualization components
@@ -289,11 +246,6 @@ docs/
    - [ ] Usage examples for each
    - [ ] Integration with CI/CD
    - [ ] Manual execution procedures
-=======
-18. **docs/LANGUAGE_GOVERNANCE_CROSS_REFERENCES.md** (NEW)
-=======
-1. **docs/LANGUAGE_GOVERNANCE_CROSS_REFERENCES.md** (NEW)
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Map all governance-related documentation
     - [ ] Link to visualization components
     - [ ] Include troubleshooting guide
@@ -304,8 +256,6 @@ docs/
     - [ ] Usage examples for each
     - [ ] Integration with CI/CD
     - [ ] Manual execution procedures
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -315,8 +265,6 @@ docs/
 
 **Timeline**: 1-2 weeks
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **Interactive Knowledge Graph** (mentioned in spec)
    - [ ] Integrate Neo4j or D3.js force-directed graph
    - [ ] Show relationships between violations, files, layers
@@ -331,11 +279,6 @@ docs/
    - [ ] Add click-to-navigate to file location
    - [ ] Implement hover tooltips with full violation details
    - [ ] Enable layer filtering (show only L4, only L1, etc.)
-=======
-20. **Interactive Knowledge Graph** (mentioned in spec)
-=======
-1. **Interactive Knowledge Graph** (mentioned in spec)
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Integrate Neo4j or D3.js force-directed graph
     - [ ] Show relationships between violations, files, layers
     - [ ] Enable drill-down from dashboard to specific issues
@@ -349,8 +292,6 @@ docs/
     - [ ] Add click-to-navigate to file location
     - [ ] Implement hover tooltips with full violation details
     - [ ] Enable layer filtering (show only L4, only L1, etc.)
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -358,8 +299,6 @@ docs/
 
 **Timeline**: 2-3 weeks
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **Auto-fix PR Generation**
    - [ ] Create GitHub Action to generate fix PRs for suggested migrations
    - [ ] Integrate with existing auto-fix bot
@@ -374,11 +313,6 @@ docs/
    - [ ] Store daily snapshots of health scores
    - [ ] Generate trend charts (30-day, 90-day)
    - [ ] Predict future health score trajectory
-=======
-23. **Auto-fix PR Generation**
-=======
-1. **Auto-fix PR Generation**
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Create GitHub Action to generate fix PRs for suggested migrations
     - [ ] Integrate with existing auto-fix bot
     - [ ] Add validation checks before auto-merging
@@ -392,8 +326,6 @@ docs/
     - [ ] Store daily snapshots of health scores
     - [ ] Generate trend charts (30-day, 90-day)
     - [ ] Predict future health score trajectory
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -403,8 +335,6 @@ docs/
 
 **Timeline**: 3-4 weeks
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **Knowledge Graph Sync**
    - [ ] Auto-update `docs/knowledge-graph.yaml` with governance data
    - [ ] Link violations to knowledge base entries
@@ -414,11 +344,6 @@ docs/
    - [ ] Extend health score to include documentation quality
    - [ ] Track documentation coverage per layer
    - [ ] Flag outdated/missing docs
-=======
-26. **Knowledge Graph Sync**
-=======
-1. **Knowledge Graph Sync**
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Auto-update `docs/knowledge-graph.yaml` with governance data
     - [ ] Link violations to knowledge base entries
     - [ ] Enable semantic search across governance reports
@@ -427,8 +352,6 @@ docs/
     - [ ] Extend health score to include documentation quality
     - [ ] Track documentation coverage per layer
     - [ ] Flag outdated/missing docs
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -436,8 +359,6 @@ docs/
 
 **Timeline**: 4-6 weeks
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **VS Code Extension**
    - [ ] Real-time violation highlighting in IDE
    - [ ] Quick-fix suggestions based on governance rules
@@ -447,11 +368,6 @@ docs/
    - [ ] Block commits that worsen health score
    - [ ] Show violation preview before commit
    - [ ] Suggest alternative approaches
-=======
-28. **VS Code Extension**
-=======
-1. **VS Code Extension**
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Real-time violation highlighting in IDE
     - [ ] Quick-fix suggestions based on governance rules
     - [ ] Local health score preview
@@ -460,8 +376,6 @@ docs/
     - [ ] Block commits that worsen health score
     - [ ] Show violation preview before commit
     - [ ] Suggest alternative approaches
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -471,8 +385,6 @@ docs/
 
 **Timeline**: 2-3 months
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **Violation Prediction Model**
    - [ ] Train ML model on historical violation patterns
    - [ ] Predict future hotspots before they emerge
@@ -482,11 +394,6 @@ docs/
    - [ ] Use graph algorithms to find optimal migration sequences
    - [ ] Minimize disruption while maximizing health improvement
    - [ ] Generate step-by-step migration plans
-=======
-30. **Violation Prediction Model**
-=======
-1. **Violation Prediction Model**
->>>>>>> origin/copilot/sub-pr-402
     - [ ] Train ML model on historical violation patterns
     - [ ] Predict future hotspots before they emerge
     - [ ] Recommend proactive refactoring
@@ -495,8 +402,6 @@ docs/
     - [ ] Use graph algorithms to find optimal migration sequences
     - [ ] Minimize disruption while maximizing health improvement
     - [ ] Generate step-by-step migration plans
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -504,18 +409,10 @@ docs/
 
 **Timeline**: 3-4 months
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **Cross-repo Governance Dashboard**
    - [ ] Aggregate health scores across multiple repositories
    - [ ] Track organization-wide language compliance
    - [ ] Enable portfolio-level decision making
-=======
-32. **Cross-repo Governance Dashboard**
-    - [ ] Aggregate health scores across multiple repositories
-    - [ ] Track organization-wide language compliance
-    - [ ] Enable portfolio-level decision making
->>>>>>> origin/alert-autofix-37
 =======
 1. **Cross-repo Governance Dashboard**
     - [ ] Aggregate health scores across multiple repositories
@@ -553,8 +450,6 @@ docs/
 ## 🎯 Success Metrics
 
 ### Key Performance Indicators (KPIs)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | KPI                    | Current    | Target (30 days) | Target (90 days) |
 | ---------------------- | ---------- | ---------------- | ---------------- |
@@ -564,10 +459,6 @@ docs/
 | Fix Success Rate       | 87%        | 92%              | 95%              |
 | Documentation Coverage | ~60%\*     | 85%              | 95%              |
 | CI/CD Uptime           | 100%       | 100%             | 100%             |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | KPI | Current | Target (30 days) | Target (90 days) |
 |-----|---------|------------------|------------------|
 | Health Score | 85/100 (B) | 90/100 (A-) | 95/100 (A) |
@@ -576,8 +467,6 @@ docs/
 | Fix Success Rate | 87% | 92% | 95% |
 | Documentation Coverage | ~60%* | 85% | 95% |
 | CI/CD Uptime | 100% | 100% | 100% |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -645,15 +534,10 @@ docs/
 ## 🤝 Stakeholder Communication
 
 ### For Engineering Team
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Key Message**: "New language governance dashboard provides real-time
 visibility into code quality, with automated CI/CD enforcement and actionable
 insights."
-=======
-**Key Message**: "New language governance dashboard provides real-time visibility into code quality, with automated CI/CD enforcement and actionable insights."
->>>>>>> origin/alert-autofix-37
 =======
 
 **Key Message**: "New language governance dashboard provides real-time visibility into code quality, with automated CI/CD enforcement and actionable insights."
@@ -667,15 +551,10 @@ insights."
 4. Integrate dashboard into daily workflow
 
 ### For Management
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Key Message**: "Delivered enterprise-grade governance system tracking health
 score of 85/100 across 6-layer architecture, with 87% fix success rate and
 automated enforcement."
-=======
-**Key Message**: "Delivered enterprise-grade governance system tracking health score of 85/100 across 6-layer architecture, with 87% fix success rate and automated enforcement."
->>>>>>> origin/alert-autofix-37
 =======
 
 **Key Message**: "Delivered enterprise-grade governance system tracking health score of 85/100 across 6-layer architecture, with 87% fix success rate and automated enforcement."
@@ -689,14 +568,9 @@ automated enforcement."
 - **Compliance**: Policy enforcement across 6 architectural layers
 
 ### For External Contributors
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Key Message**: "Language governance dashboard ensures consistent code quality.
 Check health score before submitting PRs."
-=======
-**Key Message**: "Language governance dashboard ensures consistent code quality. Check health score before submitting PRs."
->>>>>>> origin/alert-autofix-37
 =======
 
 **Key Message**: "Language governance dashboard ensures consistent code quality. Check health score before submitting PRs."
@@ -713,8 +587,6 @@ Check health score before submitting PRs."
 ## 🚦 Risk Assessment
 
 ### Technical Risks
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | Risk                              | Probability | Impact | Mitigation                                        |
 | --------------------------------- | ----------- | ------ | ------------------------------------------------- |
@@ -730,10 +602,6 @@ Check health score before submitting PRs."
 | Developer resistance to adoption | Medium      | Medium | Training sessions, clear value demonstration |
 | Documentation drift continues    | High        | Low    | Automate doc synchronization in CI           |
 | Maintenance burden increases     | Low         | Medium | Clear ownership model, runbook documentation |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | Risk | Probability | Impact | Mitigation |
 |------|-------------|--------|------------|
 | CI/CD workflow failures | Low | High | Add error handling, fallback to manual generation |
@@ -748,8 +616,6 @@ Check health score before submitting PRs."
 | Developer resistance to adoption | Medium | Medium | Training sessions, clear value demonstration |
 | Documentation drift continues | High | Low | Automate doc synchronization in CI |
 | Maintenance burden increases | Low | Medium | Clear ownership model, runbook documentation |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -757,14 +623,9 @@ Check health score before submitting PRs."
 
 ## 📝 Conclusion
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 PR #2 successfully delivers a comprehensive **Language Governance Dashboard**
 system that provides:
 
-=======
-PR #2 successfully delivers a comprehensive **Language Governance Dashboard** system that provides:
->>>>>>> origin/alert-autofix-37
 =======
 PR #2 successfully delivers a comprehensive **Language Governance Dashboard** system that provides:
 

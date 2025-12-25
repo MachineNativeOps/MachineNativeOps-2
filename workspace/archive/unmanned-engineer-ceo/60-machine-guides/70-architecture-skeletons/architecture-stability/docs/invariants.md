@@ -3,15 +3,9 @@
 ## 分層不變條件
 
 ### INV-001: 單向依賴原則
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: 依賴關係必須由外向內，禁止反向依賴 **層級順序**: applications → agents
 → services → platform → core
-=======
-**規則**: 依賴關係必須由外向內，禁止反向依賴
-**層級順序**: applications → agents → services → platform → core
->>>>>>> origin/alert-autofix-37
 =======
 
 **規則**: 依賴關係必須由外向內，禁止反向依賴
@@ -24,15 +18,9 @@
 - ❌ 禁止: `platform/foundation/security` → `services/billing`
 
 ### INV-002: 同層隔離原則
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: 同一層級的模組不得直接依賴，必須通過 API/Event **適用層級**: services,
 agents
-=======
-**規則**: 同一層級的模組不得直接依賴，必須通過 API/Event
-**適用層級**: services, agents
->>>>>>> origin/alert-autofix-37
 =======
 
 **規則**: 同一層級的模組不得直接依賴，必須通過 API/Event
@@ -45,15 +33,9 @@ agents
 - ✅ 允許: `services/billing` 通過 HTTP API 調用 `services/user`
 
 ### INV-003: Core 穩定性原則
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: core 層只能依賴標準庫和明確聲明的外部依賴 **禁止**:
 core 依賴 platform/services/agents/applications
-=======
-**規則**: core 層只能依賴標準庫和明確聲明的外部依賴
-**禁止**: core 依賴 platform/services/agents/applications
->>>>>>> origin/alert-autofix-37
 =======
 
 **規則**: core 層只能依賴標準庫和明確聲明的外部依賴
@@ -90,15 +72,9 @@ core 依賴 platform/services/agents/applications
 ## 安全不變條件
 
 ### INV-008: 零信任原則
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: 所有跨邊界調用必須驗證身份與權限 **邊界定義**:
 service 邊界、tenant 邊界、network 邊界
-=======
-**規則**: 所有跨邊界調用必須驗證身份與權限
-**邊界定義**: service 邊界、tenant 邊界、network 邊界
->>>>>>> origin/alert-autofix-37
 =======
 
 **規則**: 所有跨邊界調用必須驗證身份與權限

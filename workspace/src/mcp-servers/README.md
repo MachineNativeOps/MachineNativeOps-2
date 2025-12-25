@@ -184,14 +184,9 @@ npm run check:strict
 - ✅ Node.js version compatibility check
 
 #### 2. **Logic Validator**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ✅ **Authenticity checks**: Detects suspicious patterns (eval, dynamic
   functions)
-=======
-- ✅ **Authenticity checks**: Detects suspicious patterns (eval, dynamic functions)
->>>>>>> origin/alert-autofix-37
 =======
 
 - ✅ **Authenticity checks**: Detects suspicious patterns (eval, dynamic functions)

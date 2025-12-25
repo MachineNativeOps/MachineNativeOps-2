@@ -6,18 +6,11 @@
 
 ## 🎯 核心目標
 
-<<<<<<< HEAD
 ### 🏗️ 架構設計支持
 - **微服務架構**: 自動化命名空間配置
 - **雲原生架構**: 容器化和服務網絡命名空間
 - **混合雲架構**: 多雲環境命名空間統一
 - **分層架構**: 多層應用命名空間標準化
-=======
-1. **完全替換命名空間**：將所有 `machinenativeops.io/v2` 替換為 `machinenativeops.io/v2`
-2. **統一資源類型**：將 `MachineNativeOpsGlobalBaseline` 替換為 `MachineNativeOpsGlobalBaseline`
-3. **更新 URN 模式**：將 `urn:machinenativeops:` 替換為 `urn:machinenativeops:`
-4. **標準化標籤**：將 `machinenativeops.io/` 前綴替換為 `machinenativeops.io/`
->>>>>>> main
 
 ### 🚀 部署自動化
 - **CI/CD 管道**: 持續集成部署命名空間管理
@@ -59,16 +52,10 @@ python scripts/migration/machinenativeops-aaps-converter.py --mode=all --backup 
 # 完整驗證
 python scripts/migration/machinenativeops-aaps-validator.py .
 
-<<<<<<< HEAD
 # 模式特定驗證
 python scripts/migration/machinenativeops-aaps-validator.py --mode=architecture .
 python scripts/migration/machinenativeops-aaps-validator.py --mode=deployment .
 python scripts/migration/machinenativeops-aaps-validator.py --mode=security .
-=======
-- `config/axioms/global-baseline-v2.yaml` - 主要配置檔案
-- `scripts/migration/namespace-converter.py` - 轉換工具
-- `docs/migration/machinenativeops-namespace-migration-guide.md` - 詳細指南
->>>>>>> main
 
 # 報告生成
 python scripts/migration/machinenativeops-aaps-validator.py --report=validation_report.json .

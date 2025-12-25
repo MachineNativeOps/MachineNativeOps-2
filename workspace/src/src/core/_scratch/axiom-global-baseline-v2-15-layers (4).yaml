@@ -6,11 +6,7 @@
 # BLAKE3: [TO BE COMPUTED AFTER GENERATION]
 
 apiVersion: machinenativeops.io/v2
-<<<<<<< HEAD
 kind: AxiomGlobalBaseline
-=======
-kind: MachineNativeOpsGlobalBaseline
->>>>>>> main
 metadata:
   name: machinenativeops-global-baseline-v2
   version: v2.0.0

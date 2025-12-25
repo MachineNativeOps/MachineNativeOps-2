@@ -81,14 +81,9 @@
 ### 2.1 引用關係（References）
 
 #### HLP Executor Core → 現有系統
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - `config/system-manifest.yaml`: 新增 HLP
   Executor 作為 enhanced_integration 元件
-=======
-- `config/system-manifest.yaml`: 新增 HLP Executor 作為 enhanced_integration 元件
->>>>>>> origin/alert-autofix-37
 =======
 
 - `config/system-manifest.yaml`: 新增 HLP Executor 作為 enhanced_integration 元件

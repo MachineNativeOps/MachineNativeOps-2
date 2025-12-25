@@ -7,14 +7,9 @@
 - 架構決策紀錄（ADR）與評審流程。
 
 ## 架構原則 Principles
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Single Source Config**：所有拓撲來自 `synergymesh.yaml` +
    `config/system-module-map.yaml`。
-=======
-1. **Single Source Config**：所有拓撲來自 `synergymesh.yaml` + `config/system-module-map.yaml`。
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Single Source Config**：所有拓撲來自 `synergymesh.yaml` + `config/system-module-map.yaml`。

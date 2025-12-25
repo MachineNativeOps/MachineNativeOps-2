@@ -51,17 +51,11 @@ HLP Executor Core Plugin
 ```
 
 #### Key Features Documented
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Async DAG Orchestration** - Topological sorting with risk-weighted
    scheduling
 2. **Partial Rollback Management** - 3-level granularity
    (Phase/Plan-unit/Artifact)
-=======
-1. **Async DAG Orchestration** - Topological sorting with risk-weighted scheduling
-2. **Partial Rollback Management** - 3-level granularity (Phase/Plan-unit/Artifact)
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Async DAG Orchestration** - Topological sorting with risk-weighted scheduling

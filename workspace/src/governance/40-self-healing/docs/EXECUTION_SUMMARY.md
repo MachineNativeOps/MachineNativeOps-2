@@ -106,12 +106,7 @@
 ✅ 協調任務執行成功 (analyze, monitor, deploy)
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### 階段 4: 在 governance/\_legacy/83-integration (deprecated - see 30-agents) 中創建跨維度整合 ✅
-=======
-### 階段 4: 在 governance/dimensions/83-integration 中創建跨維度整合 ✅
->>>>>>> origin/alert-autofix-37
 =======
 ### 階段 4: 在 governance/dimensions/83-integration 中創建跨維度整合 ✅
 >>>>>>> origin/copilot/sub-pr-402

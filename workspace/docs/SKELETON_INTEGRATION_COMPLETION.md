@@ -52,18 +52,12 @@ Successfully extracted, analyzed, and integrated architecture skeleton configura
 - **技術棧**: C++/ROS 2, Python, Go, YAML/Markdown
 
 #### 差異識別
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **缺失骨架**: 6 個（identity-tenancy, data-governance,
   performance-reliability, cost-management, knowledge-base,
   nucleus-orchestrator）
 - **命名不一致**: 2 個（testing-compatibility vs testing-governance,
   docs-examples vs docs-governance）
-=======
-- **缺失骨架**: 6 個（identity-tenancy, data-governance, performance-reliability, cost-management, knowledge-base, nucleus-orchestrator）
-- **命名不一致**: 2 個（testing-compatibility vs testing-governance, docs-examples vs docs-governance）
->>>>>>> origin/alert-autofix-37
 =======
 
 - **缺失骨架**: 6 個（identity-tenancy, data-governance, performance-reliability, cost-management, knowledge-base, nucleus-orchestrator）

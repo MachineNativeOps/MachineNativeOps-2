@@ -387,18 +387,11 @@ use island_runtime::{Agent, Runtime};
 let runtime = Runtime::new();
 let agent = Agent::new("developer-agent");
 runtime.spawn(agent);
-<<<<<<< HEAD
-<<<<<<< HEAD
 ````
 
 EOF
 
 ````
-=======
-```
-EOF
-```
->>>>>>> origin/alert-autofix-37
 =======
 ```
 
@@ -467,14 +460,9 @@ go run cmd/server/main.go
 ```bash
 curl http://localhost:8080/health
 ```
-<<<<<<< HEAD
 EOF
-<<<<<<< HEAD
 
 ````
-=======
-```
->>>>>>> origin/alert-autofix-37
 =======
 
 EOF

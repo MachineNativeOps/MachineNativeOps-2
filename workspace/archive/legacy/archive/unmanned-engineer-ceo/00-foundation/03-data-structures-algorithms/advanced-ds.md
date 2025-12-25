@@ -1,14 +1,9 @@
 # Advanced Data Structures
 
 ## Storage-Oriented
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **B-Tree/B+Tree**：適用於 transactional
   state；對應 PostgreSQL/SQLite 嵌入式模組。
-=======
-- **B-Tree/B+Tree**：適用於 transactional state；對應 PostgreSQL/SQLite 嵌入式模組。
->>>>>>> origin/alert-autofix-37
 =======
 
 - **B-Tree/B+Tree**：適用於 transactional state；對應 PostgreSQL/SQLite 嵌入式模組。

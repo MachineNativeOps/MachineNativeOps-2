@@ -93,14 +93,9 @@ The repository contains all files and configurations from the Replit "full_check
 - [x] `tests/` - Test suite
 
 ### ✅ Island AI Stage 2 Coordinator
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - [x] `island-ai/src/collaboration/agent-coordinator.ts` - Core coordinator (340
       lines)
-=======
-- [x] `island-ai/src/collaboration/agent-coordinator.ts` - Core coordinator (340 lines)
->>>>>>> origin/alert-autofix-37
 =======
 
 - [x] `island-ai/src/collaboration/agent-coordinator.ts` - Core coordinator (340 lines)
@@ -179,14 +174,9 @@ publicDir = "apps/web/dist"              # ✅ Output directory correct
 ## Issues Fixed
 
 ### 1. Documentation Discrepancy ✅ FIXED
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Issue:** `docs/REPLIT_DEPLOYMENT.md` incorrectly showed `python-3.11` in
 modules list  
-=======
-**Issue:** `docs/REPLIT_DEPLOYMENT.md` incorrectly showed `python-3.11` in modules list  
->>>>>>> origin/alert-autofix-37
 =======
 
 **Issue:** `docs/REPLIT_DEPLOYMENT.md` incorrectly showed `python-3.11` in modules list  
@@ -300,8 +290,6 @@ modules list
 ## Performance Metrics (from Documentation)
 
 ### Build Times
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | Operation        | Time |
 | ---------------- | ---- |
@@ -316,10 +304,6 @@ modules list
 | --------- | ----------- | ----------- |
 | main.js   | 2.9 MB      | ~600 KB     |
 | main.css  | 71 KB       | ~15 KB      |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | Operation | Time |
 |-----------|------|
 | First install | ~20s |
@@ -333,8 +317,6 @@ modules list
 |------|------|---------|
 | main.js | 2.9 MB | ~600 KB |
 | main.css | 71 KB | ~15 KB |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 | **Total** | **2.97 MB** | **~615 KB** |
@@ -383,16 +365,10 @@ The 12 missing commits (all except a8923cd) represent **incremental development 
 
 1. **✅ Repository is production-ready** - No additional sync needed
 2. **✅ Deployment can proceed** - Follow `docs/REPLIT_DEPLOYMENT.md`
-<<<<<<< HEAD
-<<<<<<< HEAD
 3. **✅ Development can continue** - Use `npm run dev:stack` for local
    development
 4. **ℹ️ Optional:** If detailed commit history is needed, access the Replit
    project directly at <https://replit.com/@unmanned-island/Unmanned-Island-3>
-=======
-3. **✅ Development can continue** - Use `npm run dev:stack` for local development
-4. **ℹ️ Optional:** If detailed commit history is needed, access the Replit project directly at https://replit.com/@unmanned-island/Unmanned-Island-3
->>>>>>> origin/alert-autofix-37
 =======
 3. **✅ Development can continue** - Use `npm run dev:stack` for local development
 4. **ℹ️ Optional:** If detailed commit history is needed, access the Replit project directly at <https://replit.com/@unmanned-island/Unmanned-Island-3>

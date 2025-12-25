@@ -39,15 +39,9 @@
 | Lifecycle / Registry / Safety | TypeScript              | 適合同步 + 非同步事件流     |
 
 > **底層性能模組（如需要）仍可用 C++，但必須有 TS/Python API 封裝。**
-<<<<<<< HEAD
-<<<<<<< HEAD
 >
 > **📘 詳細的 Core
 > Engine 語言堆疊說明請參考：[Core Engine Language Stack](./core-engine-language-stack.md)**  
-=======
-
-> **📘 詳細的 Core Engine 語言堆疊說明請參考：[Core Engine Language Stack](./core-engine-language-stack.md)**  
->>>>>>> origin/alert-autofix-37
 =======
 
 > **📘 詳細的 Core Engine 語言堆疊說明請參考：[Core Engine Language Stack](./core-engine-language-stack.md)**  

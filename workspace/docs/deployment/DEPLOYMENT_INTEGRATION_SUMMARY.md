@@ -510,17 +510,10 @@ npm run test
 如有任何问题或需要进一步协助，请：
 
 - **查看文档**: [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
-<<<<<<< HEAD
-<<<<<<< HEAD
 - **查看报告**:
   [DEPLOYMENT_VALIDATION_REPORT.md](DEPLOYMENT_VALIDATION_REPORT.md)
 - **GitHub Issues**: <https://github.com/SynergyMesh/SynergyMesh/issues>
 - **Email**: <admin@synergymesh.io>
-=======
-- **查看报告**: [DEPLOYMENT_VALIDATION_REPORT.md](DEPLOYMENT_VALIDATION_REPORT.md)
-- **GitHub Issues**: https://github.com/SynergyMesh/SynergyMesh/issues
-- **Email**: admin@synergymesh.io
->>>>>>> origin/alert-autofix-37
 =======
 - **查看报告**: [DEPLOYMENT_VALIDATION_REPORT.md](DEPLOYMENT_VALIDATION_REPORT.md)
 - **GitHub Issues**: <https://github.com/SynergyMesh/SynergyMesh/issues>

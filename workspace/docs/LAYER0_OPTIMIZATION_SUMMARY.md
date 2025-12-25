@@ -25,14 +25,9 @@ Successfully optimized and restructured **Layer 0 (OS/Hardware)** components acc
 
 > **最佳化重構 Layer 0 (OS/Hardware)：C++, Rust, C**
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 The task required optimization and refactoring of Layer 0 components, focusing
 on:
 
-=======
-The task required optimization and refactoring of Layer 0 components, focusing on:
->>>>>>> origin/alert-autofix-37
 =======
 The task required optimization and refactoring of Layer 0 components, focusing on:
 

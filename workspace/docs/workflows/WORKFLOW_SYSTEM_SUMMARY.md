@@ -57,10 +57,6 @@ This document summarizes the complete implementation of the SynergyMesh Workflow
 **Lines of Code:** 883  
 **Complexity:** Very High  
 **Components:**
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 - **ContractRegistry**: Manages 5 indexes (contracts, names, types, dependencies, checksum)
 - **ContractValidator**: 4 validation layers (schema, metadata, rules, security)
 - **ContractExecutor**: Async execution with pre/post validation
@@ -75,10 +71,6 @@ This document summarizes the complete implementation of the SynergyMesh Workflow
 - Deprecation cycle management (90-day period)
 
 #### 3. Behavior Contracts (config/behavior-contracts.yaml)
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 **Lines of Code:** 587  
 **Contracts Defined:** 11 complete contracts
 **Categories:**
@@ -423,10 +415,6 @@ This document summarizes the complete implementation of the SynergyMesh Workflow
    - Audit requirements
 
 #### 18-20. Additional Documentation
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 - **ARCHITECTURE_DETAILED.md**: Component details, data models, integration points
 - **API_REFERENCE.md**: Complete API documentation with examples
 - **DEPLOYMENT_GUIDE.md**: Step-by-step deployment instructions for 4 deployment options
@@ -435,10 +423,6 @@ This document summarizes the complete implementation of the SynergyMesh Workflow
 ### Layer 6: Enhanced Implementation ✅
 
 Enhanced the existing files:
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 - **instant_execution_pipeline.py**: Added detailed logging, metrics, error handling
 - **governance_engine.py**: Implemented pattern recognition, conflict detection, risk assessment algorithms
 
@@ -703,11 +687,7 @@ docker-compose ps
 - 📖 Documentation: [docs/](docs/)
 - 🐛 Bug Reports: [GitHub Issues](https://github.com/synergymesh/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/synergymesh/discussions)
-<<<<<<< HEAD
 - 📧 Email: support@synergymesh.io
-=======
-- 📧 Email: <support@synergymesh.io>
->>>>>>> origin/copilot/sub-pr-402
 
 ### Contributing | 貢獻
 

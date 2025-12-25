@@ -248,12 +248,7 @@ python tools/generate-refactor-playbook.py \
 ### 格式化
 
 - 使用 Markdown 標準格式
-<<<<<<< HEAD
-<<<<<<< HEAD
 - 程式碼區塊使用語法高亮（`yaml,`bash 等）
-=======
-- 程式碼區塊使用語法高亮（```yaml, ```bash 等）
->>>>>>> origin/alert-autofix-37
 =======
 - 程式碼區塊使用語法高亮（```yaml,```bash 等）
 >>>>>>> origin/copilot/sub-pr-402

@@ -534,7 +534,6 @@ const reports = await runStageOne({
 
 > **新增於 PR #73** - 完整的 CI 治理框架，包含智能代理配置、錯誤處理映射、和 Stage 0 自動化檢查。
 
-<<<<<<< HEAD
 | 文件路徑                                                                                               | 說明                    | 操作指引                               |
 | ------------------------------------------------------------------------------------------------------ | ----------------------- | -------------------------------------- |
 | [config/ci-agent-config.yaml](./config/ci-agent-config.yaml)                                           | CI Copilot 智能代理配置 | 定義代理角色、分析流程、骨架整合       |
@@ -551,22 +550,6 @@ const reports = await runStageOne({
 | [scripts/hooks/pre-push](./scripts/hooks/pre-push)                                                     | Stage 0 推送前驗證      | 必要檔案、目錄結構、骨架索引檢查       |
 | [scripts/hooks/install-hooks.sh](./scripts/hooks/install-hooks.sh)                                     | Git Hooks 安裝腳本      | 一鍵安裝本地 hooks                     |
 | [docs/reports/PR73_CI_GOVERNANCE_ANALYSIS.md](./docs/reports/PR73_CI_GOVERNANCE_ANALYSIS.md)           | CI 治理框架分析報告     | 完整架構分析與整合說明                 |
-=======
-| 文件路徑 | 說明 | 操作指引 |
-| --- | --- | --- |
-| [config/ci-agent-config.yaml](./config/ci-agent-config.yaml) | CI Copilot 智能代理配置 | 定義代理角色、分析流程、骨架整合 |
-| [config/ci-error-handler.yaml](./config/ci-error-handler.yaml) | 錯誤分類與行動映射 | 錯誤類型 → 優先級 → 修復步驟 |
-| [.github/workflows/reusable-ci.yml](./.github/workflows/reusable-ci.yml) ⭐ | 可重用 CI 管道 | 統一的 lint、test、build 流程 |
-| [.github/workflows/reusable-docker-build.yml](./.github/workflows/reusable-docker-build.yml) ⭐ | 可重用 Docker 建置 | 統一的容器建置、測試、掃描流程 |
-| [.github/workflows/monorepo-dispatch.yml](./.github/workflows/monorepo-dispatch.yml) | Monorepo CI 調度器 | 基礎 CI，路徑偵測、快速反饋 |
-| [.github/workflows/core-services-ci.yml](./.github/workflows/core-services-ci.yml) | 核心服務 CI | 包含 Docker 建置的完整 CI |
-| [.github/workflows/integration-deployment.yml](./.github/workflows/integration-deployment.yml) | 整合與部署 | 全面系統整合測試、四層驗證 |
-| [.github/workflows/arch-governance-validation.yml](./.github/workflows/arch-governance-validation.yml) | 架構與治理驗證工作流程 | 自動驗證架構、安全、資料治理 |
-| [scripts/hooks/pre-commit](./scripts/hooks/pre-commit) | Stage 0 提交前檢查 | YAML 驗證、Workflow 檢查、敏感資料掃描 |
-| [scripts/hooks/pre-push](./scripts/hooks/pre-push) | Stage 0 推送前驗證 | 必要檔案、目錄結構、骨架索引檢查 |
-| [scripts/hooks/install-hooks.sh](./scripts/hooks/install-hooks.sh) | Git Hooks 安裝腳本 | 一鍵安裝本地 hooks |
-| [docs/reports/PR73_CI_GOVERNANCE_ANALYSIS.md](./docs/reports/PR73_CI_GOVERNANCE_ANALYSIS.md) | CI 治理框架分析報告 | 完整架構分析與整合說明 |
->>>>>>> origin/copilot/sub-pr-402
 
 ### 自動修復文檔 (`docs/automation/`)
 
@@ -598,8 +581,6 @@ const reports = await runStageOne({
 
 ### 治理文檔 (`governance/`)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 > **⚠️ 重要更新 (2025-12-12)**: 治理目錄已完成重組，解決目錄衝突與重複問題。詳見
 > [governance/RESTRUCTURING_GUIDE.md](./governance/RESTRUCTURING_GUIDE.md)
 
@@ -623,9 +604,6 @@ const reports = await runStageOne({
 | [governance/35-scripts/validate-python-syntax.py](./governance/35-scripts/validate-python-syntax.py) ⭐ **NEW**              | Python 語法驗證器   | 自動化語法檢查工具                                       |
 | [governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md](./governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md) | 語言維度映射        | 多語言配置                                               |
 | [governance/policies/conftest/matechat-integration/README.md](./governance/policies/conftest/matechat-integration/README.md) | MateChat 整合策略   | Conftest 策略                                            |
-=======
-=======
->>>>>>> origin/copilot/sub-pr-402
 | 文件路徑                                                                                                                     | 說明              | 操作指引      |
 | ---------------------------------------------------------------------------------------------------------------------------- | ----------------- | ------------- |
 | [governance/README.md](./governance/README.md)                                                                               | 治理入口          | 政策與規則    |
@@ -640,8 +618,6 @@ const reports = await runStageOne({
 | [governance/35-scripts/validate-python-syntax.py](./governance/35-scripts/validate-python-syntax.py) ⭐ **NEW**              | Python 語法驗證器 | 自動化語法檢查工具 |
 | [governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md](./governance/environment-matrix/LANGUAGE_DIMENSION_MAPPING.md) | 語言維度映射      | 多語言配置    |
 | [governance/policies/conftest/matechat-integration/README.md](./governance/policies/conftest/matechat-integration/README.md) | MateChat 整合策略 | Conftest 策略 |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 

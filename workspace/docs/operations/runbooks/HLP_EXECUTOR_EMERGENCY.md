@@ -57,14 +57,9 @@ alerting_rules:
 ```
 
 #### 明顯症狀 | Observable Symptoms
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503
   or no response
-=======
-- ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
->>>>>>> origin/alert-autofix-37
 =======
 
 - ❌ 所有 `/healthz` 端點返回 503 或無回應 | All `/healthz` endpoints return 503 or no response
@@ -174,14 +169,9 @@ kubectl describe pod -n unmanned-island-system -l app=hlp-executor-core | \
 ### 🛠️ 恢復措施 | Recovery Actions
 
 #### 恢復路徑 A: 快速重啟 (應用層問題)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash,
 configuration correct
-=======
-**使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash, configuration correct
->>>>>>> origin/alert-autofix-37
 =======
 
 **使用場景**: 暫時性應用崩潰，配置正確 | Transient application crash, configuration correct
@@ -231,14 +221,9 @@ kubectl logs -n unmanned-island-system -l app=hlp-executor-core -f --tail=50
 ```
 
 #### 恢復路徑 C: 資源調整 (資源不足)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods
 cannot be scheduled
-=======
-**使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods cannot be scheduled
->>>>>>> origin/alert-autofix-37
 =======
 
 **使用場景**: 節點資源不足，Pod 無法調度 | Insufficient node resources, pods cannot be scheduled
@@ -364,14 +349,9 @@ alerting_rules:
 ```
 
 #### 明顯症狀 | Observable Symptoms
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond
   expected time
-=======
-- ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
->>>>>>> origin/alert-autofix-37
 =======
 
 - ⚠️ 執行卡在相同階段超過預期時間 | Executions stuck in same phase beyond expected time
@@ -382,14 +362,9 @@ alerting_rules:
 - ⚠️ Prometheus 顯示異常的狀態轉換延遲 | Prometheus shows abnormal state transition latency
 
 #### 業務影響 | Business Impact
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter
   inconsistent state
-=======
-- ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
->>>>>>> origin/alert-autofix-37
 =======
 
 - ⚠️ 部分 HLP 執行可能進入不一致狀態 | Some HLP executions may enter inconsistent state
@@ -495,14 +470,9 @@ done
 ```
 
 #### 恢復路徑 B: 重建狀態索引 (廣泛問題)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected,
 state index may be corrupted
-=======
-**使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected, state index may be corrupted
->>>>>>> origin/alert-autofix-37
 =======
 
 **使用場景**: 多個執行受影響，狀態索引可能損壞 | Multiple executions affected, state index may be corrupted
@@ -540,14 +510,9 @@ kubectl exec -it deployment/hlp-executor-core -n unmanned-island-system -- \
 ```
 
 #### 恢復路徑 C: 完整回滾與重啟 (嚴重損壞)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed
 online
-=======
-**使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed online
->>>>>>> origin/alert-autofix-37
 =======
 
 **使用場景**: 狀態嚴重損壞，無法在線修復 | Severe corruption, cannot be fixed online
@@ -620,14 +585,9 @@ T+2hr:   If not resolved → Schedule incident review
 - [ ] 創建初步事件報告 | Create preliminary incident report
 
 ### 24 小時內
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report
       (Post-Mortem)
-=======
-- [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)
->>>>>>> origin/alert-autofix-37
 =======
 
 - [ ] 完成詳細事件報告 (Post-Mortem) | Complete detailed incident report (Post-Mortem)

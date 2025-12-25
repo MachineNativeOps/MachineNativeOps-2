@@ -53,8 +53,6 @@ docs/refactor_playbooks/
 
 **舊資產生命週期規則：**
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 - 真實舊檔案只允許暫存在 `_legacy_scratch/` 中，用於解構與比較。
 - `_legacy_scratch/` 受 `.gitignore` 保護，**任何實際程式檔不得被 commit**。
 - 一旦新的實作已寫入正式目錄（例如 `core/`, `services/`,
@@ -63,23 +61,12 @@ docs/refactor_playbooks/
   - `01_deconstruction/legacy_assets_index.yaml`（ID + 來源 + 描述）
   - `03_refactor/*_refactor.md` 檔頭中的 `legacy_assets`
     欄位保留追溯關係，而不是保留原始檔案。
-=======
-* 真實舊檔案只允許暫存在 `_legacy_scratch/` 中，用於解構與比較。
-* `_legacy_scratch/` 受 `.gitignore` 保護，**任何實際程式檔不得被 commit**。
-* 一旦新的實作已寫入正式目錄（例如 `core/`, `services/`, `automation/`），
-=======
-- 真實舊檔案只允許暫存在 `_legacy_scratch/` 中，用於解構與比較。
-- `_legacy_scratch/` 受 `.gitignore` 保護，**任何實際程式檔不得被 commit**。
-- 一旦新的實作已寫入正式目錄（例如 `core/`, `services/`, `automation/`），
->>>>>>> origin/copilot/sub-pr-402
   對應舊資產必須從 `_legacy_scratch/` 刪除。
 - 舊資產的「知識層」則透過：
 
   - `01_deconstruction/legacy_assets_index.yaml`（ID + 來源 + 描述）
   - `03_refactor/*_refactor.md` 檔頭中的 `legacy_assets` 欄位
     保留追溯關係，而不是保留原始檔案。
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -166,14 +153,8 @@ clusters:
 >
 > - `legacy_assets` 中的每個 ID 必須在
 >   `01_deconstruction/legacy_assets_index.yaml` 中有對應定義。
-<<<<<<< HEAD
-<<<<<<< HEAD
 > - 若未設定 `deconstruction_file` 或
 >   `integration_file`，代表此 cluster 的重構資料尚不完整（可在 CI 中視為 warning）。
-=======
-> * 若未設定 `deconstruction_file` 或 `integration_file`，
->   代表此 cluster 的重構資料尚不完整（可在 CI 中視為 warning）。
->>>>>>> origin/alert-autofix-37
 =======
 > - 若未設定 `deconstruction_file` 或 `integration_file`，
 >   代表此 cluster 的重構資料尚不完整（可在 CI 中視為 warning）。
@@ -186,11 +167,6 @@ clusters:
 所有 `*_refactor.md` 檔案，都應由 `templates/REFRACTOR_PLAYBOOK_TEMPLATE.md` 派生，並至少包含以下區塊：
 
 1. **檔頭：來源鏈結與基本資訊**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
    - Cluster ID
    - 對應目錄（實際會被修改的目錄列表）
    - 來源鏈結（必填）：
@@ -246,65 +222,6 @@ clusters:
    - 上游/下游依賴
    - 重構後的集成步驟順序
    - 失敗時如何快速回到舊組合（branch / feature flag 等）
-<<<<<<< HEAD
-=======
-
-   * Cluster ID
-   * 對應目錄（實際會被修改的目錄列表）
-   * 來源鏈結（必填）：
-
-     * 解構劇本：`01_deconstruction/..._deconstruction.md`
-     * 集成劇本：`02_integration/..._integration.md`
-     * 舊資產 ID 清單：對應 `legacy_assets_index.yaml` 中的 ID
-
-2. **Cluster 概覽**
-
-   * 在整個 Unmanned Island System 中的角色與邊界
-   * 目前語言組成與健康狀態（TypeScript / Python / Go / C++ 等）
-
-3. **問題盤點**
-
-   * 語言治理問題彙總（language-governance-report）
-   * Hotspot 檔案（hotspot.json）
-   * Semgrep 安全問題（semgrep-report.json）
-   * Migration Flow 觀察（migration-flow.json）
-
-4. **語言與結構重構策略**
-
-   * 語言層級策略（要移除/遷出/統一的語言）
-   * 目錄與模組邊界調整（拆分 / 合併 / 上移 / 下沉）
-   * 與集成劇本對齊的關鍵約束
-
-5. **分級重構計畫（P0 / P1 / P2）**
-
-   * P0（24–48 小時內）：阻塞 CI / 高風險問題
-   * P1（一週內）：架構清晰化、語言統一
-   * P2（持續）：技術債收斂與最佳化
-   * 每個等級都應列出具體檔案與動作（刪除 / 移動 / 改寫為某語言）
-
-6. **Auto-Fix Bot 可以處理的項目**
-
-   * 適合全自動修復的變更範圍
-   * 必須人工審查的變更範圍
-   * 建議的 Auto-Fix 規則（例如只限格式/型別/路徑，不動業務邏輯）
-
-7. **驗收條件與成功指標**
-
-   * 語言治理指標（違規數門檻）
-   * 安全指標（Semgrep HIGH/MEDIUM 上限）
-   * 架構指標（是否符合 integration 劇本的邊界與 API 約束）
-
-8. **檔案與目錄結構（交付視圖）**
-
-   * 與本次重構相關的目錄/檔案 tree
-   * 每個關鍵檔案/目錄的一行註解說明
-
-9. **集成對齊與回滾策略**
-
-   * 上游/下游依賴
-   * 重構後的集成步驟順序
-   * 失敗時如何快速回到舊組合（branch / feature flag 等）
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -313,27 +230,12 @@ clusters:
 ## 6. 如何新增一份重構劇本（標準流程）
 
 1. 在 `01_deconstruction/` 填寫（或確認存在）：
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/copilot/sub-pr-402
    - 對應 cluster 的 `*_deconstruction.md`
    - `legacy_assets_index.yaml` 中相關舊資產 ID
 
 2. 在 `02_integration/` 撰寫對應的 `*_integration.md`：
 
    - 定義語言分層、邊界與整合方式。
-<<<<<<< HEAD
-=======
-
-   * 對應 cluster 的 `*_deconstruction.md`
-   * `legacy_assets_index.yaml` 中相關舊資產 ID
-
-2. 在 `02_integration/` 撰寫對應的 `*_integration.md`：
-
-   * 定義語言分層、邊界與整合方式。
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -341,11 +243,7 @@ clusters:
 
    1. 依 domain 選擇目錄（例如 `core/`, `services/`）
    2. 以 `REFRACTOR_PLAYBOOK_TEMPLATE.md` 為基礎，新建檔案：
-<<<<<<< HEAD
-<<<<<<< HEAD
       - 例如：`core__architecture_refactor.md`
-=======
->>>>>>> origin/copilot/sub-pr-402
 
       - 例如：`core__architecture_refactor.md`
    3. 檔頭填入：
@@ -363,26 +261,6 @@ clusters:
 5. （可選）更新 `meta/CI_INTEGRATION.md` 或 CI 設定：
 
    - 讓新的 refactor 劇本能被語言治理 / Auto-Fix / Dashboard 使用。
-<<<<<<< HEAD
-=======
-
-      * 例如：`core__architecture_refactor.md`
-   3. 檔頭填入：
-
-      * cluster_id
-      * 對應目錄
-      * deconstruction_file / integration_file
-      * legacy_assets IDs
-   4. 依照「必備內容」填寫各章節。
-
-4. 更新 `index.yaml` 與 `INDEX.md`：
-
-   * 增加此 cluster 的索引條目。
-
-5. （可選）更新 `meta/CI_INTEGRATION.md` 或 CI 設定：
-
-   * 讓新的 refactor 劇本能被語言治理 / Auto-Fix / Dashboard 使用。
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 

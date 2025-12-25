@@ -1015,13 +1015,8 @@ spec:
 
 **重構計畫完成時間 (Refactor Plan Completed)**: 2025-12-07T10:19:24Z  
 **前置文檔 (Previous)**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - `01_deconstruction/kg-builder_deconstruction.md` ✅
-=======
-- `01_deconstruction/kg-builder_deconstruction.md` ✅  
->>>>>>> origin/alert-autofix-37
 =======
 
 - `01_deconstruction/kg-builder_deconstruction.md` ✅  

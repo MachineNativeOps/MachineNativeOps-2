@@ -45,14 +45,9 @@ SynergyMesh/
 ```
 
 #### 問題診斷
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **根本矛盾**: 專案已完成「治理統一遷移到 `./governance/`」，但
   `docs/GOVERNANCE/` 仍存在
-=======
-- **根本矛盾**: 專案已完成「治理統一遷移到 `./governance/`」，但 `docs/GOVERNANCE/` 仍存在
->>>>>>> origin/alert-autofix-37
 =======
 
 - **根本矛盾**: 專案已完成「治理統一遷移到 `./governance/`」，但 `docs/GOVERNANCE/` 仍存在

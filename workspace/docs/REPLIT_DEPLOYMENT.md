@@ -246,14 +246,8 @@ npm test
 
 ### Issue: "React is not defined" error
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Solution:** Check that `main.tsx` imports React:
 
-=======
-**Solution:**
-Check that `main.tsx` imports React:
->>>>>>> origin/alert-autofix-37
 =======
 **Solution:**
 Check that `main.tsx` imports React:
@@ -266,14 +260,8 @@ import { createRoot } from 'react-dom/client';
 
 ### Issue: Routes not working (404 errors)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Solution:** Ensure `HashRouter` is used (not `BrowserRouter`):
 
-=======
-**Solution:**
-Ensure `HashRouter` is used (not `BrowserRouter`):
->>>>>>> origin/alert-autofix-37
 =======
 **Solution:**
 Ensure `HashRouter` is used (not `BrowserRouter`):

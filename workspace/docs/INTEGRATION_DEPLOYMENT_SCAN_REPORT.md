@@ -125,14 +125,9 @@
    ```bash
    make all-kg
    ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 
    這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml`
    中的路徑引用。
-=======
-   這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml` 中的路徑引用。
->>>>>>> origin/alert-autofix-37
 =======
 
    這將更新 `docs/knowledge-graph.yaml` 和 `docs/superroot-entities.yaml` 中的路徑引用。

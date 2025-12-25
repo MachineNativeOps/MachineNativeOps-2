@@ -768,15 +768,9 @@ Stage 3: 閉環優化 (6-12 months)
    ```bash
    python governance/scripts/auto-fix-medium-issues.py --fix-compliance
    ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 
    **時間估計**: < 1 hour (自動化執行) ⚡ **成功標準**: 95 個 MEDIUM 問題降至 <
    10
-=======
-   **時間估計**: < 1 hour (自動化執行) ⚡
-   **成功標準**: 95 個 MEDIUM 問題降至 < 10
->>>>>>> origin/alert-autofix-37
 =======
 
    **時間估計**: < 1 hour (自動化執行) ⚡
@@ -816,14 +810,8 @@ Stage 3: 閉環優化 (6-12 months)
      - AI 驅動異常預測
      - 自動優化決策引擎
    ```
-<<<<<<< HEAD
-<<<<<<< HEAD
 
    **時間估計**: < 2 weeks ⚡ **成功標準**: 可視化 dashboard + 自動預警
-=======
-   **時間估計**: < 2 weeks ⚡
-   **成功標準**: 可視化 dashboard + 自動預警
->>>>>>> origin/alert-autofix-37
 =======
 
    **時間估計**: < 2 weeks ⚡
@@ -867,18 +855,10 @@ Stage 3: 閉環優化 (6-12 months)
    - 預測性問題檢測（機器學習）
    - 自適應策略優化
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 2. **語意網整合**
    - RDF/OWL ontology for governance
    - 知識圖譜驅動推理
    - 跨系統語意一致性
-=======
-10. **語意網整合**
-    - RDF/OWL ontology for governance
-    - 知識圖譜驅動推理
-    - 跨系統語意一致性
->>>>>>> origin/alert-autofix-37
 =======
 2. **語意網整合**
     - RDF/OWL ontology for governance

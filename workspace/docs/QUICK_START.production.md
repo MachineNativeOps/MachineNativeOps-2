@@ -503,17 +503,10 @@ docker-compose up -d
 ## 🤝 Support
 
 - 📖 [Documentation](./docs/)
-<<<<<<< HEAD
-<<<<<<< HEAD
 - 🐛
   [Issue Tracker](https://github.com/SynergyMesh-admin/Unmanned-Island/issues)
 - 💬
   [Discussions](https://github.com/SynergyMesh-admin/Unmanned-Island/discussions)
-=======
-- 🐛 [Issue Tracker](https://github.com/SynergyMesh-admin/Unmanned-Island/issues)
-- 💬 [Discussions](https://github.com/SynergyMesh-admin/Unmanned-Island/discussions)
-
->>>>>>> origin/alert-autofix-37
 =======
 - 🐛 [Issue Tracker](https://github.com/SynergyMesh-admin/Unmanned-Island/issues)
 - 💬 [Discussions](https://github.com/SynergyMesh-admin/Unmanned-Island/discussions)

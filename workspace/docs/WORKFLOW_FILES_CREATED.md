@@ -61,8 +61,6 @@
 4. ✅ **tools/generators/documentation_generator.py** (45 lines)
 
 ### Deployment | 部署
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. ✅ **Dockerfile.workflow** (42 lines)
    - Production-ready multi-stage build
@@ -114,12 +112,6 @@
    - Validation layer details
    - Customization guide
    - Rule configuration
-=======
-15. ✅ **Dockerfile.workflow** (42 lines)
-=======
-
-1. ✅ **Dockerfile.workflow** (42 lines)
->>>>>>> origin/copilot/sub-pr-402
     - Production-ready multi-stage build
     - Non-root user
     - Health checks
@@ -169,8 +161,6 @@
     - Validation layer details
     - Customization guide
     - Rule configuration
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -182,8 +172,6 @@
 4. ✅ **tests/unit/test_validators.py**
 
 ### Packaging | 打包
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. ✅ **WORKFLOW_SYSTEM_SUMMARY.md** (650+ lines)
    - Complete implementation summary
@@ -202,12 +190,6 @@
    - Core dependencies
    - Testing tools
    - Quality tools
-=======
-28. ✅ **WORKFLOW_SYSTEM_SUMMARY.md** (650+ lines)
-=======
-
-1. ✅ **WORKFLOW_SYSTEM_SUMMARY.md** (650+ lines)
->>>>>>> origin/copilot/sub-pr-402
     - Complete implementation summary
     - Statistics & metrics
     - Answers to "完成什麼？？"
@@ -224,8 +206,6 @@
     - Core dependencies
     - Testing tools
     - Quality tools
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 

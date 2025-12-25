@@ -186,13 +186,8 @@ kubectl apply -f 04-security-observability/config/rbac-policies.yaml
 - [ ] Architecture Linter 集成到 CI/CD
 - [ ] 違規需要 ADR 支持
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### Security & Observability
 
-=======
-### Security & Observability  
->>>>>>> origin/alert-autofix-37
 =======
 ### Security & Observability  
 

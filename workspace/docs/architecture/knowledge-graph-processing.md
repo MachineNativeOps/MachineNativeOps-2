@@ -508,14 +508,9 @@ metrics:
 - [DBpedia Ontology](https://www.dbpedia.org/resources/ontology/)
 
 ### 學術論文
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - Dong, X. et al. (2014). "Knowledge Vault: A Web-Scale Approach to
   Probabilistic Knowledge Fusion"
-=======
-- Dong, X. et al. (2014). "Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion"
->>>>>>> origin/alert-autofix-37
 =======
 
 - Dong, X. et al. (2014). "Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion"

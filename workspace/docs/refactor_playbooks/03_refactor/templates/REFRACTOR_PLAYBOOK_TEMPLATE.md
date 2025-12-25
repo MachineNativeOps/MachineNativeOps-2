@@ -351,23 +351,11 @@ automation/ (自動化/工具)
       └─ {{FILE_C}}  # 一行說明
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/copilot/sub-pr-402
 - 說明：
 
   - `{{FILE_A}}` — 主要入口 / API 層 / Adapter 等說明。
   - `{{FILE_B}}` — 補充說明。
   - ...
-<<<<<<< HEAD
-=======
-* 說明：
-
-  * `{{FILE_A}}` — 主要入口 / API 層 / Adapter 等說明。
-  * `{{FILE_B}}` — 補充說明。
-  * ...
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -375,10 +363,6 @@ automation/ (自動化/工具)
 
 ## 8. 集成對齊（Integration Alignment）
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/copilot/sub-pr-402
 - 上游依賴：
 
   - 例如：core/contract_service（gRPC）、governance/schemas（型別）
@@ -391,20 +375,5 @@ automation/ (自動化/工具)
 - 回滾策略：
 
   - 若此 cluster 重構失敗，如何切回舊版組合？
-<<<<<<< HEAD
-=======
-* 上游依賴：
-
-  * 例如：core/contract_service（gRPC）、governance/schemas（型別）
-* 下游使用者：
-
-  * 例如：apps/web 前端、mcp-servers/xxx
-* 集成步驟摘要：
-
-  * 重構順序 + 每步驟需要通過的測試 / CI。
-* 回滾策略：
-
-  * 若此 cluster 重構失敗，如何切回舊版組合？
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402

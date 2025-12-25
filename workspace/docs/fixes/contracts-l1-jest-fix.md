@@ -83,14 +83,9 @@ module.exports = config;
 
 ### Why `.cjs` extension?
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 For consistency with the advisory-database fix and to avoid potential module
 resolution issues:
 
-=======
-For consistency with the advisory-database fix and to avoid potential module resolution issues:
->>>>>>> origin/alert-autofix-37
 =======
 For consistency with the advisory-database fix and to avoid potential module resolution issues:
 
@@ -102,14 +97,9 @@ For consistency with the advisory-database fix and to avoid potential module res
 ### Test Infrastructure Dependencies
 
 This fix reveals the importance of:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Explicit test dependencies**: Always declare test runners and assertion
    libraries
-=======
-1. **Explicit test dependencies**: Always declare test runners and assertion libraries
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Explicit test dependencies**: Always declare test runners and assertion libraries

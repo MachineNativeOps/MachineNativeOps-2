@@ -7,8 +7,6 @@
 - 提供人/機皆可讀的資產，支援訓練、評估、派工與活體知識庫建模。
 
 ## 子系統分層 Layering
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | 層級   | 目錄                          | 描述                                                                        |
 | ------ | ----------------------------- | --------------------------------------------------------------------------- |
@@ -26,10 +24,6 @@
 | **70** | **70-architecture-skeletons** | **架構骨架原型**，展示系統各子系統的設計模式。                              |
 | **80** | **80-skeleton-configs**       | **骨架配置完整實現** ✨ NEW，包含架構穩定性、安全可觀測性等實際配置和工具。 |
 | 99     | 99-meta                       | 與活體知識庫/Schema Index 對接的映射層。                                    |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | 層級 | 目錄 | 描述 |
 | ---- | ---- | ---- |
 | 00 | 00-foundation | 核心計算機科學能力，對應 core/* 核心模組設計規範。 |
@@ -46,8 +40,6 @@
 | **70** | **70-architecture-skeletons** | **架構骨架原型**，展示系統各子系統的設計模式。 |
 | **80** | **80-skeleton-configs** | **骨架配置完整實現** ✨ NEW，包含架構穩定性、安全可觀測性等實際配置和工具。 |
 | 99 | 99-meta | 與活體知識庫/Schema Index 對接的映射層。 |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -63,17 +55,11 @@
    - 詳見：[80-skeleton-configs README](./80-skeleton-configs/README.md)
 
 ## 維運原則 Operating Principles
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Docs-first**：新增能力時先更新 manifest.yaml +
   README，並使用雙語（繁中+英文）標題以維持一致性。
 - **Schema 對齊**：所有 YAML 項目應符合 governance/schemas 內既有結構（module,
   owner, lifecycle 等欄位）。
-=======
-- **Docs-first**：新增能力時先更新 manifest.yaml + README，並使用雙語（繁中+英文）標題以維持一致性。
-- **Schema 對齊**：所有 YAML 項目應符合 governance/schemas 內既有結構（module, owner, lifecycle 等欄位）。
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Docs-first**：新增能力時先更新 manifest.yaml + README，並使用雙語（繁中+英文）標題以維持一致性。
@@ -86,12 +72,7 @@
 
 - **Phase 1**：完成 00–02 層基礎檔案（本提交）。
 - **Phase 2**：導入問卷/自評表單（30-assessment 子目錄）。
-<<<<<<< HEAD
-<<<<<<< HEAD
 - **Phase 3**：結合 docs/generated-_與 agents/_ 執行自動指派。
-=======
-- **Phase 3**：結合 docs/generated-* 與 agents/* 執行自動指派。
->>>>>>> origin/alert-autofix-37
 =======
 - **Phase 3**：結合 docs/generated-*與 agents/* 執行自動指派。
 >>>>>>> origin/copilot/sub-pr-402

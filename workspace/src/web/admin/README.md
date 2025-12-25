@@ -13,18 +13,11 @@
 - **語言治理儀表板**：實時政策合規性監控與可視化
 
 > **⚠️ 部署注意事項**
-<<<<<<< HEAD
-<<<<<<< HEAD
 >
 > - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build`
 >   生成靜態文件到 `dist/` 目錄
 > - **後端服務部署**：需要 Python 3.11+，依賴 `requirements.txt`
 >   中的套件（FastAPI、uvicorn 等）
-=======
-> 
-> - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build` 生成靜態文件到 `dist/` 目錄
-> - **後端服務部署**：需要 Python 3.11+，依賴 `requirements.txt` 中的套件（FastAPI、uvicorn 等）
->>>>>>> origin/alert-autofix-37
 =======
 >
 > - **靜態部署**（前端）：僅需要 Node.js 和 npm，執行 `npm run build` 生成靜態文件到 `dist/` 目錄

@@ -1,14 +1,9 @@
 # Chaos Engineering Guide
 
 ## 目標
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 驗證核心工作流（contract service、autonomous stack、knowledge
   base）在失效條件下的穩健度。
-=======
-- 驗證核心工作流（contract service、autonomous stack、knowledge base）在失效條件下的穩健度。
->>>>>>> origin/alert-autofix-37
 =======
 
 - 驗證核心工作流（contract service、autonomous stack、knowledge base）在失效條件下的穩健度。

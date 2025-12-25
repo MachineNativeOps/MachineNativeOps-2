@@ -163,14 +163,8 @@ rm -rf .git/refactor-cache
 - Everything configurable in `config/sync-refactor-config.yaml`
 - Update config, not code
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Migration:** If you modified directories in the old script, now update:
 
-=======
-**Migration:**
-If you modified directories in the old script, now update:
->>>>>>> origin/alert-autofix-37
 =======
 **Migration:**
 If you modified directories in the old script, now update:

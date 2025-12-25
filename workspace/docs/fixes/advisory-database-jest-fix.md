@@ -85,14 +85,9 @@ The package.json contains `"type": "module"`, which means:
 ### Configuration Rationale
 
 The `useESM: true` in ts-jest config is correct because:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - It's for handling ES modules in the TypeScript **source code**, not the config
   file
-=======
-- It's for handling ES modules in the TypeScript **source code**, not the config file
->>>>>>> origin/alert-autofix-37
 =======
 
 - It's for handling ES modules in the TypeScript **source code**, not the config file

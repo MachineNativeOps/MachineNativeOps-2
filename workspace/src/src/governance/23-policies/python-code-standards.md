@@ -259,14 +259,8 @@ Add commas between all items in the list.
 AttributeError: module 'tools.refactor' has no attribute 'ClassName'
 ```
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Fix:** Either:
 
-=======
-**Fix:**
-Either:
->>>>>>> origin/alert-autofix-37
 =======
 **Fix:**
 Either:

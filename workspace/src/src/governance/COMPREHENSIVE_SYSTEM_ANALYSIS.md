@@ -843,13 +843,8 @@ security = 100 - (critical×10 + high×5 + medium×2 + low×0.5)
 - 通用: 18 個
 
 **自動化流程**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. Tag push (v\*)
-=======
-1. Tag push (v*)
->>>>>>> origin/alert-autofix-37
 =======
 
 1. Tag push (v*)

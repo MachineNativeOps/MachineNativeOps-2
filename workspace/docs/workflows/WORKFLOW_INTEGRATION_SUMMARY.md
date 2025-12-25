@@ -109,17 +109,11 @@
 - **Usage:** `docker-compose --profile workflow up`
 
 #### ❌ `docker-compose.workflow.yml`
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Status:** Can be deleted (functionality integrated into main
   docker-compose.yml)
 - **Reason:** Workflow services added to main docker-compose.yml with profile
   support
-=======
-- **Status:** Can be deleted (functionality integrated into main docker-compose.yml)
-- **Reason:** Workflow services added to main docker-compose.yml with profile support
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Status:** Can be deleted (functionality integrated into main docker-compose.yml)
@@ -345,14 +339,9 @@ The workflow system integration follows SynergyMesh's three-systems architecture
 - **Multi-Layer Validator** (`core/validators/multi_layer_validator.py`)
 
 ### 2. Structural Governance
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Behavior Contracts**
   (`governance/policies/workflow/behavior-contracts.yaml`)
-=======
-- **Behavior Contracts** (`governance/policies/workflow/behavior-contracts.yaml`)
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Behavior Contracts** (`governance/policies/workflow/behavior-contracts.yaml`)

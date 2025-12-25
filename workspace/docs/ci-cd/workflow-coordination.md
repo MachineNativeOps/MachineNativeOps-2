@@ -13,14 +13,9 @@
 **目的**: 為每個服務變更提供快速的基本 CI 檢查
 
 **觸發條件**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 每次 push 或 PR 影響 `mcp-servers/**` 或
   `core/contract_service/contracts-L1/contracts/**`
-=======
-- 每次 push 或 PR 影響 `mcp-servers/**` 或 `core/contract_service/contracts-L1/contracts/**`
->>>>>>> origin/alert-autofix-37
 =======
 
 - 每次 push 或 PR 影響 `mcp-servers/**` 或 `core/contract_service/contracts-L1/contracts/**`

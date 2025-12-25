@@ -1,14 +1,9 @@
 # Pipeline Blueprints
 
 ## Service Template
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. Install deps (`npm install -w <service>` /
    `pip install -r requirements.txt`).
-=======
-1. Install deps (`npm install -w <service>` / `pip install -r requirements.txt`).
->>>>>>> origin/alert-autofix-37
 =======
 
 1. Install deps (`npm install -w <service>` / `pip install -r requirements.txt`).

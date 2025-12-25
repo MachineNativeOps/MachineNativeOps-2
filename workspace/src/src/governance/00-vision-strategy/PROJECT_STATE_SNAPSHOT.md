@@ -36,17 +36,10 @@
 - ✅ 實時系統指標
 
 **關鍵差異**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | 傳統方式     | 自主方式     |
 | ------------ | ------------ |
 | 30 分鐘學習  | < 1 秒理解   |
-=======
-| 傳統方式 | 自主方式 |
-|---------|---------|
-| 30 分鐘學習 | < 1 秒理解 |
->>>>>>> origin/alert-autofix-37
 =======
 
 | 傳統方式 | 自主方式 |
@@ -222,8 +215,6 @@ Automation Layer (Phase 3) ✅ 100%  ← THIS PHASE
 ```
 
 ### 資源映射完成
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | 戰略文檔                        | CRD                      | K8s Instance               | OPA Policy                   |
 | ------------------------------- | ------------------------ | -------------------------- | ---------------------------- |
@@ -236,10 +227,6 @@ Automation Layer (Phase 3) ✅ 100%  ← THIS PHASE
 | communication-plan.yaml         | ✅ CommunicationPlan     | ✅ comms-plan-v1           | ✅ policy-communication.rego |
 | success-metrics-dashboard.yaml  | ✅ MetricsDashboard      | ✅ metrics-dashboard-v1    | ✅ policy-metrics.rego       |
 | change-management-protocol.yaml | ✅ ChangeProtocol        | ✅ change-mgmt-v1          | ✅ policy-change.rego        |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | 戰略文檔 | CRD | K8s Instance | OPA Policy |
 |---------|-----|--------------|------------|
 | vision-statement.yaml | ✅ VisionStatement | ✅ vision-synergymesh-2025 | ✅ policy-vision.rego |
@@ -251,8 +238,6 @@ Automation Layer (Phase 3) ✅ 100%  ← THIS PHASE
 | communication-plan.yaml | ✅ CommunicationPlan | ✅ comms-plan-v1 | ✅ policy-communication.rego |
 | success-metrics-dashboard.yaml | ✅ MetricsDashboard | ✅ metrics-dashboard-v1 | ✅ policy-metrics.rego |
 | change-management-protocol.yaml | ✅ ChangeProtocol | ✅ change-mgmt-v1 | ✅ policy-change.rego |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -392,16 +377,7 @@ make all-kg  # 1504 nodes, 1503 edges
    - 驗證機制、儀表板工具
    - **實時反饋迴路** (< 1 小時全專案分析)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Iteration 2** (用戶: "持續自動演化"): 5. `risk-register.yaml` (16.5KB)
-=======
-**Iteration 2** (用戶: "持續自動演化"):
-5. `risk-register.yaml` (16.5KB)
-   - 6 個主要戰略風險 (Tech Debt, AI Hallucinations, Competition, 等)
-   - AI 驅動風險情報 (預測分析、蒙特卡羅模擬 10,000 次)
-   - 4 級風險升級矩陣 (Critical < 4hr → Low 自動監控)
->>>>>>> origin/alert-autofix-37
 =======
 **Iteration 2** (用戶: "持續自動演化"):
 5. `risk-register.yaml` (16.5KB)
@@ -416,16 +392,7 @@ make all-kg  # 1504 nodes, 1503 edges
    - 季度級里程碑 (2025 Q4 → 2030 願景實現)
    - 應變計劃 (競爭、經濟、技術故障)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Iteration 3** (用戶: "繼續補充"): 7. `communication-plan.yaml` (25.5KB)
-=======
-**Iteration 3** (用戶: "繼續補充"):
-7. `communication-plan.yaml` (25.5KB)
-   - 4 個溝通目標 (100% 願景認知、戰略對齊、雙向溝通、透明度)
-   - **AI agent 專屬渠道** (event bus, webhooks, real-time dashboard)
-   - 危機溝通協議 (15min 啟動 → 1hr 作戰室)
->>>>>>> origin/alert-autofix-37
 =======
 **Iteration 3** (用戶: "繼續補充"):
 7. `communication-plan.yaml` (25.5KB)
@@ -440,13 +407,7 @@ make all-kg  # 1504 nodes, 1503 edges
    - 25+ 核心指標 (願景實現、OKR 健康、業務表現、DORA 指標)
    - 4 種 AI 生成洞察 (異常檢測、預測、根因分析、推薦)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Iteration 4** (用戶: "在試一次"): 9. `change-management-protocol.yaml` (18KB)
-=======
-**Iteration 4** (用戶: "在試一次"):
-9. `change-management-protocol.yaml` (18KB)
->>>>>>> origin/copilot/sub-pr-402
 
 - 4 級變更分類 (Minor < 1min → Strategic < 1month)
 - AI 驅動影響分析 (< 5 分鐘自動評估)
@@ -454,21 +415,8 @@ make all-kg  # 1504 nodes, 1503 edges
 - 版本控制 + 回滾協議
 
 1. `README.md` (更新)
-<<<<<<< HEAD
    - 修正過時內容 (4 個文件 → 9 個文件)
    - 新增變更管理、AI 自主演化展示章節
-=======
-**Iteration 4** (用戶: "在試一次"):
-9. `change-management-protocol.yaml` (18KB)
-   - 4 級變更分類 (Minor < 1min → Strategic < 1month)
-   - AI 驅動影響分析 (< 5 分鐘自動評估)
-   - 6 步驟變更工作流 (Proposal → Validation)
-   - 版本控制 + 回滾協議
-
-10. `README.md` (更新)
-    - 修正過時內容 (4 個文件 → 9 個文件)
-    - 新增變更管理、AI 自主演化展示章節
->>>>>>> origin/alert-autofix-37
 =======
     - 修正過時內容 (4 個文件 → 9 個文件)
     - 新增變更管理、AI 自主演化展示章節
@@ -906,15 +854,10 @@ SynergyMesh/
 ## 🔍 常見問題 (FAQ for Next Agent)
 
 ### Q1: 我從哪裡開始？
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **A**: 先讀本文件（`PROJECT_STATE_SNAPSHOT.md`），再讀
 `README.gac-deployment.md`，最後讀
 `gac-architecture.yaml`。按順序閱讀能快速建立完整脈絡。
-=======
-**A**: 先讀本文件（`PROJECT_STATE_SNAPSHOT.md`），再讀 `README.gac-deployment.md`，最後讀 `gac-architecture.yaml`。按順序閱讀能快速建立完整脈絡。
->>>>>>> origin/alert-autofix-37
 =======
 
 **A**: 先讀本文件（`PROJECT_STATE_SNAPSHOT.md`），再讀 `README.gac-deployment.md`，最後讀 `gac-architecture.yaml`。按順序閱讀能快速建立完整脈絡。

@@ -250,17 +250,11 @@ apps/web → services/users → core/auth
 **Project:** Integration of 6 baseline YAML files from `_legacy_scratch` to production locations
 
 **Documentation:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 📋 [Integration Plan](./BASELINE_YAML_INTEGRATION_PLAN.md) - Comprehensive
   plan with 44 action items
 - 📊 [P0 Completion Report](./P0_COMPLETION_REPORT.md) - Detailed metrics and
   analysis
-=======
-- 📋 [Integration Plan](./BASELINE_YAML_INTEGRATION_PLAN.md) - Comprehensive plan with 44 action items
-- 📊 [P0 Completion Report](./P0_COMPLETION_REPORT.md) - Detailed metrics and analysis
->>>>>>> origin/alert-autofix-37
 =======
 
 - 📋 [Integration Plan](./BASELINE_YAML_INTEGRATION_PLAN.md) - Comprehensive plan with 44 action items

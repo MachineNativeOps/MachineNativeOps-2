@@ -24,14 +24,9 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Source:** Extracted from `baseline-01-namespace-governance.v1.0.yaml`
 
 **Key Features:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ✅ 5 environment naming patterns (production, staging, development, feature,
   tenant)
-=======
-- ✅ 5 environment naming patterns (production, staging, development, feature, tenant)
->>>>>>> origin/alert-autofix-37
 =======
 
 - ✅ 5 environment naming patterns (production, staging, development, feature, tenant)
@@ -56,14 +51,9 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Source:** Extracted from `baseline-02-security-rbac.v1.0.yaml`
 
 **Key Features:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ✅ 6-tier RBAC role hierarchy (cluster-admin, platform-operator, developer,
   viewer, ci-cd-automation, security-auditor)
-=======
-- ✅ 6-tier RBAC role hierarchy (cluster-admin, platform-operator, developer, viewer, ci-cd-automation, security-auditor)
->>>>>>> origin/alert-autofix-37
 =======
 
 - ✅ 6-tier RBAC role hierarchy (cluster-admin, platform-operator, developer, viewer, ci-cd-automation, security-auditor)
@@ -135,17 +125,11 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Source:** Extracted from `baseline-01-namespace-governance.v1.0.yaml`
 
 **Key Features:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - ✅ 10 required labels (app.kubernetes.io/\*, environment, owner, cost-center,
   compliance.level, baseline.level)
 - ✅ 5 optional labels (security.scan.required, backup.enabled, monitoring.tier,
   network.zone, tenant-id)
-=======
-- ✅ 10 required labels (app.kubernetes.io/*, environment, owner, cost-center, compliance.level, baseline.level)
-- ✅ 5 optional labels (security.scan.required, backup.enabled, monitoring.tier, network.zone, tenant-id)
->>>>>>> origin/alert-autofix-37
 =======
 
 - ✅ 10 required labels (app.kubernetes.io/*, environment, owner, cost-center, compliance.level, baseline.level)
@@ -212,14 +196,9 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 ---
 
 #### 📚 KUBERNETES_BASELINE_GUIDE.md
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **Location:**
 `docs/refactor_playbooks/03_refactor/meta/KUBERNETES_BASELINE_GUIDE.md`  
-=======
-**Location:** `docs/refactor_playbooks/03_refactor/meta/KUBERNETES_BASELINE_GUIDE.md`  
->>>>>>> origin/alert-autofix-37
 =======
 
 **Location:** `docs/refactor_playbooks/03_refactor/meta/KUBERNETES_BASELINE_GUIDE.md`  
@@ -289,14 +268,9 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Target:** 21 files to integrate
 
 **High-Priority Items:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Capability Registry Schema** -
    `governance/schemas/capability-registry.schema.json`
-=======
-1. **Capability Registry Schema** - `governance/schemas/capability-registry.schema.json`
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Capability Registry Schema** - `governance/schemas/capability-registry.schema.json`
@@ -322,14 +296,9 @@ Successfully completed Phase 0 (P0) of the Baseline YAML integration project. Al
 **Focus:** Quantum computing module (experimental)
 
 **Items:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Quantum Circuit Library** - 4 circuit definitions in
    `core/quantum-circuits/`
-=======
-1. **Quantum Circuit Library** - 4 circuit definitions in `core/quantum-circuits/`
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Quantum Circuit Library** - 4 circuit definitions in `core/quantum-circuits/`
@@ -410,14 +379,9 @@ Status: Modular, maintainable, production-ready ✅
 ```
 
 **Key Improvements:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 📦 **Separation of Concerns:** Policies, schemas, configuration, and
   documentation are separated
-=======
-- 📦 **Separation of Concerns:** Policies, schemas, configuration, and documentation are separated
->>>>>>> origin/alert-autofix-37
 =======
 
 - 📦 **Separation of Concerns:** Policies, schemas, configuration, and documentation are separated

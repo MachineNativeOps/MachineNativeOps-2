@@ -17,14 +17,9 @@
 ### 1. 命名空間與 RBAC (4 個文件)
 
 ✅ **namespace.yaml**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 6 個命名空間：autofix, autofix-dev, autofix-staging, monitoring, logging,
   ingress-nginx
-=======
-- 6 個命名空間：autofix, autofix-dev, autofix-staging, monitoring, logging, ingress-nginx
->>>>>>> origin/alert-autofix-37
 =======
 
 - 6 個命名空間：autofix, autofix-dev, autofix-staging, monitoring, logging, ingress-nginx

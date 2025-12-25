@@ -261,14 +261,9 @@ safety:
 ## 🔌 Integration Points / 整合點
 
 ### 1. With automation_launcher.py
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 The system integrates with the existing automation launcher via pipeline
 definitions.
-=======
-The system integrates with the existing automation launcher via pipeline definitions.
->>>>>>> origin/alert-autofix-37
 =======
 
 The system integrates with the existing automation launcher via pipeline definitions.

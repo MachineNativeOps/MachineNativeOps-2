@@ -469,17 +469,10 @@ docker-compose up -d
 
 ## 📞 獲取幫助 | Get Help
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 - **文檔**: <https://github.com/MachineNativeOps-admin/MachineNativeOps/tree/main/docs>
 - **Issues**: <https://github.com/MachineNativeOps-admin/MachineNativeOps/issues>
 - **Discussions**:
   <https://github.com/MachineNativeOps-admin/MachineNativeOps/discussions>
-=======
-- **文檔**: https://github.com/MachineNativeOps-admin/MachineNativeOps/tree/main/docs
-- **Issues**: https://github.com/MachineNativeOps-admin/MachineNativeOps/issues
-- **Discussions**: https://github.com/MachineNativeOps-admin/MachineNativeOps/discussions
->>>>>>> origin/alert-autofix-37
 =======
 - **文檔**: <https://github.com/MachineNativeOps-admin/MachineNativeOps/tree/main/docs>
 - **Issues**: <https://github.com/MachineNativeOps-admin/MachineNativeOps/issues>

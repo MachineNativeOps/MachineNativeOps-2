@@ -18,13 +18,8 @@
 - 不同語言與平台的命名特色
 - 建立個人命名習慣
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### 第二階段：工具與平台 (第3-4週)
 
-=======
-### 第二階段：工具與平台 (第3-4週)  
->>>>>>> origin/alert-autofix-37
 =======
 ### 第二階段：工具與平台 (第3-4週)  
 
@@ -1237,13 +1232,8 @@ user_service_cpu_usage_percent
 ### 4.5 CI/CD Pipeline 命名
 
 #### GitHub Actions Workflow 命名
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 ````yaml
-=======
-```yaml
->>>>>>> origin/alert-autofix-37
 =======
 
 ```yaml
@@ -1662,13 +1652,8 @@ resource "random_string" "bucket_suffix" {
 ```
 
 #### Ansible Playbook 命名
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 ````yaml
-=======
-```yaml
->>>>>>> origin/alert-autofix-37
 =======
 
 ```yaml
@@ -2053,13 +2038,8 @@ resource "random_string" "bucket_suffix" {
 ```
 
 #### Ansible Playbook 命名
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 ````yaml
-=======
-```yaml
->>>>>>> origin/alert-autofix-37
 =======
 
 ```yaml
@@ -2395,13 +2375,8 @@ nacl-database-subnet-prod         # 資料庫子網路 ACL
 ```
 
 #### 憑證與金鑰管理命名
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 ````bash
-=======
-```bash
->>>>>>> origin/alert-autofix-37
 =======
 
 ```bash
@@ -2737,33 +2712,19 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
 **Terraform 命名實踐建議**：
 
 - **資源塊名稱（Resource Name）**：
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/copilot/sub-pr-402
   - 格式：`resource "<provider>_<type>" "<logical_name>" { ... }`
   - `<provider>_<type>`一律用小寫底線，如`aws_s3_bucket`。
   - `<logical_name>`可用 single, plural, concise，建議不可冗餘（如`public`、`db`、`web` 而非`public_s3_bucket`）。
   - **範例**：
 
-<<<<<<< HEAD
     ```hcl
     resource "aws_route_table" "public" { ... }
     resource "aws_nat_gateway" "this" { ... }
     ```
-=======
-    - 格式：`resource "<provider>_<type>" "<logical_name>" { ... }`
-    - `<provider>_<type>`一律用小寫底線，如`aws_s3_bucket`。
-    - `<logical_name>`可用 single, plural, concise，建議不可冗餘（如`public`、`db`、`web` 而非`public_s3_bucket`）。
-    - **範例**：
-=======
->>>>>>> origin/copilot/sub-pr-402
       ```hcl
       resource "aws_route_table" "public" { ... }
       resource "aws_nat_gateway" "this" { ... }
       ```
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -2773,21 +2734,12 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
   - 避免重複 provider/type，直接使用描述性命名如 `db_subnet_group`。
 
 - **tags/labels**：
-<<<<<<< HEAD
-<<<<<<< HEAD
   - AWS 支援時，統一在 blocks 最後，用 Name 與更具備分群、清理便捷性之標籤（可 include 環境、功能）。
   - 範例：
 
     ```hcl
     tags = { Name = "web-prod-api" }
     ```
-=======
-    - AWS 支援時，統一在 blocks 最後，用 Name 與更具備分群、清理便捷性之標籤（可 include 環境、功能）。
-    - 範例：
-      ```hcl
-      tags = { Name = "web-prod-api" }
-      ```
->>>>>>> origin/alert-autofix-37
 =======
   - AWS 支援時，統一在 blocks 最後，用 Name 與更具備分群、清理便捷性之標籤（可 include 環境、功能）。
   - 範例：
@@ -2803,8 +2755,6 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
   - 不可同時指定兩者，否則編譯失敗。
 
 - **模組（Module）命名**：
-<<<<<<< HEAD
-<<<<<<< HEAD
   - 標準為
     `module "<logical_name>" { source = ... }`，命名建議帶上功能與環境，如
     `vpc_prod`。
@@ -2817,24 +2767,12 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
     ├── resource "aws_route_table" "private" {...}
     └── resource "aws_instance" "bastion" {...}
     ```
-=======
-    - 標準為 `module "<logical_name>" { source = ... }`，命名建議帶上功能與環境，如 `vpc_prod`。
-    - 內部資源命名則帶入模組名，利於追蹤。
-    - **結構示例**：
-=======
-  - 標準為 `module "<logical_name>" { source = ... }`，命名建議帶上功能與環境，如 `vpc_prod`。
-  - 內部資源命名則帶入模組名，利於追蹤。
-  - **結構示例**：
-
->>>>>>> origin/copilot/sub-pr-402
       ```
       main.tf
       ├── resource "aws_nat_gateway" "this" {...}
       ├── resource "aws_route_table" "private" {...}
       └── resource "aws_instance" "bastion" {...}
       ```
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -2854,15 +2792,10 @@ Terraform 廣泛用於跨雲端平台的 IaC。有效的命名慣例可降低重
 AWS CloudFormation 與 CDK 均可管理 AWS 基礎設施，命名規範有助於避免資源重覆、運維混淆及版本管理難題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://docs.aws.amazon.com/zh_tw/AWSCloudFormation/latest/TemplateReference/aws-properties-name.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "4")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://docs.aws.amazon.com/zh_tw/cdk/v2/guide/projects.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "5")。
 
 - **CloudFormation 命名特點**：
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/copilot/sub-pr-402
   - 大多數資源可自訂名稱，預設則自動生成（如`Stack-Resource-randomid`）。
   - 若自訂，需於範本中明確指定且不可重複；命名僅可用 ASCII 字母數字與中橫線，不可以中橫線結尾，且 63 字元內。
   - yaml/json property 需要類似：
 
-<<<<<<< HEAD
     ```yaml
     Properties:
       TableName: 'orders-prod-v1'
@@ -2883,12 +2816,6 @@ AWS CloudFormation 與 CDK 均可管理 AWS 基礎設施，命名規範有助於
   - 利用 Stack 變數與 tags，在全區管理下可依照不同 Project/Env/System 維護資源唯一性。
   - 建議所有重要資源皆加 `Environment`、`Project`、`Module`
     標籤，提升搜尋與後期維護效率。
-=======
-    - 大多數資源可自訂名稱，預設則自動生成（如`Stack-Resource-randomid`）。
-    - 若自訂，需於範本中明確指定且不可重複；命名僅可用 ASCII 字母數字與中橫線，不可以中橫線結尾，且 63 字元內。
-    - yaml/json property 需要類似：
-=======
->>>>>>> origin/copilot/sub-pr-402
       ```yaml
       Properties:
         TableName: "orders-prod-v1"
@@ -2906,10 +2833,8 @@ AWS CloudFormation 與 CDK 均可管理 AWS 基礎設施，命名規範有助於
   - CDK 程式碼內資源識別通常帶有 stack/cluster/功能，便於 versioning 及資源查找。
 
 - **環境維度標註**：
-<<<<<<< HEAD
     - 利用 Stack 變數與 tags，在全區管理下可依照不同 Project/Env/System 維護資源唯一性。
     - 建議所有重要資源皆加 `Environment`、`Project`、`Module` 標籤，提升搜尋與後期維護效率。
->>>>>>> origin/alert-autofix-37
 =======
   - 利用 Stack 變數與 tags，在全區管理下可依照不同 Project/Env/System 維護資源唯一性。
   - 建議所有重要資源皆加 `Environment`、`Project`、`Module` 標籤，提升搜尋與後期維護效率。
@@ -2974,8 +2899,6 @@ pipeline {
 
 ### 6.3 GitLab CI/CD 與 GitHub Actions 工作流程命名
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **GitLab
 CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://hackmd.io/@CloudyWing/Hym3ZoBT1g?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '9')[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ithelp.ithome.com.tw/articles/10344451?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '10')[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/weixin_47877869/article/details/145616371?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '11')：
 
@@ -2985,16 +2908,11 @@ CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](
   等動詞性名稱，便於橫向比較及自動化擴展。
 - job: 跟 Jenkins 的 `動作-對象-環境`，如
   `build-backend-image`、`test-e2e-staging`、`deploy-prod`.
-=======
-=======
->>>>>>> origin/copilot/sub-pr-402
 **GitLab CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://hackmd.io/@CloudyWing/Hym3ZoBT1g?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "9")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ithelp.ithome.com.tw/articles/10344451?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "10")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/weixin_47877869/article/details/145616371?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "11")：
 
 - pipeline/workflow: 可定義整體標題，參數如 `workflow: name: "deploy-main-production"`。
 - stage: 推薦採用 `build`、`test`、`deploy`、`quality`、`notify` 等動詞性名稱，便於橫向比較及自動化擴展。
 - job: 跟 Jenkins 的 `動作-對象-環境`，如 `build-backend-image`、`test-e2e-staging`、`deploy-prod`.
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 - 變數名稱全大寫底線分隔（`DOCKER_IMAGE_NAME`）。
@@ -3021,13 +2939,8 @@ CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](
 
 ### 7.1 企業命名治理的挑戰
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 企業在大規模 DevOps、雲端、微服務與資料治理背景下，命名規範必須升級為全組織協作框架。一旦命名混亂將造成以下問題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://zhuanlan.zhihu.com/p/502755740?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '12')[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.esensoft.com/industry-news/dx-51865.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '13')[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/qq_20245171/article/details/145456548?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '14')：
 
-=======
-企業在大規模 DevOps、雲端、微服務與資料治理背景下，命名規範必須升級為全組織協作框架。一旦命名混亂將造成以下問題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://zhuanlan.zhihu.com/p/502755740?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "12")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.esensoft.com/industry-news/dx-51865.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "13")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/qq_20245171/article/details/145456548?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "14")：
->>>>>>> origin/alert-autofix-37
 =======
 企業在大規模 DevOps、雲端、微服務與資料治理背景下，命名規範必須升級為全組織協作框架。一旦命名混亂將造成以下問題[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://zhuanlan.zhihu.com/p/502755740?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "12")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.esensoft.com/industry-news/dx-51865.html?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "13")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://blog.csdn.net/qq_20245171/article/details/145456548?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "14")：
 
@@ -3039,14 +2952,9 @@ CI/CD**（`.gitlab-ci.yml`）規則建議[43dcd9a7-70db-4a1f-b0ae-981daa162054](
 ### 7.2 命名治理策略與執行框架
 
 **命名治理策略包含**：
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **標準化框架（如 DAMA,
   DCMM）**：主框架需包括標準、流程、組織、工具與監督等機制。
-=======
-- **標準化框架（如 DAMA, DCMM）**：主框架需包括標準、流程、組織、工具與監督等機制。
->>>>>>> origin/alert-autofix-37
 =======
 
 - **標準化框架（如 DAMA, DCMM）**：主框架需包括標準、流程、組織、工具與監督等機制。
@@ -3192,13 +3100,8 @@ mq-topic: ai-finance-billing-payments
 
 ### 10.1 持續改進理念與流程
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 命名規範不可能一次到位，其最佳實踐來自持續優化迭代[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ahaslides.com/zh-TW/blog/continuous-improvement-examples/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '23')[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.managertoday.com.tw/articles/view/55730?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 '24')。企業/團隊應參考 PDCA(R)（Plan-Do-Check-Act-Record）循環：
 
-=======
-命名規範不可能一次到位，其最佳實踐來自持續優化迭代[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ahaslides.com/zh-TW/blog/continuous-improvement-examples/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "23")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.managertoday.com.tw/articles/view/55730?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "24")。企業/團隊應參考 PDCA(R)（Plan-Do-Check-Act-Record）循環：
->>>>>>> origin/alert-autofix-37
 =======
 命名規範不可能一次到位，其最佳實踐來自持續優化迭代[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://ahaslides.com/zh-TW/blog/continuous-improvement-examples/?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "23")[43dcd9a7-70db-4a1f-b0ae-981daa162054](https://www.managertoday.com.tw/articles/view/55730?citationMarker=43dcd9a7-70db-4a1f-b0ae-981daa162054 "24")。企業/團隊應參考 PDCA(R)（Plan-Do-Check-Act-Record）循環：
 

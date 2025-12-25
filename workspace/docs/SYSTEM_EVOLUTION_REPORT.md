@@ -42,13 +42,8 @@
 - `refactor-playbook-coverage`（重構劇本覆蓋率）：目前得分 100.0/100 → 找出 cluster-heatmap 中沒有對應 03_refactor Playbook 的 cluster，為其建立最小可用的重構劇本。
 
 ---
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 本報告由 `tools/evolution/generate_evolution_report.py` 自動生成。
-=======
-本報告由 `tools/evolution/generate_evolution_report.py` 自動生成。
->>>>>>> origin/alert-autofix-37
 =======
 本報告由 `tools/evolution/generate_evolution_report.py` 自動生成。
 >>>>>>> origin/copilot/sub-pr-402

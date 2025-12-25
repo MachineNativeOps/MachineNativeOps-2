@@ -139,17 +139,10 @@ This provenance meets the following standards:
 
 For security issues or questions about provenance:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 - **Security Team**: <security@unmanned-island.io>
 - **Platform Team**: <platform@unmanned-island.io>
 - **Issue Tracker**:
   <https://github.com/SynergyMesh-admin/Unmanned-Island/issues>
-=======
-- **Security Team**: security@unmanned-island.io
-- **Platform Team**: platform@unmanned-island.io
-- **Issue Tracker**: https://github.com/SynergyMesh-admin/Unmanned-Island/issues
->>>>>>> origin/alert-autofix-37
 =======
 - **Security Team**: <security@unmanned-island.io>
 - **Platform Team**: <platform@unmanned-island.io>

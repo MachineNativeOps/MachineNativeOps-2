@@ -55,15 +55,9 @@
 **功能模組 Functional Modules:**
 
 1. **Zero Trust Principles**: 明確驗證、最小權限、假設入侵
-<<<<<<< HEAD
-<<<<<<< HEAD
 2. **RBAC Role Matrix**: 5 個角色層級 (cluster-admin, platform-operator,
    developer, viewer, ci-cd-automation)
 3. **Encryption Standards**:
-=======
-2. **RBAC Role Matrix**: 5 個角色層級 (cluster-admin, platform-operator, developer, viewer, ci-cd-automation)
-3. **Encryption Standards**: 
->>>>>>> origin/alert-autofix-37
 =======
 2. **RBAC Role Matrix**: 5 個角色層級 (cluster-admin, platform-operator, developer, viewer, ci-cd-automation)
 3. **Encryption Standards**:
@@ -693,13 +687,7 @@ if __name__ == "__main__":
 
 **文件狀態 Document Status:** ✅ 規劃完成，等待執行  
 **下一步審查 Next Review:** P0 執行完成後  
-<<<<<<< HEAD
-<<<<<<< HEAD
 **負責人 Owner:** Repository Maintainers
-=======
-**負責人 Owner:** Repository Maintainers  
-
->>>>>>> origin/alert-autofix-37
 =======
 **負責人 Owner:** Repository Maintainers  
 >>>>>>> origin/copilot/sub-pr-402

@@ -70,16 +70,7 @@ api:
                 digest: { type: "object" }
           metadata:
             type: "object"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-          safe_root_config:
-            type: "string"
-            description: "Environment variable defining SAFE_ROOT path (default: SAFE_ROOT_PATH)"
-            optional: true
-      
->>>>>>> origin/alert-autofix-37
 =======
       
 >>>>>>> origin/copilot/sub-pr-402
@@ -103,14 +94,7 @@ api:
         - "Signature uses Sigstore/Fulcio"
         - "Certificate includes transparency log entry"
         - "Attestation is immutable after creation"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-        - "File paths validated against SAFE_ROOT to prevent path traversal (PR #351)"
-        - "All file operations use realpath() and relative() for security"
-      
->>>>>>> origin/alert-autofix-37
 =======
       
 >>>>>>> origin/copilot/sub-pr-402
@@ -365,29 +349,7 @@ security:
     - "Certificates include OIDC identity"
     - "Transparency log provides non-repudiation"
     - "No long-lived signing keys stored"
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-    - "Path traversal prevention using SAFE_ROOT validation (PR #351)"
-    - "File operations use realpath() for symlink resolution"
-    - "Path containment verified using relative() checks"
-  
-  security_enhancements_pr351:
-    date: "2025-12-15"
-    changes:
-      - "Added resolveSafePath() method for path validation"
-      - "SAFE_ROOT configurable via SAFE_ROOT_PATH environment variable"
-      - "All file operations protected against directory traversal"
-      - "Symlink resolution before path validation"
-      - "Sensitive data redaction in logs (passwords, tokens, API keys)"
-      - "Strong cryptographic algorithms enforced (SHA-256+)"
-    policy_references:
-      - "SEC-PATH-001: governance/10-policy/base-policies/security-policies.yaml#path_security"
-      - "SEC-LOG-001: governance/10-policy/base-policies/security-policies.yaml#logging_security"
-      - "SEC-CRYPTO-001: governance/10-policy/base-policies/security-policies.yaml#cryptography"
-  
->>>>>>> origin/alert-autofix-37
 =======
   
 >>>>>>> origin/copilot/sub-pr-402

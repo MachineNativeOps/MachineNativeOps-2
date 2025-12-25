@@ -23,14 +23,9 @@ Successfully identified and resolved the root cause of 51+ automated CI failure 
 - **Frequency**: Every push to main or PR branch
 
 ### Root Cause
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **File**:
 `core/contract_service/contracts-L1/contracts/src/middleware/validation.ts`  
-=======
-**File**: `core/contract_service/contracts-L1/contracts/src/middleware/validation.ts`  
->>>>>>> origin/alert-autofix-37
 =======
 
 **File**: `core/contract_service/contracts-L1/contracts/src/middleware/validation.ts`  
@@ -76,13 +71,8 @@ return (req: Request, _res: Response, next: NextFunction): void => {
 - **Build Process**: Subsequent steps (lint, test, build) can execute
 - **Issue Creation**: Stops automated generation of duplicate issues
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### Indirect Impact
 
-=======
-### Indirect Impact  
->>>>>>> origin/alert-autofix-37
 =======
 ### Indirect Impact  
 
@@ -94,14 +84,9 @@ return (req: Request, _res: Response, next: NextFunction): void => {
 ## Recommendations
 
 ### Immediate Actions
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. **Issue Cleanup**: Close all duplicate CI failure issues related to this
    error
-=======
-1. **Issue Cleanup**: Close all duplicate CI failure issues related to this error
->>>>>>> origin/alert-autofix-37
 =======
 
 1. **Issue Cleanup**: Close all duplicate CI failure issues related to this error

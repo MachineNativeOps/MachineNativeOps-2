@@ -9,14 +9,9 @@
 ## 📋 交付成果
 
 ### 1. 解構摘要文件
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **檔案**:
 `docs/refactor_playbooks/01_deconstruction/HLP_EXECUTOR_CORE_DECONSTRUCTION.md`
-=======
-**檔案**: `docs/refactor_playbooks/01_deconstruction/HLP_EXECUTOR_CORE_DECONSTRUCTION.md`
->>>>>>> origin/alert-autofix-37
 =======
 
 **檔案**: `docs/refactor_playbooks/01_deconstruction/HLP_EXECUTOR_CORE_DECONSTRUCTION.md`
@@ -33,14 +28,9 @@
 - ✅ 運維手冊與測試配置
 
 ### 2. 邏輯→目標位置對應表
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **檔案**:
 `docs/refactor_playbooks/02_integration/HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md`
-=======
-**檔案**: `docs/refactor_playbooks/02_integration/HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md`
->>>>>>> origin/alert-autofix-37
 =======
 
 **檔案**: `docs/refactor_playbooks/02_integration/HLP_EXECUTOR_CORE_INTEGRATION_MAPPING.md`
@@ -83,14 +73,9 @@
 - ✅ 3個整合階段的驗證檢查點
 
 ### 4. legacy_scratch 清理計畫
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **檔案**:
 `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_LEGACY_CLEANUP.md`
-=======
-**檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_LEGACY_CLEANUP.md`
->>>>>>> origin/alert-autofix-37
 =======
 
 **檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_LEGACY_CLEANUP.md`
@@ -115,14 +100,9 @@
 - ✅ 清理決策樹
 
 ### 5. 目錄與檔案整合藍圖
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **檔案**:
 `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_DIRECTORY_BLUEPRINT.md`
-=======
-**檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_DIRECTORY_BLUEPRINT.md`
->>>>>>> origin/alert-autofix-37
 =======
 
 **檔案**: `docs/refactor_playbooks/03_refactor/HLP_EXECUTOR_CORE_DIRECTORY_BLUEPRINT.md`

@@ -71,14 +71,9 @@
 - `apps/web/components/ClusterHealthGauge.tsx`
 
 **預期成果：**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 訪問 `http://localhost:3000/language-governance-dashboard`
   即可查看所有 playbooks
-=======
-- 訪問 `http://localhost:3000/language-governance-dashboard` 即可查看所有 playbooks
->>>>>>> origin/alert-autofix-37
 =======
 
 - 訪問 `http://localhost:3000/language-governance-dashboard` 即可查看所有 playbooks

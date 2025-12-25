@@ -19,13 +19,8 @@
 - 所有重大重構建議都必須在 docs/refactor_playbooks/03_refactor/* 中有對應 Playbook。
 
 ---
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 本計畫由 `evolution_orchestrator.py` 自動生成
-=======
-本計畫由 `evolution_orchestrator.py` 自動生成
->>>>>>> origin/alert-autofix-37
 =======
 本計畫由 `evolution_orchestrator.py` 自動生成
 >>>>>>> origin/copilot/sub-pr-402

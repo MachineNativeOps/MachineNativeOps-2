@@ -9,14 +9,9 @@
 
 ## 📋 Overview
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 Phase 4 implements AI-driven autonomous enhancements following the **instant
 execution model**:
 
-=======
-Phase 4 implements AI-driven autonomous enhancements following the **instant execution model**:
->>>>>>> origin/alert-autofix-37
 =======
 Phase 4 implements AI-driven autonomous enhancements following the **instant execution model**:
 
@@ -123,14 +118,9 @@ scaleUp:
 **Capability**: Auto-integrate with external systems
 
 **Platforms**:
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Slack**: Instant notifications (policy violations, deployments,
   auto-healing)
-=======
-- **Slack**: Instant notifications (policy violations, deployments, auto-healing)
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Slack**: Instant notifications (policy violations, deployments, auto-healing)

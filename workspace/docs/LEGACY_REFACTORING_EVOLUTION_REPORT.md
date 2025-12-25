@@ -15,14 +15,9 @@ Successfully completed the automated refactoring evolution workflow for 27 legac
 ## Workflow Execution
 
 ### Phase 1: Analysis & Planning ✅
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Batch Analysis Results:** Reviewed pre-existing analysis at
   `/tmp/legacy_batch_results.yaml`
-=======
-- **Batch Analysis Results:** Reviewed pre-existing analysis at `/tmp/legacy_batch_results.yaml`
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Batch Analysis Results:** Reviewed pre-existing analysis at `/tmp/legacy_batch_results.yaml`
@@ -115,14 +110,9 @@ The following files contain logic/skills/tools that should be embedded into exis
 ### Phase 4: Legacy File Deletion ✅
 
 **Complete Deletion of 27 Legacy Files:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - All 27 files successfully deleted from
   `docs/refactor_playbooks/_legacy_scratch/`
-=======
-- All 27 files successfully deleted from `docs/refactor_playbooks/_legacy_scratch/`
->>>>>>> origin/alert-autofix-37
 =======
 
 - All 27 files successfully deleted from `docs/refactor_playbooks/_legacy_scratch/`
@@ -212,8 +202,6 @@ The following files contain logic/skills/tools that should be embedded into exis
 
 ## Next Steps & Recommendations
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### Immediate Actions Required
 
 1. **Manual Embedded Integration:** Review the 7 embedded integration assets and
@@ -231,12 +219,6 @@ The following files contain logic/skills/tools that should be embedded into exis
    `_legacy_scratch` paths and update them
 3. **Validation Scripts:** Run existing validation scripts to ensure no
    regressions
-=======
-### Immediate Actions Required:
-=======
-### Immediate Actions Required
-
->>>>>>> origin/copilot/sub-pr-402
 1. **Manual Embedded Integration:** Review the 7 embedded integration assets and extract their logic into appropriate project files
 2. **Index Updates:** Run `python tools/refactor/update_indexes.py` to update documentation indexes
 3. **Knowledge Graph Sync:** Execute `make all-kg` to regenerate knowledge graph with new structure
@@ -246,8 +228,6 @@ The following files contain logic/skills/tools that should be embedded into exis
 1. **Documentation Review:** Update README files in each target directory to reference new assets
 2. **Cross-Reference Updates:** Search for any references to old `_legacy_scratch` paths and update them
 3. **Validation Scripts:** Run existing validation scripts to ensure no regressions
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 4. **CI/CD Integration:** Update CI workflows if they reference any moved files
@@ -264,16 +244,10 @@ The following files contain logic/skills/tools that should be embedded into exis
 - `docs/refactor_playbooks/03_refactor/kg-builder/` (3 DOCX files)
 - `docs/refactor_playbooks/03_refactor/misc/` (5 MD/DOCX files)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ### Deleted
 
 - All 27 files from `docs/refactor_playbooks/_legacy_scratch/` (except
   `.gitkeep`)
-=======
-### Deleted:
-- All 27 files from `docs/refactor_playbooks/_legacy_scratch/` (except `.gitkeep`)
->>>>>>> origin/alert-autofix-37
 =======
 ### Deleted
 

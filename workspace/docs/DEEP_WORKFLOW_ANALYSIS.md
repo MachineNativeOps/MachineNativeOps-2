@@ -6,15 +6,10 @@
 
 ## Executive Summary
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 After thorough investigation, the 7 failing workflows all have
 **"startup_failure"** conclusions, meaning they fail before any jobs execute.
 This is NOT caused by:
 
-=======
-After thorough investigation, the 7 failing workflows all have **"startup_failure"** conclusions, meaning they fail before any jobs execute. This is NOT caused by:
->>>>>>> origin/alert-autofix-37
 =======
 After thorough investigation, the 7 failing workflows all have **"startup_failure"** conclusions, meaning they fail before any jobs execute. This is NOT caused by:
 
@@ -108,14 +103,9 @@ jobs:
 - All test jobs depend on `detect-changes`
 - Test jobs only run if specific file types changed
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 **Hypothesis**: If this PR only modifies documentation/workflow files, NO code
 paths trigger, so:
 
-=======
-**Hypothesis**: If this PR only modifies documentation/workflow files, NO code paths trigger, so:
->>>>>>> origin/alert-autofix-37
 =======
 **Hypothesis**: If this PR only modifies documentation/workflow files, NO code paths trigger, so:
 

@@ -6,14 +6,9 @@
 - **Do-Calculus**：評估干預（deploy / rollback）對 SLO 的影響。
 
 ## 範例
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - $Deploy \rightarrow ErrorRate \rightarrow Rollback$ vs
   $Deploy \rightarrow Observability \rightarrow AutoFix$。
-=======
-- $Deploy \rightarrow ErrorRate \rightarrow Rollback$ vs $Deploy \rightarrow Observability \rightarrow AutoFix$。
->>>>>>> origin/alert-autofix-37
 =======
 
 - $Deploy \rightarrow ErrorRate \rightarrow Rollback$ vs $Deploy \rightarrow Observability \rightarrow AutoFix$。

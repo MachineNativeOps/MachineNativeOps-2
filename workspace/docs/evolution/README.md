@@ -51,14 +51,9 @@
 - 視實際情況調整 `config/system-evolution.yaml` 中的目標與權重。
 
 長期：
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - 在工具層接上 AI，用 evolution-state.yaml 作為輸入，產出更細緻的重構計畫與 Auto-Fix
   PR。
-=======
-- 在工具層接上 AI，用 evolution-state.yaml 作為輸入，產出更細緻的重構計畫與 Auto-Fix PR。
->>>>>>> origin/alert-autofix-37
 =======
 
 - 在工具層接上 AI，用 evolution-state.yaml 作為輸入，產出更細緻的重構計畫與 Auto-Fix PR。

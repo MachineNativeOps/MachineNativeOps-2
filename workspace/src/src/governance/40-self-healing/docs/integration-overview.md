@@ -129,14 +129,9 @@
 #### 6. unmanned-island-integration-manifest.md
 
 ```yaml
-<<<<<<< HEAD
-<<<<<<< HEAD
 路徑:
   governance/_legacy/30-agents (formerly 83-integration)
   (deprecated)/unmanned-island-integration-manifest.md
-=======
-路徑: governance/dimensions/83-integration/unmanned-island-integration-manifest.md
->>>>>>> origin/alert-autofix-37
 =======
 路徑: governance/dimensions/83-integration/unmanned-island-integration-manifest.md
 >>>>>>> origin/copilot/sub-pr-402
@@ -214,8 +209,6 @@
 
 ## 🔗 治理維度整合狀態 (Governance Dimensions Integration Status)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 | Dimension ID                        | Name                       | Integration Files                                                                   | Status  |
 | ----------------------------------- | -------------------------- | ----------------------------------------------------------------------------------- | ------- |
 | 00-vision-strategy                  | Vision & Strategy          | AI-BEHAVIOR-CONTRACT.md, INSTANT-EXECUTION-MANIFEST.yaml, AUTONOMOUS_AGENT_STATE.md | ✅ 100% |
@@ -223,9 +216,6 @@
 | 28-tests                            | Tests & Validation         | validate_unmanned_island_integration.py                                             | ✅ 100% |
 | 30-agents (formerly 83-integration) | Integration & Coordination | unmanned-island-integration-manifest.md                                             | ✅ 100% |
 | 39-automation                       | Automation & Orchestration | unmanned_island_integration_engine.py                                               | ✅ 100% |
-=======
-=======
->>>>>>> origin/copilot/sub-pr-402
 | Dimension ID | Name | Integration Files | Status |
 |--------------|------|-------------------|--------|
 | 00-vision-strategy | Vision & Strategy | AI-BEHAVIOR-CONTRACT.md, INSTANT-EXECUTION-MANIFEST.yaml, AUTONOMOUS_AGENT_STATE.md | ✅ 100% |
@@ -233,8 +223,6 @@
 | 28-tests | Tests & Validation | validate_unmanned_island_integration.py | ✅ 100% |
 | 83-integration | Integration & Coordination | unmanned-island-integration-manifest.md | ✅ 100% |
 | 39-automation | Automation & Orchestration | unmanned_island_integration_engine.py | ✅ 100% |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -430,13 +418,8 @@ print(result)
 ### 功能文檔
 
 - [自我修復框架](governance/14-improvement/unmanned-island-self-healing.yaml)
-<<<<<<< HEAD
-<<<<<<< HEAD
 - [整合清單](governance/\_legacy/30-agents (formerly 83-integration)
   (deprecated)/unmanned-island-integration-manifest.md)
-=======
-- [整合清單](governance/dimensions/83-integration/unmanned-island-integration-manifest.md)
->>>>>>> origin/alert-autofix-37
 =======
 - [整合清單](governance/dimensions/83-integration/unmanned-island-integration-manifest.md)
 >>>>>>> origin/copilot/sub-pr-402

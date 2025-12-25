@@ -248,17 +248,11 @@ python-tests:
 - **Result**: ✅ Working as expected
 
 #### Scenario 2: Security Vulnerability
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - **Before**: High-severity vulnerability found, workflow succeeds ✅ (false
   positive)
 - **After**: High-severity vulnerability found, workflow fails ❌ (correct
   behavior)
-=======
-- **Before**: High-severity vulnerability found, workflow succeeds ✅ (false positive)
-- **After**: High-severity vulnerability found, workflow fails ❌ (correct behavior)
->>>>>>> origin/alert-autofix-37
 =======
 
 - **Before**: High-severity vulnerability found, workflow succeeds ✅ (false positive)

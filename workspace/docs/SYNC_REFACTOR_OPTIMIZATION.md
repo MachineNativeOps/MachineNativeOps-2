@@ -122,14 +122,9 @@ This document describes the comprehensive optimization of the Unmanned Island Sy
 #### 6. ✅ Centralized Directory Configuration
 
 **Implementation:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 - `scripts/sync/watch-and-sync.sh` template reads from config (already using
   `island.bootstrap.stage0.yaml`)
-=======
-- `scripts/sync/watch-and-sync.sh` template reads from config (already using `island.bootstrap.stage0.yaml`)
->>>>>>> origin/alert-autofix-37
 =======
 
 - `scripts/sync/watch-and-sync.sh` template reads from config (already using `island.bootstrap.stage0.yaml`)
@@ -352,14 +347,9 @@ done
 **Problem:** Refactor workflow not triggered after governance changes
 
 **Solution:**
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 1. Check `sync-refactor-config.yaml` - `integration.sync_triggers_refactor`
    should be `true`
-=======
-1. Check `sync-refactor-config.yaml` - `integration.sync_triggers_refactor` should be `true`
->>>>>>> origin/alert-autofix-37
 =======
 
 1. Check `sync-refactor-config.yaml` - `integration.sync_triggers_refactor` should be `true`

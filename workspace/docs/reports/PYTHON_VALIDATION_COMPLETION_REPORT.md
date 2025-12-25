@@ -18,14 +18,9 @@ Successfully implemented a comprehensive Python syntax validation system that ad
 ## 🎯 Problem Statement | 問題陳述
 
 ### Original Issue
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 The problem statement referenced syntax errors in Python `__init__.py` files
 where missing commas in `__all__` lists could cause:
-=======
-The problem statement referenced syntax errors in Python `__init__.py` files where missing commas in `__all__` lists could cause:
->>>>>>> origin/alert-autofix-37
 =======
 
 The problem statement referenced syntax errors in Python `__init__.py` files where missing commas in `__all__` lists could cause:

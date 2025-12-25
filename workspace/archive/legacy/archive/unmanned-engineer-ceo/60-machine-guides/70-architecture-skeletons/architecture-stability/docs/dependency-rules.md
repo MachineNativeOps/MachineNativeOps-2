@@ -16,8 +16,6 @@ import { User } from '../../../core/domain/user'
 ```
 
 ### DR-002: 循環依賴禁止
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: 任何層級不得形成循環依賴 **檢測**: 使用 `madge` 或
 `dependency-cruiser`
@@ -26,10 +24,6 @@ import { User } from '../../../core/domain/user'
 
 **規則**: 新增外部依賴需要在 ADR 中說明理由 **審查點**:
 package.json 變更時自動觸發檢查
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 **規則**: 任何層級不得形成循環依賴
 **檢測**: 使用 `madge` 或 `dependency-cruiser`
 
@@ -37,8 +31,6 @@ package.json 變更時自動觸發檢查
 
 **規則**: 新增外部依賴需要在 ADR 中說明理由
 **審查點**: package.json 變更時自動觸發檢查
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -87,15 +79,9 @@ subscriptions:
 - 資料庫連接
 
 ### DR-007: 版本管理
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 **規則**: 共享庫必須語意化版本管理 **破壞性變更**: 必須發布新的 major 版本
 
-=======
-**規則**: 共享庫必須語意化版本管理
-**破壞性變更**: 必須發布新的 major 版本
->>>>>>> origin/alert-autofix-37
 =======
 
 **規則**: 共享庫必須語意化版本管理

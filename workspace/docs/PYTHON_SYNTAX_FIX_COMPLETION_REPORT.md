@@ -40,7 +40,7 @@
 **狀態**: ✅ 已修復
 
 ### 5. test_governance.py
-**問題**: Git合併衝突標記 (`<<<<<<< HEAD`, `=======`, `>>>>>>> origin/copilot/sub-pr-402`)
+**問題**: Git合併衝突標記 (`[CONFLICT_MARKER_REMOVED]`, ``, ``)
 **修復**: 清理合併衝突標記，保留正確的代碼內容
 **狀態**: ✅ 已修復
 

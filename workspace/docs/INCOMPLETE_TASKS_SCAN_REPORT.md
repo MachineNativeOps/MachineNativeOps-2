@@ -111,13 +111,8 @@ ops/                     █ 3.0% (58 項)
 
 #### 🔴 測試與質量保證
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. **高風險與關鍵路徑識別**
    (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:6`)
-=======
-6. **高風險與關鍵路徑識別** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:6`)
->>>>>>> origin/alert-autofix-37
 =======
 1. **高風險與關鍵路徑識別** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:6`)
 >>>>>>> origin/copilot/sub-pr-402
@@ -125,13 +120,8 @@ ops/                     █ 3.0% (58 項)
    - 影響: 測試策略有效性
    - 建議: P0 - 風險評估
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 2. **測試覆蓋率目標達成**
    (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:27`)
-=======
-7. **測試覆蓋率目標達成** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:27`)
->>>>>>> origin/alert-autofix-37
 =======
 2. **測試覆蓋率目標達成** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/testing-governance/checklists.md:27`)
 >>>>>>> origin/copilot/sub-pr-402
@@ -139,13 +129,8 @@ ops/                     █ 3.0% (58 項)
    - 影響: 代碼質量
    - 建議: P0 - 持續追蹤
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 3. **關鍵路徑 E2E 測試**
    (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/checklists.md:52`)
-=======
-8. **關鍵路徑 E2E 測試** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/checklists.md:52`)
->>>>>>> origin/alert-autofix-37
 =======
 3. **關鍵路徑 E2E 測試** (`unmanned-engineer-ceo/60-machine-guides/70-architecture-skeletons/architecture-stability/checklists.md:52`)
 >>>>>>> origin/copilot/sub-pr-402
@@ -160,8 +145,6 @@ ops/                     █ 3.0% (58 項)
    - 影響: 部署效率
    - 建議: P0 - 依賴映射
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 2. **新增 critical hotspots 通知** (`docs/PR_ANALYSIS_AND_ACTION_PLAN.md:247`)
    - 類別: 代碼質量監控
    - 閾值: score ≥ 70
@@ -185,11 +168,6 @@ ops/                     █ 3.0% (58 項)
    - 類別: 自動化監控
    - 影響: 營運效率
    - 建議: P0 - 實施自動化
-=======
-10. **新增 critical hotspots 通知** (`docs/PR_ANALYSIS_AND_ACTION_PLAN.md:247`)
-=======
-2. **新增 critical hotspots 通知** (`docs/PR_ANALYSIS_AND_ACTION_PLAN.md:247`)
->>>>>>> origin/copilot/sub-pr-402
     - 類別: 代碼質量監控
     - 閾值: score ≥ 70
     - 建議: P0 - 自動化告警
@@ -210,8 +188,6 @@ ops/                     █ 3.0% (58 項)
     - 類別: 自動化監控
     - 影響: 營運效率
     - 建議: P0 - 實施自動化
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
@@ -1046,8 +1022,6 @@ jobs:
 ### 成功指標 (Success Metrics)
 
 #### 短期指標 (Week 1-4)
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 | 指標       | 目標        | 追蹤頻率 |
 | ---------- | ----------- | -------- |
@@ -1074,10 +1048,6 @@ jobs:
 | 技術債減少         | >50% | 每季     |
 | 性能改善           | >30% | 每季     |
 | 團隊滿意度         | >4/5 | 每季     |
-=======
-=======
-
->>>>>>> origin/copilot/sub-pr-402
 | 指標 | 目標 | 追蹤頻率 |
 |------|------|---------|
 | P0 完成率 | 100% | 每日 |
@@ -1103,8 +1073,6 @@ jobs:
 | 技術債減少 | >50% | 每季 |
 | 性能改善 | >30% | 每季 |
 | 團隊滿意度 | >4/5 | 每季 |
-<<<<<<< HEAD
->>>>>>> origin/alert-autofix-37
 =======
 >>>>>>> origin/copilot/sub-pr-402
 
