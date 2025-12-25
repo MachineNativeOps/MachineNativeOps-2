@@ -16,6 +16,7 @@
 ### 1. 創建實用工具層
 
 #### CLI 工具 (`bin/cp-cli`)
+
 ```bash
 # 命令行工具讓開發者輕鬆使用 controlplane
 ./bin/cp-cli status              # 查看狀態
