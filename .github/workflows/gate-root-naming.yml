@@ -1,264 +1,52 @@
 name: 🚪 Root Naming Policy Gate
-true:
+
+on:
   pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
     paths:
-    - root.*
-    - init.d/**
-    - bin/**
-    - sbin/**
-    - etc/**
-    - lib/**
-    - var/**
-    - usr/**
-    types:
-    - opened
-    - edited
-    - synchronize
-    - reopened
-    - ready_for_review
+      - root.*
+      - init.d/**
+      - bin/**
+      - sbin/**
+      - etc/**
+      - lib/**
+      - var/**
+      - usr/**
+
 permissions:
   contents: read
   pull-requests: write
+
 jobs:
   validate_root_naming:
     name: 🔍 驗證 root/ 命名規範
     runs-on: ubuntu-latest
     steps:
       - name: 📥 檢出代碼
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@v4
 
-      - name: 🔍 檢查 root/ 變更檔案
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const prNumber = context.payload.pull_request.number;
-
-            const files = await github.paginate(
-              github.rest.pulls.listFiles,
-              { owner, repo, pull_number: prNumber, per_page: 100 }
-            );
-
-            const changedFiles = files.map(f => f.filename);
-            const rootChanges = changedFiles.filter(p => 
-              p.startsWith("root.") || 
-              p.startsWith("init.d/") ||
-              p.startsWith("bin/") ||
-              p.startsWith("sbin/") ||
-              p.startsWith("etc/") ||
-              p.startsWith("lib/") ||
-              p.startsWith("var/") ||
-              p.startsWith("usr/")
-            );
-
-            if (rootChanges.length === 0) {
-              core.info("✅ 本 PR 未變更根層檔案，跳過命名規範檢查");
-              return;
-            }
-
-            core.info(`📋 檢測到 ${rootChanges.length} 個根層變更檔案`);
-
-            // 允許的檔案模式（根層）
-            const allowedPatterns = [
-              // 根層治理配置檔案
-              /^root\.config\.yaml$/,
-              /^root\.governance\.yaml$/,
-              /^root\.modules\.yaml$/,
-              /^root\.super-execution\.yaml$/,
-              /^root\.trust\.yaml$/,
-              /^root\.provenance\.yaml$/,
-              /^root\.integrity\.yaml$/,
-              /^root\.bootstrap\.yaml$/,
-              /^root\.naming-policy\.yaml$/,
-              /^root\.devices\.map$/,
-              /^root\.fs\.map$/,
-              /^root\.kernel\.map$/,
-              /^root\.env\.sh$/,
-              /^gates\.map\.yaml$/,
-              
-              // FHS 標準目錄
-              /^init\.d\/.*$/,
-              /^bin\/.*$/,
-              /^sbin\/.*$/,
-              /^etc\/.*$/,
-              /^lib\/.*$/,
-              /^var\/.*$/,
-              /^usr\/.*$/,
-              /^home\/.*$/,
-              /^tmp\/.*$/,
-              /^opt\/.*$/,
-              /^srv\/.*$/,
-            ];
-
-            // 禁止的模式
-            const denyPatterns = [
-              { pattern: /[A-Z]/, reason: "禁止大寫字母" },
-              { pattern: /\s/, reason: "禁止空白字元" },
-              { pattern: /\.yml$/, reason: "統一使用 .yaml（不用 .yml）" },
-            ];
-
-            const violations = [];
-
-            for (const filepath of rootChanges) {
-              // 檢查禁止模式
-              for (const deny of denyPatterns) {
-                if (deny.pattern.test(filepath)) {
-                  violations.push({
-                    file: filepath,
-                    reason: deny.reason,
-                    severity: "error"
-                  });
-                }
-              }
-
-              // 檢查是否符合允許模式
-              const isAllowed = allowedPatterns.some(pattern => pattern.test(filepath));
-              if (!isAllowed) {
-                violations.push({
-                  file: filepath,
-                  reason: "不符合 root/ 命名規範 allowlist",
-                  severity: "error"
-                });
-              }
-            }
-
-            // 生成報告
-            let report = "## 🔍 Root 命名規範檢查報告\n\n";
-            
-            if (violations.length === 0) {
-              report += "### ✅ 檢查通過\n\n";
-              report += `所有 ${rootChanges.length} 個檔案都符合命名規範。\n\n`;
-              report += "**變更檔案清單:**\n";
-              rootChanges.forEach(f => {
-                report += `- ✅ \`${f}\`\n`;
-              });
-              
-              core.info(report);
-              
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body: report
-              });
-              
-              return;
-            }
-
-            // 有違規
-            report += "### ❌ 檢查失敗\n\n";
-            report += `發現 ${violations.length} 個違規項目：\n\n`;
-            
-            violations.forEach((v, i) => {
-              report += `${i + 1}. **\`${v.file}\`**\n`;
-              report += `   - ❌ ${v.reason}\n\n`;
-            });
-
-            report += "\n---\n\n";
-            report += "### 📋 根層命名規範要求\n\n";
-            report += "**允許的檔案模式:**\n";
-            report += "- `root.<category>.yaml` (例如: `root.config.yaml`)\n";
-            report += "- `root.<category>.map` (例如: `root.devices.map`)\n";
-            report += "- `root.env.sh`\n";
-            report += "- `init.d/**` (初始化腳本)\n";
-            report += "- `bin/**`, `sbin/**`, `etc/**`, `lib/**` (FHS 標準目錄)\n";
-            report += "- `var/**`, `usr/**`, `home/**`, `tmp/**` (FHS 標準目錄)\n\n";
-            
-            report += "**禁止的模式:**\n";
-            report += "- ❌ 大寫字母\n";
-            report += "- ❌ 空白字元\n";
-            report += "- ❌ 使用 `.yml` (請統一使用 `.yaml`)\n\n";
-            
-            report += "**修正方式:**\n";
-            report += "1. 重命名違規檔案以符合規範\n";
-            report += "2. 更新 PR 並重新提交\n";
-            report += "3. 若需新增新的檔案類型，請先更新 `root.naming-policy.yaml`\n";
-
-            await github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: prNumber,
-              body: report
-            });
-
-            core.setFailed(
-              `Root 命名規範檢查失敗：發現 ${violations.length} 個違規項目。請查看 PR 評論了解詳情。`
-            );
-
-      - name: 📊 輸出檢查摘要
-        if: always()
+      - name: 🔍 檢查 root 命名
         run: |
-          echo "## 🚪 Root Layer Naming Policy Gate" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "本次檢查針對根層檔案（root.* 和 FHS 目錄）的命名規範進行驗證。" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "詳細結果請查看 PR 評論。" >> $GITHUB_STEP_SUMMARY
-    - name: 📥 檢出代碼
-      uses: 0ad4b8f3a27c304e21892351cbf9860471245599
-    - name: 🔍 檢查 root/ 變更檔案
-      uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
-      with:
-        script: "const owner = context.repo.owner;\nconst repo = context.repo.repo;\n\
-          const prNumber = context.payload.pull_request.number;\n\nconst files = await\
-          \ github.paginate(\n  github.rest.pulls.listFiles,\n  { owner, repo, pull_number:\
-          \ prNumber, per_page: 100 }\n);\n\nconst changedFiles = files.map(f => f.filename);\n\
-          const rootChanges = changedFiles.filter(p => \n  p.startsWith(\"root.\"\
-          ) || \n  p.startsWith(\"init.d/\") ||\n  p.startsWith(\"bin/\") ||\n  p.startsWith(\"\
-          sbin/\") ||\n  p.startsWith(\"etc/\") ||\n  p.startsWith(\"lib/\") ||\n\
-          \  p.startsWith(\"var/\") ||\n  p.startsWith(\"usr/\")\n);\n\nif (rootChanges.length\
-          \ === 0) {\n  core.info(\"✅ 本 PR 未變更根層檔案，跳過命名規範檢查\");\n  return;\n}\n\n\
-          core.info(`\U0001F4CB 檢測到 ${rootChanges.length} 個根層變更檔案`);\n\n// 允許的檔案模式（根層）\n\
-          const allowedPatterns = [\n  // 根層治理配置檔案\n  /^root\\.config\\.yaml$/,\n\
-          \  /^root\\.governance\\.yaml$/,\n  /^root\\.modules\\.yaml$/,\n  /^root\\\
-          .super-execution\\.yaml$/,\n  /^root\\.trust\\.yaml$/,\n  /^root\\.provenance\\\
-          .yaml$/,\n  /^root\\.integrity\\.yaml$/,\n  /^root\\.bootstrap\\.yaml$/,\n\
-          \  /^root\\.naming-policy\\.yaml$/,\n  /^root\\.devices\\.map$/,\n  /^root\\\
-          .fs\\.map$/,\n  /^root\\.kernel\\.map$/,\n  /^root\\.env\\.sh$/,\n  /^gates\\\
-          .map\\.yaml$/,\n  \n  // FHS 標準目錄\n  /^init\\.d\\/.*$/,\n  /^bin\\/.*$/,\n\
-          \  /^sbin\\/.*$/,\n  /^etc\\/.*$/,\n  /^lib\\/.*$/,\n  /^var\\/.*$/,\n \
-          \ /^usr\\/.*$/,\n  /^home\\/.*$/,\n  /^tmp\\/.*$/,\n  /^opt\\/.*$/,\n  /^srv\\\
-          /.*$/,\n];\n\n// 禁止的模式\nconst denyPatterns = [\n  { pattern: /[A-Z]/, reason:\
-          \ \"禁止大寫字母\" },\n  { pattern: /\\s/, reason: \"禁止空白字元\" },\n  { pattern:\
-          \ /\\.yml$/, reason: \"統一使用 .yaml（不用 .yml）\" },\n];\n\nconst violations\
-          \ = [];\n\nfor (const filepath of rootChanges) {\n  // 檢查禁止模式\n  for (const\
-          \ deny of denyPatterns) {\n    if (deny.pattern.test(filepath)) {\n    \
-          \  violations.push({\n        file: filepath,\n        reason: deny.reason,\n\
-          \        severity: \"error\"\n      });\n    }\n  }\n\n  // 檢查是否符合允許模式\n\
-          \  const isAllowed = allowedPatterns.some(pattern => pattern.test(filepath));\n\
-          \  if (!isAllowed) {\n    violations.push({\n      file: filepath,\n   \
-          \   reason: \"不符合 root/ 命名規範 allowlist\",\n      severity: \"error\"\n \
-          \   });\n  }\n}\n\n// 生成報告\nlet report = \"## \U0001F50D Root 命名規範檢查報告\\\
-          n\\n\";\n\nif (violations.length === 0) {\n  report += \"### ✅ 檢查通過\\n\\\
-          n\";\n  report += `所有 ${rootChanges.length} 個檔案都符合命名規範。\\n\\n`;\n  report\
-          \ += \"**變更檔案清單:**\\n\";\n  rootChanges.forEach(f => {\n    report += `-\
-          \ ✅ \\`${f}\\`\\n`;\n  });\n  \n  core.info(report);\n  \n  await github.rest.issues.createComment({\n\
-          \    owner,\n    repo,\n    issue_number: prNumber,\n    body: report\n\
-          \  });\n  \n  return;\n}\n\n// 有違規\nreport += \"### ❌ 檢查失敗\\n\\n\";\nreport\
-          \ += `發現 ${violations.length} 個違規項目：\\n\\n`;\n\nviolations.forEach((v, i)\
-          \ => {\n  report += `${i + 1}. **\\`${v.file}\\`**\\n`;\n  report += ` \
-          \  - ❌ ${v.reason}\\n\\n`;\n});\n\nreport += \"\\n---\\n\\n\";\nreport +=\
-          \ \"### \U0001F4CB 根層命名規範要求\\n\\n\";\nreport += \"**允許的檔案模式:**\\n\";\nreport\
-          \ += \"- `root.<category>.yaml` (例如: `root.config.yaml`)\\n\";\nreport +=\
-          \ \"- `root.<category>.map` (例如: `root.devices.map`)\\n\";\nreport += \"\
-          - `root.env.sh`\\n\";\nreport += \"- `init.d/**` (初始化腳本)\\n\";\nreport +=\
-          \ \"- `bin/**`, `sbin/**`, `etc/**`, `lib/**` (FHS 標準目錄)\\n\";\nreport +=\
-          \ \"- `var/**`, `usr/**`, `home/**`, `tmp/**` (FHS 標準目錄)\\n\\n\";\n\nreport\
-          \ += \"**禁止的模式:**\\n\";\nreport += \"- ❌ 大寫字母\\n\";\nreport += \"- ❌ 空白字元\\\
-          n\";\nreport += \"- ❌ 使用 `.yml` (請統一使用 `.yaml`)\\n\\n\";\n\nreport += \"\
-          **修正方式:**\\n\";\nreport += \"1. 重命名違規檔案以符合規範\\n\";\nreport += \"2. 更新 PR\
-          \ 並重新提交\\n\";\nreport += \"3. 若需新增新的檔案類型，請先更新 `root.naming-policy.yaml`\\\
-          n\";\n\nawait github.rest.issues.createComment({\n  owner,\n  repo,\n  issue_number:\
-          \ prNumber,\n  body: report\n});\n\ncore.setFailed(\n  `Root 命名規範檢查失敗：發現\
-          \ ${violations.length} 個違規項目。請查看 PR 評論了解詳情。`\n);\n"
-    - if: always()
-      name: 📊 輸出檢查摘要
-      run: 'echo "## 🚪 Root Layer Naming Policy Gate" >> $GITHUB_STEP_SUMMARY
+          set -euo pipefail
+          violations=0
+          for file in root.* init.d/* bin/* sbin/* etc/* lib/* var/* usr/*; do
+            [ -e "$file" ] || continue
+            basename=$(basename "$file")
+            case "$basename" in
+              *[A-Z]*)
+                echo "❌ 文件含有大寫字母: $file" >> "$GITHUB_STEP_SUMMARY"
+                violations=$((violations+1))
+                ;;
+              *\ * )
+                echo "❌ 文件含有空白: $file" >> "$GITHUB_STEP_SUMMARY"
+                violations=$((violations+1))
+                ;;
+            esac
+          done
 
-        echo "" >> $GITHUB_STEP_SUMMARY
-
-        echo "本次檢查針對根層檔案（root.* 和 FHS 目錄）的命名規範進行驗證。" >> $GITHUB_STEP_SUMMARY
-
-        echo "" >> $GITHUB_STEP_SUMMARY
-
-        echo "詳細結果請查看 PR 評論。" >> $GITHUB_STEP_SUMMARY'
+          if [ $violations -eq 0 ]; then
+            echo "✅ 所有檔案符合命名規範" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "總計 $violations 項命名違規" >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi

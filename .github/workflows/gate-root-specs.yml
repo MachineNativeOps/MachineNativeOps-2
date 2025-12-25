@@ -1,399 +1,51 @@
 name: Gate - Root Specifications Validation
+
 permissions:
   contents: read
-true:
+
+on:
   pull_request:
     paths:
-    - root.*.yaml
-    - root.*.map
-    - root.*.sh
-    - root.specs.*.yaml
-    - root.registry.*.yaml
+      - root.*.yaml
+      - root.*.map
+      - root.*.sh
+      - root.specs.*.yaml
+      - root.registry.*.yaml
   push:
-    branches:
-    - main
+    branches: [main]
     paths:
-    - root.*.yaml
-    - root.*.map
-    - root.*.sh
+      - root.*.yaml
+      - root.*.map
+      - root.*.sh
+
 jobs:
   validate-root-specs:
     name: Validate Root Layer Specifications
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout Repository
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: 🐍 Setup Python
-        uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      
+          python-version: "3.11"
+
       - name: 📦 Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml
-      
-      - name: 🔍 Run Naming Validation
-        id: naming
-        run: |
-          echo "## 🔤 Naming Specification Validation" >> $GITHUB_STEP_SUMMARY
-          
-          # Check file naming patterns
-          echo "### File Naming Patterns" >> $GITHUB_STEP_SUMMARY
-          
-          INVALID_FILES=0
-          for file in root.*.yaml root.*.map root.*.sh; do
-            if [ -f "$file" ]; then
-              # Check for uppercase letters
-              if echo "$file" | grep -q '[A-Z]'; then
-                echo "❌ File contains uppercase: $file" >> $GITHUB_STEP_SUMMARY
-                INVALID_FILES=$((INVALID_FILES + 1))
-              fi
-              
-              # Check for spaces
-              if echo "$file" | grep -q ' '; then
-                echo "❌ File contains spaces: $file" >> $GITHUB_STEP_SUMMARY
-                INVALID_FILES=$((INVALID_FILES + 1))
-              fi
-              
-              # Check for .yml extension
-              if echo "$file" | grep -q '\.yml$'; then
-                echo "❌ File uses .yml instead of .yaml: $file" >> $GITHUB_STEP_SUMMARY
-                INVALID_FILES=$((INVALID_FILES + 1))
-              fi
-            fi
-          done
-          
-          if [ $INVALID_FILES -eq 0 ]; then
-            echo "✅ All files pass naming validation" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Found $INVALID_FILES files with naming violations" >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
-      
-      - name: 🔗 Run Reference Validation
-        id: references
-        run: |
-          echo "## 🔗 Reference Specification Validation" >> $GITHUB_STEP_SUMMARY
-          
-          # Check URN format
-          echo "### URN Format Validation" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -f "root.registry.urns.yaml" ]; then
-            INVALID_URNS=$(grep -E "urn:" root.registry.urns.yaml | grep -v "^urn:machinenativeops:" | wc -l)
-            
-            if [ $INVALID_URNS -eq 0 ]; then
-              echo "✅ All URNs use correct namespace" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "❌ Found $INVALID_URNS URNs with incorrect namespace" >> $GITHUB_STEP_SUMMARY
-              exit 1
-            fi
-          else
-            echo "⚠️ URN registry not found" >> $GITHUB_STEP_SUMMARY
-          fi
-      
-      - name: 🗺️ Run Mapping Validation
-        id: mapping
-        run: |
-          echo "## 🗺️ Mapping Specification Validation" >> $GITHUB_STEP_SUMMARY
-          
-          # Check module name consistency
-          echo "### Module Name Consistency" >> $GITHUB_STEP_SUMMARY
-          
-          if [ -f "root.registry.modules.yaml" ]; then
-            echo "✅ Module registry found" >> $GITHUB_STEP_SUMMARY
-            
-            # Extract module names and check for duplicates
-            MODULE_COUNT=$(grep -E "^\s+- id:" root.registry.modules.yaml | wc -l)
-            UNIQUE_COUNT=$(grep -E "^\s+- id:" root.registry.modules.yaml | sort -u | wc -l)
-            
-            if [ $MODULE_COUNT -eq $UNIQUE_COUNT ]; then
-              echo "✅ No duplicate module IDs found ($MODULE_COUNT modules)" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "❌ Duplicate module IDs detected" >> $GITHUB_STEP_SUMMARY
-              exit 1
-            fi
-          else
-            echo "⚠️ Module registry not found" >> $GITHUB_STEP_SUMMARY
-          fi
-      
-      - name: 🧠 Run Logic Validation
-        id: logic
-        run: |
-          echo "## 🧠 Logic Specification Validation" >> $GITHUB_STEP_SUMMARY
-          
-          # Check for basic YAML syntax
-          echo "### YAML Syntax Validation" >> $GITHUB_STEP_SUMMARY
-          
-          SYNTAX_ERRORS=0
-          for file in root.*.yaml; do
-            if [ -f "$file" ]; then
-              if ! python -c "import yaml; yaml.safe_load(open('$file'))" 2>/dev/null; then
-                echo "❌ YAML syntax error in: $file" >> $GITHUB_STEP_SUMMARY
-                SYNTAX_ERRORS=$((SYNTAX_ERRORS + 1))
-              fi
-            fi
-          done
-          
-          if [ $SYNTAX_ERRORS -eq 0 ]; then
-            echo "✅ All YAML files have valid syntax" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Found $SYNTAX_ERRORS files with syntax errors" >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
-      
-      - name: 🌐 Run Context Validation
-        id: context
-        run: |
-          echo "## 🌐 Context Specification Validation" >> $GITHUB_STEP_SUMMARY
-          
-          # Check apiVersion consistency
-          echo "### API Version Consistency" >> $GITHUB_STEP_SUMMARY
-          
-          API_VERSIONS=$(grep -h "^apiVersion:" root.*.yaml 2>/dev/null | sort -u | wc -l)
-          
-          if [ $API_VERSIONS -le 2 ]; then
-            echo "✅ API versions are consistent ($API_VERSIONS unique versions)" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "⚠️ Multiple API versions detected ($API_VERSIONS versions)" >> $GITHUB_STEP_SUMMARY
-            grep -h "^apiVersion:" root.*.yaml | sort -u >> $GITHUB_STEP_SUMMARY
-          fi
-      
-      - name: 🐍 Run Python Validator
-        id: python-validator
-        run: |
-          echo "## 🐍 Python Validator Results" >> $GITHUB_STEP_SUMMARY
-          
-          chmod +x scripts/validation/validate-root-specs.py
-          
-          if python scripts/validation/validate-root-specs.py; then
-            echo "✅ Python validation passed" >> $GITHUB_STEP_SUMMARY
-          else
-            echo "❌ Python validation failed" >> $GITHUB_STEP_SUMMARY
-            cat root-specs-validation-report.md >> $GITHUB_STEP_SUMMARY
-            exit 1
-          fi
-      
-      - name: 📊 Generate Summary
+
+      - name: 🔍 Run validation
+        run: python controlplane/baseline/validation/validate-root-specs.py
+
+      - name: 📊 驗證結果輸出
         if: always()
         run: |
-          echo "## 📊 Validation Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          
-          if [ "${{ steps.naming.outcome }}" == "success" ] && \
-             [ "${{ steps.references.outcome }}" == "success" ] && \
-             [ "${{ steps.mapping.outcome }}" == "success" ] && \
-             [ "${{ steps.logic.outcome }}" == "success" ] && \
-             [ "${{ steps.context.outcome }}" == "success" ] && \
-             [ "${{ steps.python-validator.outcome }}" == "success" ]; then
-            echo "### ✅ All Validations Passed!" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "The root layer specifications are compliant with all defined rules." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "### ❌ Validation Failed" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Please review the errors above and fix the violations before merging." >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "#### Failed Checks:" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.naming.outcome }}" != "success" ] && echo "- ❌ Naming Validation" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.references.outcome }}" != "success" ] && echo "- ❌ Reference Validation" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.mapping.outcome }}" != "success" ] && echo "- ❌ Mapping Validation" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.logic.outcome }}" != "success" ] && echo "- ❌ Logic Validation" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.context.outcome }}" != "success" ] && echo "- ❌ Context Validation" >> $GITHUB_STEP_SUMMARY
-            [ "${{ steps.python-validator.outcome }}" != "success" ] && echo "- ❌ Python Validator" >> $GITHUB_STEP_SUMMARY
-          fi
-      
-      - name: 💬 Comment on PR
-        if: github.event_name == 'pull_request' && failure()
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
-        with:
-          script: |
-            const fs = require('fs');
-            let report = '## ❌ Root Specifications Validation Failed\n\n';
-            
-            if (fs.existsSync('root-specs-validation-report.md')) {
-              report += fs.readFileSync('root-specs-validation-report.md', 'utf8');
-            } else {
-              report += 'Please check the workflow logs for details.\n';
-            }
-            
-            report += '\n---\n';
-            report += '**Action Required:** Please fix the violations and push the changes.\n';
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: report
-            });
-      
-      - name: 📤 Upload Validation Report
-        if: always()
-        uses: 65462800fd760344b1a7b4382951275a0abb4808
-        with:
-          name: root-specs-validation-report
-          path: root-specs-validation-report.md
-          retention-days: 30
-      
-      - name: ❌ Fail if Validation Failed
-        if: |
-          steps.naming.outcome != 'success' ||
-          steps.references.outcome != 'success' ||
-          steps.mapping.outcome != 'success' ||
-          steps.logic.outcome != 'success' ||
-          steps.context.outcome != 'success' ||
-          steps.python-validator.outcome != 'success'
-        run: |
-          echo "❌ Root specifications validation failed!"
-          echo "Please review the errors and fix the violations."
-          exit 1
-    - name: 📥 Checkout Repository
-      uses: 0ad4b8f3a27c304e21892351cbf9860471245599
-      with:
-        fetch-depth: 0
-    - name: 🐍 Setup Python
-      uses: 82c7e631bb3cdc910f68e0081d534527d238d7a7
-      with:
-        python-version: '3.11'
-    - name: 📦 Install Dependencies
-      run: 'python -m pip install --upgrade pip
-
-        pip install pyyaml
-
-        '
-    - id: naming
-      name: 🔍 Run Naming Validation
-      run: "echo \"## \U0001F524 Naming Specification Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \n# Check file naming patterns\necho \"### File Naming Patterns\" >> $GITHUB_STEP_SUMMARY\n\
-        \nINVALID_FILES=0\nfor file in root.*.yaml root.*.map root.*.sh; do\n  if\
-        \ [ -f \"$file\" ]; then\n    # Check for uppercase letters\n    if echo \"\
-        $file\" | grep -q '[A-Z]'; then\n      echo \"❌ File contains uppercase: $file\"\
-        \ >> $GITHUB_STEP_SUMMARY\n      INVALID_FILES=$((INVALID_FILES + 1))\n  \
-        \  fi\n    \n    # Check for spaces\n    if echo \"$file\" | grep -q ' ';\
-        \ then\n      echo \"❌ File contains spaces: $file\" >> $GITHUB_STEP_SUMMARY\n\
-        \      INVALID_FILES=$((INVALID_FILES + 1))\n    fi\n    \n    # Check for\
-        \ .yml extension\n    if echo \"$file\" | grep -q '\\.yml$'; then\n      echo\
-        \ \"❌ File uses .yml instead of .yaml: $file\" >> $GITHUB_STEP_SUMMARY\n \
-        \     INVALID_FILES=$((INVALID_FILES + 1))\n    fi\n  fi\ndone\n\nif [ $INVALID_FILES\
-        \ -eq 0 ]; then\n  echo \"✅ All files pass naming validation\" >> $GITHUB_STEP_SUMMARY\n\
-        else\n  echo \"❌ Found $INVALID_FILES files with naming violations\" >> $GITHUB_STEP_SUMMARY\n\
-        \  exit 1\nfi\n"
-    - id: references
-      name: 🔗 Run Reference Validation
-      run: "echo \"## \U0001F517 Reference Specification Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \n# Check URN format\necho \"### URN Format Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \nif [ -f \"root.registry.urns.yaml\" ]; then\n  INVALID_URNS=$(grep -E \"\
-        urn:\" root.registry.urns.yaml | grep -v \"^urn:machinenativeops:\" | wc -l)\n\
-        \  \n  if [ $INVALID_URNS -eq 0 ]; then\n    echo \"✅ All URNs use correct\
-        \ namespace\" >> $GITHUB_STEP_SUMMARY\n  else\n    echo \"❌ Found $INVALID_URNS\
-        \ URNs with incorrect namespace\" >> $GITHUB_STEP_SUMMARY\n    exit 1\n  fi\n\
-        else\n  echo \"⚠️ URN registry not found\" >> $GITHUB_STEP_SUMMARY\nfi\n"
-    - id: mapping
-      name: 🗺️ Run Mapping Validation
-      run: "echo \"## \U0001F5FA️ Mapping Specification Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \n# Check module name consistency\necho \"### Module Name Consistency\" >>\
-        \ $GITHUB_STEP_SUMMARY\n\nif [ -f \"root.registry.modules.yaml\" ]; then\n\
-        \  echo \"✅ Module registry found\" >> $GITHUB_STEP_SUMMARY\n  \n  # Extract\
-        \ module names and check for duplicates\n  MODULE_COUNT=$(grep -E \"^\\s+-\
-        \ id:\" root.registry.modules.yaml | wc -l)\n  UNIQUE_COUNT=$(grep -E \"^\\\
-        s+- id:\" root.registry.modules.yaml | sort -u | wc -l)\n  \n  if [ $MODULE_COUNT\
-        \ -eq $UNIQUE_COUNT ]; then\n    echo \"✅ No duplicate module IDs found ($MODULE_COUNT\
-        \ modules)\" >> $GITHUB_STEP_SUMMARY\n  else\n    echo \"❌ Duplicate module\
-        \ IDs detected\" >> $GITHUB_STEP_SUMMARY\n    exit 1\n  fi\nelse\n  echo \"\
-        ⚠️ Module registry not found\" >> $GITHUB_STEP_SUMMARY\nfi\n"
-    - id: logic
-      name: 🧠 Run Logic Validation
-      run: "echo \"## \U0001F9E0 Logic Specification Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \n# Check for basic YAML syntax\necho \"### YAML Syntax Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \nSYNTAX_ERRORS=0\nfor file in root.*.yaml; do\n  if [ -f \"$file\" ]; then\n\
-        \    if ! python -c \"import yaml; yaml.safe_load(open('$file'))\" 2>/dev/null;\
-        \ then\n      echo \"❌ YAML syntax error in: $file\" >> $GITHUB_STEP_SUMMARY\n\
-        \      SYNTAX_ERRORS=$((SYNTAX_ERRORS + 1))\n    fi\n  fi\ndone\n\nif [ $SYNTAX_ERRORS\
-        \ -eq 0 ]; then\n  echo \"✅ All YAML files have valid syntax\" >> $GITHUB_STEP_SUMMARY\n\
-        else\n  echo \"❌ Found $SYNTAX_ERRORS files with syntax errors\" >> $GITHUB_STEP_SUMMARY\n\
-        \  exit 1\nfi\n"
-    - id: context
-      name: 🌐 Run Context Validation
-      run: "echo \"## \U0001F310 Context Specification Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \n# Check apiVersion consistency\necho \"### API Version Consistency\" >>\
-        \ $GITHUB_STEP_SUMMARY\n\nAPI_VERSIONS=$(grep -h \"^apiVersion:\" root.*.yaml\
-        \ 2>/dev/null | sort -u | wc -l)\n\nif [ $API_VERSIONS -le 2 ]; then\n  echo\
-        \ \"✅ API versions are consistent ($API_VERSIONS unique versions)\" >> $GITHUB_STEP_SUMMARY\n\
-        else\n  echo \"⚠️ Multiple API versions detected ($API_VERSIONS versions)\"\
-        \ >> $GITHUB_STEP_SUMMARY\n  grep -h \"^apiVersion:\" root.*.yaml | sort -u\
-        \ >> $GITHUB_STEP_SUMMARY\nfi\n"
-    - id: python-validator
-      name: 🐍 Run Python Validator
-      run: "echo \"## \U0001F40D Python Validator Results\" >> $GITHUB_STEP_SUMMARY\n\
-        \nchmod +x scripts/validation/validate-root-specs.py\n\nif python scripts/validation/validate-root-specs.py;\
-        \ then\n  echo \"✅ Python validation passed\" >> $GITHUB_STEP_SUMMARY\nelse\n\
-        \  echo \"❌ Python validation failed\" >> $GITHUB_STEP_SUMMARY\n  cat root-specs-validation-report.md\
-        \ >> $GITHUB_STEP_SUMMARY\n  exit 1\nfi\n"
-    - if: always()
-      name: 📊 Generate Summary
-      run: "echo \"## \U0001F4CA Validation Summary\" >> $GITHUB_STEP_SUMMARY\necho\
-        \ \"\" >> $GITHUB_STEP_SUMMARY\n\nif [ \"${{ steps.naming.outcome }}\" ==\
-        \ \"success\" ] && \\\n   [ \"${{ steps.references.outcome }}\" == \"success\"\
-        \ ] && \\\n   [ \"${{ steps.mapping.outcome }}\" == \"success\" ] && \\\n\
-        \   [ \"${{ steps.logic.outcome }}\" == \"success\" ] && \\\n   [ \"${{ steps.context.outcome\
-        \ }}\" == \"success\" ] && \\\n   [ \"${{ steps.python-validator.outcome }}\"\
-        \ == \"success\" ]; then\n  echo \"### ✅ All Validations Passed!\" >> $GITHUB_STEP_SUMMARY\n\
-        \  echo \"\" >> $GITHUB_STEP_SUMMARY\n  echo \"The root layer specifications\
-        \ are compliant with all defined rules.\" >> $GITHUB_STEP_SUMMARY\nelse\n\
-        \  echo \"### ❌ Validation Failed\" >> $GITHUB_STEP_SUMMARY\n  echo \"\" >>\
-        \ $GITHUB_STEP_SUMMARY\n  echo \"Please review the errors above and fix the\
-        \ violations before merging.\" >> $GITHUB_STEP_SUMMARY\n  echo \"\" >> $GITHUB_STEP_SUMMARY\n\
-        \  echo \"#### Failed Checks:\" >> $GITHUB_STEP_SUMMARY\n  [ \"${{ steps.naming.outcome\
-        \ }}\" != \"success\" ] && echo \"- ❌ Naming Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \  [ \"${{ steps.references.outcome }}\" != \"success\" ] && echo \"- ❌ Reference\
-        \ Validation\" >> $GITHUB_STEP_SUMMARY\n  [ \"${{ steps.mapping.outcome }}\"\
-        \ != \"success\" ] && echo \"- ❌ Mapping Validation\" >> $GITHUB_STEP_SUMMARY\n\
-        \  [ \"${{ steps.logic.outcome }}\" != \"success\" ] && echo \"- ❌ Logic Validation\"\
-        \ >> $GITHUB_STEP_SUMMARY\n  [ \"${{ steps.context.outcome }}\" != \"success\"\
-        \ ] && echo \"- ❌ Context Validation\" >> $GITHUB_STEP_SUMMARY\n  [ \"${{\
-        \ steps.python-validator.outcome }}\" != \"success\" ] && echo \"- ❌ Python\
-        \ Validator\" >> $GITHUB_STEP_SUMMARY\nfi\n"
-    - if: github.event_name == 'pull_request' && failure()
-      name: 💬 Comment on PR
-      uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
-      with:
-        script: "const fs = require('fs');\nlet report = '## ❌ Root Specifications\
-          \ Validation Failed\\n\\n';\n\nif (fs.existsSync('root-specs-validation-report.md'))\
-          \ {\n  report += fs.readFileSync('root-specs-validation-report.md', 'utf8');\n\
-          } else {\n  report += 'Please check the workflow logs for details.\\n';\n\
-          }\n\nreport += '\\n---\\n';\nreport += '**Action Required:** Please fix\
-          \ the violations and push the changes.\\n';\n\ngithub.rest.issues.createComment({\n\
-          \  issue_number: context.issue.number,\n  owner: context.repo.owner,\n \
-          \ repo: context.repo.repo,\n  body: report\n});\n"
-    - if: always()
-      name: 📤 Upload Validation Report
-      uses: 65462800fd760344b1a7b4382951275a0abb4808
-      with:
-        name: root-specs-validation-report
-        path: root-specs-validation-report.md
-        retention-days: 30
-    - if: 'steps.naming.outcome != ''success'' ||
-
-        steps.references.outcome != ''success'' ||
-
-        steps.mapping.outcome != ''success'' ||
-
-        steps.logic.outcome != ''success'' ||
-
-        steps.context.outcome != ''success'' ||
-
-        steps.python-validator.outcome != ''success''
-
-        '
-      name: ❌ Fail if Validation Failed
-      run: 'echo "❌ Root specifications validation failed!"
-
-        echo "Please review the errors and fix the violations."
-
-        exit 1'
+          echo "## Root specification validation" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Status: ${{ job.status }}" >> "$GITHUB_STEP_SUMMARY"

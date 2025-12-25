@@ -1,54 +1,35 @@
 name: 🚪 PR Evidence Gate - 強制執行證據驗證
-true:
+
+on:
   pull_request:
-    branches:
-    - main
-    - master
-    types:
-    - opened
-    - edited
-    - synchronize
-    - reopened
+    branches: [main, master]
+    types: [opened, edited, synchronize, reopened]
+
 env:
   AGENT_CONTRACT_ENFORCEMENT: true
   EVIDENCE_REQUIRED: true
   STRICT_MODE: true
+
 jobs:
   validate-pr-evidence:
     name: 🔍 驗證 PR 證據完整性
-    outputs:
-      missing-items: ${{ steps.validation.outputs.missing-items }}
-      validation-status: ${{ steps.validation.outputs.status }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: read
-    runs-on: ubuntu-latest
     steps:
-      - name: 📥 檢出代碼
-        uses: 0ad4b8f3a27c304e21892351cbf9860471245599
-        with:
-          fetch-depth: 0
-
-      - name: 🔍 驗證四大核心證據
+      - name: 驗證四大核心證據
         id: validation
-        uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
+        uses: actions/github-script@v7
         with:
           script: |
             const pr = context.payload.pull_request;
             const body = (pr && pr.body) ? pr.body : "";
             const errors = [];
 
-            // 允許大小寫、允許欄位前後空白
-            // 1) repo: https://github.com/<owner>/<repo>
             const repoRe = /(^|\n)\s*-\s*repo\s*:\s*https:\/\/github\.com\/[^\/\s]+\/[^\/\s]+(\s|$)/i;
-
-            // 2) branch: <something>
             const branchRe = /(^|\n)\s*-\s*branch\s*:\s*\S+(\s|$)/i;
-
-            // 3) commit (40-char SHA): <40 hex>
             const commitRe = /(^|\n)\s*-\s*commit(?:\s*\(40-char\s*sha\))?\s*:\s*[0-9a-f]{40}(\s|$)/i;
-
-            // 4) PR: https://github.com/<owner>/<repo>/pull/<number>
             const prRe = /(^|\n)\s*-\s*pr\s*:\s*https:\/\/github\.com\/[^\/\s]+\/[^\/\s]+\/pull\/\d+(\s|$)/i;
 
             if (!repoRe.test(body)) errors.push("缺少或格式錯誤：- repo: https://github.com/<owner>/<repo>");
@@ -56,7 +37,6 @@ jobs:
             if (!commitRe.test(body)) errors.push("缺少或格式錯誤：- commit: <40位sha>");
             if (!prRe.test(body)) errors.push("缺少或格式錯誤：- PR: https://github.com/<owner>/<repo>/pull/<number>");
 
-            // 檢查 placeholder
             const placeholders = [
               "<owner>", "<repo>", "<branch-name>", "<paste-full-sha-here>", "<this pr url>", "<number>", "[pr_number]", "[本 pr 編號]"
             ];
@@ -104,48 +84,3 @@ jobs:
             echo "### ✅ 驗證通過" >> $GITHUB_STEP_SUMMARY
             echo "所有四大核心證據都已提供且格式正確。" >> $GITHUB_STEP_SUMMARY
           fi
-    - name: 📥 檢出代碼
-      uses: 0ad4b8f3a27c304e21892351cbf9860471245599
-      with:
-        fetch-depth: 0
-    - id: validation
-      name: 🔍 驗證四大核心證據
-      uses: 60a0d83039c74a4aee543508d2ffcb1c3799cdea
-      with:
-        script: "const pr = context.payload.pull_request;\nconst body = (pr && pr.body)\
-          \ ? pr.body : \"\";\nconst errors = [];\n\n// 允許大小寫、允許欄位前後空白\n// 1) repo:\
-          \ https://github.com/<owner>/<repo>\nconst repoRe = /(^|\\n)\\s*-\\s*repo\\\
-          s*:\\s*https:\\/\\/github\\.com\\/[^\\/\\s]+\\/[^\\/\\s]+(\\s|$)/i;\n\n\
-          // 2) branch: <something>\nconst branchRe = /(^|\\n)\\s*-\\s*branch\\s*:\\\
-          s*\\S+(\\s|$)/i;\n\n// 3) commit (40-char SHA): <40 hex>\nconst commitRe\
-          \ = /(^|\\n)\\s*-\\s*commit(?:\\s*\\(40-char\\s*sha\\))?\\s*:\\s*[0-9a-f]{40}(\\\
-          s|$)/i;\n\n// 4) PR: https://github.com/<owner>/<repo>/pull/<number>\nconst\
-          \ prRe = /(^|\\n)\\s*-\\s*pr\\s*:\\s*https:\\/\\/github\\.com\\/[^\\/\\\
-          s]+\\/[^\\/\\s]+\\/pull\\/\\d+(\\s|$)/i;\n\nif (!repoRe.test(body)) errors.push(\"\
-          缺少或格式錯誤：- repo: https://github.com/<owner>/<repo>\");\nif (!branchRe.test(body))\
-          \ errors.push(\"缺少或格式錯誤：- branch: <branch-name>\");\nif (!commitRe.test(body))\
-          \ errors.push(\"缺少或格式錯誤：- commit: <40位sha>\");\nif (!prRe.test(body)) errors.push(\"\
-          缺少或格式錯誤：- PR: https://github.com/<owner>/<repo>/pull/<number>\");\n\n//\
-          \ 檢查 placeholder\nconst placeholders = [\n  \"<owner>\", \"<repo>\", \"\
-          <branch-name>\", \"<paste-full-sha-here>\", \"<this pr url>\", \"<number>\"\
-          , \"[pr_number]\", \"[本 pr 編號]\"\n];\nconst lowerBody = body.toLowerCase();\n\
-          const badPlaceholders = placeholders.filter(p => lowerBody.includes(p.toLowerCase()));\n\
-          if (badPlaceholders.length > 0) {\n  errors.push(`PR 仍包含未替換的 placeholder：${badPlaceholders.join(\"\
-          , \")}`);\n}\n\nif (errors.length > 0) {\n  core.setFailed(\n    [\n   \
-          \   \"PR 交付證據 Gate 未通過（缺一不可）。\",\n      \"\",\n      \"請在 PR 描述最上方加入以下四項（並填入真實值）：\"\
-          ,\n      \"- repo: https://github.com/MachineNativeOps/MachineNativeOps\"\
-          ,\n      \"- branch: <branch-name>\",\n      \"- commit: <40位sha>\",\n \
-          \     \"- PR: https://github.com/MachineNativeOps/MachineNativeOps/pull/<number>\"\
-          ,\n      \"\",\n      \"錯誤清單：\",\n      ...errors.map(e => `- ${e}`),\n\
-          \    ].join(\"\\n\")\n  );\n  core.setOutput('status', 'FAIL');\n  core.setOutput('missing-items',\
-          \ errors.join(','));\n} else {\n  core.info(\"✅ PR 交付證據欄位齊全。\");\n  core.setOutput('status',\
-          \ 'PASS');\n  core.setOutput('missing-items', '');\n}\n"
-    - if: always()
-      name: 📊 驗證結果輸出
-      run: "echo \"## \U0001F6A8 PR 驗證結果\" >> $GITHUB_STEP_SUMMARY\necho \"\" >> $GITHUB_STEP_SUMMARY\n\
-        echo \"**驗證狀態:** ${{ steps.validation.outputs.status }}\" >> $GITHUB_STEP_SUMMARY\n\
-        echo \"\" >> $GITHUB_STEP_SUMMARY\n\nif [ \"${{ steps.validation.outputs.status\
-        \ }}\" = \"FAIL\" ]; then\n  echo \"### ❌ 驗證失敗項目:\" >> $GITHUB_STEP_SUMMARY\n\
-        \  echo \"${{ steps.validation.outputs.missing-items }}\" | tr ',' '\\n' |\
-        \ sed 's/^/- /' >> $GITHUB_STEP_SUMMARY\nelse\n  echo \"### ✅ 驗證通過\" >> $GITHUB_STEP_SUMMARY\n\
-        \  echo \"所有四大核心證據都已提供且格式正確。\" >> $GITHUB_STEP_SUMMARY\nfi"

@@ -1,6 +1,6 @@
 name: aaps-phase1-gates
-true:
-  pull_request: null
+on:
+  pull_request: {}
   push:
     branches:
     - main
