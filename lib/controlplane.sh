@@ -281,7 +281,15 @@ cp_synthesize_active() {
     
     # 複製 baseline 配置
     if [[ -d "$CP_BASELINE_PATH/config" ]]; then
-        cp -r "$CP_BASELINE_PATH/config/"*.yaml "$CP_ACTIVE_PATH/" 2>/dev/null || true
+        # 使用 nullglob 確保沒有匹配時不會把萬用字元當成字串傳給 cp
+        shopt -s nullglob
+        local yaml_files=("$CP_BASELINE_PATH"/config/*.yaml)
+        if ((${#yaml_files[@]} > 0)); then
+            cp -r "${yaml_files[@]}" "$CP_ACTIVE_PATH/"
+        else
+            cp_log_info "No baseline YAML config files found in $CP_BASELINE_PATH/config"
+        fi
+        shopt -u nullglob
     fi
     
     # TODO: 合併 overlay 配置 (需要更複雜的邏輯)
