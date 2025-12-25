@@ -21,6 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare site content
+        run: |
+          if [ ! -d workspace/docs ]; then
+            mkdir -p workspace/docs
+            echo "# Pages placeholder" > workspace/docs/index.md
+          fi
+
       - name: Upload site content
         uses: actions/upload-pages-artifact@v3
         with:

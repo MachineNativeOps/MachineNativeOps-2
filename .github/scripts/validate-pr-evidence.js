@@ -1,4 +1,4 @@
-function validate({ context, core }) {
+function validatePREvidence({ context, core }) {
   const pr = context.payload.pull_request;
   const body = pr && pr.body ? pr.body : "";
   const errors = [];
@@ -46,4 +46,4 @@ function validate({ context, core }) {
   }
 }
 
-module.exports = { validatePREvidence: validate };
+module.exports = { validatePREvidence };

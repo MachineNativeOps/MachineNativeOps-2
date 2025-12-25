@@ -41,6 +41,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
+      - name: ✅ Verify validator script
+        run: |
+          if [ ! -f controlplane/baseline/validation/validate-root-specs.py ]; then
+            echo "Validator script missing"; exit 1;
+          fi
+
       - name: 🔍 Run validation
         run: python controlplane/baseline/validation/validate-root-specs.py
 

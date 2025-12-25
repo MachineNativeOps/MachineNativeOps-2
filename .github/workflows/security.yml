@@ -62,8 +62,18 @@ jobs:
       - name: Scan for high-risk patterns
         run: |
           set -e
-          patterns='(?i)(aws[_-]?access_key_id|aws[_-]?secret_access_key|ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{80,}|api[_-]?key|secret[_-]?key|private[_-]?key|xox[baprs]-[A-Za-z0-9-]{10,})'
-          if git grep -nE "$patterns" -- . ':!node_modules' ':!.git'; then
+          patterns=(
+            'aws[_-]?access_key_id'
+            'aws[_-]?secret_access_key'
+            'ghp_[A-Za-z0-9]{36}'
+            'github_pat_[A-Za-z0-9_]{80,}'
+            'api[_-]?key'
+            'secret[_-]?key'
+            'private[_-]?key'
+            'xox[baprs]-[A-Za-z0-9-]{10,}'
+          )
+          regex="(?i)($(printf '%s|' \"${patterns[@]}\" | sed 's/|$//'))"
+          if git grep -nE "$regex" -- . ':!node_modules' ':!.git'; then
             echo "⚠️ Potential secrets detected. Please review the matches above."
           else
             echo "✅ No obvious secrets found."
