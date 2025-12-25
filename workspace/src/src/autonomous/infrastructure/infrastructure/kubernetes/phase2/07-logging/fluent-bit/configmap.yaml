@@ -1,9 +1,0 @@
-apiVersion: machinenativeops.io/v2
-data:
-  fluent-bit.conf: "[SERVICE]\n    Flush 1\n    Log_Level info\n\n[INPUT]\n    Name\
-    \ tail\n    Path /var/log/containers/*.log\n    Parser docker\n\n[OUTPUT]\n  \
-    \  Name loki\n    Match *\n    Host loki.logging.svc.cluster.local\n    Port 3100\n"
-kind: ConfigMap
-metadata:
-  name: fluent-bit-config
-  namespace: machinenativenops

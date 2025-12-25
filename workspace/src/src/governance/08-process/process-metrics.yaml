@@ -1,8 +1,0 @@
-lastUpdated: '2025-12-10'
-metrics:
-  cost: Cost per transaction
-  efficiency: Cycle time, throughput
-  quality: Error rate, rework
-  satisfaction: User feedback
-status: active
-version: '1.0'

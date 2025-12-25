@@ -1,9 +1,0 @@
-dimension: 01-architecture
-framework:
-  levels:
-  - strategic
-  - tactical
-  - operational
-  type: hybrid
-status: active
-version: 1.0.0

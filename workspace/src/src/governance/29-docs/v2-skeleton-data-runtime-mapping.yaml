@@ -1,8 +1,0 @@
-runtime_module:
-  docs:
-    evolution_policy: platform/governance/data/docs/schema-evolution.md
-    naming_conventions: platform/governance/data/docs/naming-conventions.md
-  registry:
-    schemas: platform/governance/data/registry/schemas.yaml
-    sensitive_fields: platform/governance/data/registry/sensitive-fields.yaml
-  root: platform/governance/data

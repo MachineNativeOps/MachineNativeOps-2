@@ -1,6 +1,0 @@
-database:
-  path: ':memory:'
-  type: sqlite
-environment: testing
-logging:
-  level: DEBUG

@@ -1,6 +1,0 @@
-database:
-  path: data/governance-dev.db
-  type: sqlite
-environment: development
-logging:
-  level: DEBUG

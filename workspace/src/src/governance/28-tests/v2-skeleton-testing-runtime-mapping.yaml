@@ -1,8 +1,0 @@
-runtime_module:
-  config:
-    coverage_thresholds: platform/governance/testing/config/coverage-thresholds.yaml
-  docs:
-    compatibility_matrix: platform/governance/testing/docs/compatibility-matrix.md
-    coverage_policy: platform/governance/testing/docs/coverage-policy.md
-    test_pyramid: platform/governance/testing/docs/test-pyramid.md
-  root: platform/governance/testing

@@ -1,8 +1,0 @@
-runtime_module:
-  docs:
-    structure_guide: platform/knowledge/docs-governance/docs/structure-guide.md
-    style_guide: platform/knowledge/docs-governance/docs/style-guide.md
-  root: platform/knowledge/docs-governance
-  templates:
-    adr: platform/knowledge/docs-governance/templates/ADR.template.md
-    readme: platform/knowledge/docs-governance/templates/README.template.md

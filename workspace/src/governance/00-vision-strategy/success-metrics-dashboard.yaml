@@ -514,10 +514,10 @@ alerts:
       
     slack:
       channels:
-        - "#critical-alerts" (Critical only)
-        - "#okr-tracking" (OKR-related)
-        - "#eng-alerts" (Engineering metrics)
-        - "#customer-health" (Customer metrics)
+        - "#critical-alerts - Critical only"
+        - "#okr-tracking - OKR-related"
+        - "#eng-alerts - Engineering metrics"
+        - "#customer-health - Customer metrics"
       
     email:
       recipients_by_severity:

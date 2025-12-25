@@ -1,9 +1,0 @@
-integration: ITSM, collaboration tools
-lastUpdated: '2025-12-10'
-status: active
-system_capabilities:
-- Process modeling
-- Workflow automation
-- Process monitoring
-- Performance analytics
-version: '1.0'
