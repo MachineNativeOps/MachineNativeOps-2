@@ -34,11 +34,11 @@ controlplane:
 # 啟動模式
 bootMode:
   mode: "production"  # production | development | testing
-  strictValidation: true
-  autoRepair: false
+  strictValidation: true  # 嚴格驗證配置與結構（啟動時強制 schema/config 檢查）
+  autoRepair: false       # 自動嘗試修復可恢復問題
 
 # 健康檢查
 healthCheck:
-  enabled: true
-  interval: 60  # seconds
-  timeout: 10   # seconds
+  enabled: true   # 是否啟用健康檢查
+  interval: 60    # seconds
+  timeout: 10     # seconds
