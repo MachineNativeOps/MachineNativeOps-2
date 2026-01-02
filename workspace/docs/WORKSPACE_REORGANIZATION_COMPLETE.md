@@ -105,12 +105,6 @@ workspace/
 │   ├── cloudflare/               # Cloudflare 部署
 │   └── deploy/                   # 其他部署配置
 │
-├── dev-tools/                    # 開發工具
-│   ├── .vscode/                  # VS Code 配置
-│   ├── axm-tools/
-│   ├── engine/
-│   └── tools/
-│
 ├── docs/                         # 文檔
 │   ├── agents/
 │   ├── api/
@@ -153,13 +147,7 @@ workspace/
 
 ## 📋 重組映射
 
-### 1. 開發工具 → workspace/dev-tools/
-- ✅ `.vscode/`
-- ✅ `axm-tools/`
-- ✅ `engine/`
-- ✅ `tools/`
-
-### 2. 源代碼 → workspace/src/
+### 1. 源代碼 → workspace/src/
 - ✅ `src/`
 - ✅ `scripts/`
 - ✅ `bin/`
@@ -319,11 +307,6 @@ Overall Status: ✅ PASS
 - `cloudflare/`: Cloudflare 部署配置
 - `deploy/`: 其他部署腳本
 
-### workspace/dev-tools/
-**用途**: 開發工具和 IDE 配置
-- `.vscode/`: VS Code 設置
-- 各種開發輔助工具
-
 ### workspace/docs/
 **用途**: 所有文檔
 - 按主題組織
@@ -364,7 +347,7 @@ Overall Status: ✅ PASS
 - **文檔** → `workspace/docs/`
 - **測試** → `workspace/tests/`
 - **部署** → `workspace/deploy/`
-- **工具** → `workspace/dev-tools/`
+- **工具** → `workspace/tools/`
 - **歷史** → `workspace/archive/`
 
 ### 2. 根目錄原則

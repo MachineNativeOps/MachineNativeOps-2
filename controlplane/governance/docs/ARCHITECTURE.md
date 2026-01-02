@@ -122,9 +122,6 @@ workspace/
 ├── deploy/
 │   ├── cloudflare/
 │   └── deploy/
-├── dev-tools/
-│   ├── engine/
-│   └── tools/
 ├── docs/
 │   ├── 00-VISION-STRATEGY-ANALYSIS.md
 │   ├── AAPS_ANALYSIS_REPORT.md

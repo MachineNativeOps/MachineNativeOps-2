@@ -136,7 +136,6 @@ workspace/
 ├── client/             # Client applications
 ├── config/             # Workspace configuration
 ├── deploy/             # Deployment files
-├── dev-tools/          # Development tools
 ├── docs/               # Project documentation
 ├── ops/                # Operations files
 ├── projects/           # Project files

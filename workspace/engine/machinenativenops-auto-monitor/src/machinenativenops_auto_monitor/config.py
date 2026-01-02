@@ -8,6 +8,7 @@ Configuration Module
 Manages configuration for the auto-monitor system.
 """
 
+import os
 import logging
 from pathlib import Path
 from typing import Any, Dict
@@ -352,7 +353,7 @@ class MonitorConfig:
     namespace: str = 'machinenativeops'
     registry: str = 'registry.machinenativeops.io'
     certificate_path: str = 'etc/machinenativeops/pkl'
-    cluster_token: str = 'super-agent-etcd-cluster'
+    cluster_token: str = field(default_factory=lambda: os.getenv('CLUSTER_TOKEN', ''))
     
     # Feature flags
     enable_kubernetes: bool = False
