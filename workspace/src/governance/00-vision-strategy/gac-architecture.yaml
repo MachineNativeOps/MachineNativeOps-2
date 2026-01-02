@@ -206,7 +206,7 @@ deployment_phases:
         command: "kubectl apply -f governance/00-vision-strategy/policy/"
         validation: "kubectl get constrainttemplates"
       - step: "Configure GitOps"
-        command: "argocd app create governance-00-vision-strategy --repo <repo> --path governance/00-vision-strategy/k8s"
+        command: "argocd app create governance-00-vision-strategy --repo https://github.com/MachineNativeOps/machine-native-ops --path governance/00-vision-strategy/k8s"
         validation: "argocd app get governance-00-vision-strategy"
     
   phase_3:
