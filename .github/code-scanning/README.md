@@ -104,6 +104,14 @@ python .github/code-scanning/tools/dashboard.py
 
 訪問 `http://localhost:5000` 查看 Web 儀表板。
 
+**安全配置：**
+- 預設情況下，儀表板僅監聽 `127.0.0.1`（本機訪問），確保安全性
+- 如需允許外部訪問，請設置環境變數：
+  ```bash
+  DASHBOARD_HOST=0.0.0.0 python .github/code-scanning/tools/dashboard.py
+  ```
+- 可通過 `DASHBOARD_PORT` 環境變數自定義端口（預設：5000）
+
 ### GitHub Actions 集成
 
 工作流自動在以下情況觸發：
@@ -317,8 +325,13 @@ python .github/code-scanning/tools/advanced_scanner.py
 lsof -i :5000
 
 # 使用不同端口啟動
-python .github/code-scanning/tools/dashboard.py
+DASHBOARD_PORT=8080 python .github/code-scanning/tools/dashboard.py
+
+# 允許外部訪問（僅限安全環境）
+DASHBOARD_HOST=0.0.0.0 python .github/code-scanning/tools/dashboard.py
 ```
+
+**注意：** 預設情況下，儀表板僅允許本機訪問（127.0.0.1）以確保安全性。在生產或共享環境中，切勿將儀表板綁定到 0.0.0.0，除非您完全了解安全風險。
 
 ## 貢獻指南
 

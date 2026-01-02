@@ -164,7 +164,15 @@ def main() -> None:
     """
     主函數
     
-    啟動 Web 儀表板服務器，監聽 0.0.0.0:5000。
+    啟動 Web 儀表板服務器。
+    
+    預設監聽 127.0.0.1:5000（僅本機訪問）以確保安全性。
+    如需允許外部訪問，請設置環境變數 DASHBOARD_HOST=0.0.0.0。
+    
+    環境變數：
+    - DASHBOARD_HOST: 監聽地址（預設：127.0.0.1）
+    - DASHBOARD_PORT: 監聽端口（預設：5000）
+    
     如果模板文件不存在，會自動創建默認模板。
     """
     # 確保目錄存在
@@ -176,10 +184,16 @@ def main() -> None:
     if not template_file.exists():
         create_default_template(template_file)
     
+    # 從環境變數讀取配置，預設為安全的 localhost 綁定
+    host = os.environ.get('DASHBOARD_HOST', '127.0.0.1')
+    port = int(os.environ.get('DASHBOARD_PORT', '5000'))
+    
     # 啟動服務器
     print("🚀 啟動高階代碼掃描儀表板...")
-    print("📊 訪問 http://localhost:5000 查看儀表板")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    print(f"📊 訪問 http://{host}:{port} 查看儀表板")
+    if host == '0.0.0.0':
+        print("⚠️  警告：服務器監聽所有網絡接口，請確保在安全環境中運行")
+    app.run(debug=True, host=host, port=port)
 
 def create_default_template(template_path: Path) -> None:
     """
