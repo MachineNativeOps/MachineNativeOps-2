@@ -1,0 +1,126 @@
+name: 🔍 Repository Evidence Scanner - 全儲存庫證據掃描
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      output_format:
+        description: 'Output format (console or json)'
+        required: false
+        default: 'console'
+        type: choice
+        options:
+          - console
+          - json
+  
+  # Scheduled scan (weekly)
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6:00 UTC
+  
+  # On push to main (for monitoring purposes)
+  push:
+    branches: [main]
+    paths:
+      - '**/*.md'
+      - '**/*.yml'
+      - '**/*.yaml'
+
+env:
+  AGENT_CONTRACT_ENFORCEMENT: true
+  EVIDENCE_SCANNING: true
+
+jobs:
+  scan-repository:
+    name: 🔍 掃描全儲存庫證據合規性
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+
+      - name: 🔍 Run Evidence Scanner
+        id: scan
+        run: |
+          echo "🚪 PR Evidence Gate - 全儲存庫掃描"
+          echo ""
+          
+          # Always use JSON output for reliable metric extraction
+          node .github/scripts/scan-repository-evidence.js --json > scan-results.json
+          EXIT_CODE=$?
+          
+          # Display results based on user preference
+          if [ "${{ github.event.inputs.output_format }}" = "json" ]; then
+            cat scan-results.json
+          else
+            # Also run with console output for human-readable display
+            node .github/scripts/scan-repository-evidence.js 2>&1 | tee scan-output.txt || true
+          fi
+          
+          # Extract metrics from JSON (reliable parsing)
+          ERRORS=$(jq '.summary.errors' scan-results.json)
+          WARNINGS=$(jq '.summary.warnings' scan-results.json)
+          TOTAL=$(jq '.summary.total_scanned' scan-results.json)
+          RATE=$(jq -r '.summary.compliance_rate' scan-results.json)
+          
+          echo "errors=$ERRORS" >> $GITHUB_OUTPUT
+          echo "warnings=$WARNINGS" >> $GITHUB_OUTPUT
+          echo "total=$TOTAL" >> $GITHUB_OUTPUT
+          echo "compliance_rate=$RATE" >> $GITHUB_OUTPUT
+          
+          # Fail if there are errors (but allow warnings)
+          # Use explicit numeric validation
+          if [[ "$ERRORS" =~ ^[0-9]+$ ]] && [ "$ERRORS" -gt 0 ]; then
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+          else
+            echo "status=PASS" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 📊 Generate Summary Report
+        if: always()
+        run: |
+          echo "## 🔍 全儲存庫證據掃描報告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 掃描統計" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 指標 | 數值 |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 總掃描檔案數 | ${{ steps.scan.outputs.total }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ❌ 錯誤數 | ${{ steps.scan.outputs.errors }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚠️ 警告數 | ${{ steps.scan.outputs.warnings }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 📈 合規率 | ${{ steps.scan.outputs.compliance_rate }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.scan.outputs.status }}" = "FAIL" ]; then
+            echo "### ❌ 掃描狀態：失敗" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "發現 ${{ steps.scan.outputs.errors }} 個錯誤需要修正。" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ✅ 掃描狀態：通過" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "所有檔案均符合證據規範。" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "*掃描時間: $(date -u +"%Y-%m-%d %H:%M:%S UTC")*" >> $GITHUB_STEP_SUMMARY
+
+      - name: 📤 Upload Scan Results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: evidence-scan-results
+          path: |
+            scan-results.json
+            scan-output.txt
+          if-no-files-found: ignore
+          retention-days: 30

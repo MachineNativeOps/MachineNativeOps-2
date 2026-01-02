@@ -77,7 +77,7 @@ kubectl -n argocd get secret argocd-initial-admin-secret \
 
 # 使用 Flux
 flux get all
-flux reconcile source git <repo>
+flux reconcile source git machine-native-ops
 ```
 
 #### 健康監控
