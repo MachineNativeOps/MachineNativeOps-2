@@ -45,7 +45,7 @@ spec:
   
   # 應用上下文
   applicationContext:
-    name: "MachineNativeOps AAPS"
+    name: "MachineNativeOps"
     version: "v1.0.0"
     namespace: "machinenativenops"
     
