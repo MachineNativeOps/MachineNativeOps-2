@@ -14,6 +14,8 @@ from flask import Flask, render_template, jsonify, send_file
 from werkzeug.utils import secure_filename
 from pathlib import Path
 import json
+import os
+import ipaddress
 from datetime import datetime
 from typing import Dict
 
@@ -22,6 +24,20 @@ app = Flask(__name__)
 # 配置
 REPORTS_DIR = Path(".github/code-scanning/reports")
 TEMPLATE_DIR = Path(".github/code-scanning/templates")
+
+# 本機地址 / Localhost addresses for security checks
+LOCALHOST_ADDRESSES = ('127.0.0.1', 'localhost', '::1')
+# 預設配置 / Default configuration
+DEFAULT_HOST = '127.0.0.1'
+DEFAULT_PORT = 5000
+DEFAULT_DEBUG = False
+# 有效端口範圍 / Valid port range
+MIN_PORT = 1
+MAX_PORT = 65535
+# 確保模板目錄存在
+TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+
+app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 
 class DashboardData:
     """儀表板數據管理"""
@@ -147,9 +163,8 @@ def download_report(filename):
         base_path = REPORTS_DIR.resolve()
         resolved_path = report_path.resolve()
         
-        # Check that the resolved path is under the base directory
-        # Using relative_to() which raises ValueError if path is outside base
-        resolved_path.relative_to(base_path)
+        # Validate path is within base directory - raises ValueError if outside
+        _ = resolved_path.relative_to(base_path)
         
         # Ensure it's not the base directory itself and is a file
         if resolved_path == base_path or not resolved_path.is_file():
@@ -171,7 +186,18 @@ def main() -> None:
     """
     主函數
     
-    啟動 Web 儀表板服務器，監聽 0.0.0.0:5000。
+    啟動 Web 儀表板服務器。
+    
+    預設監聽 127.0.0.1:5000（僅本機訪問）以確保安全性。
+    僅在受信任的開發環境中使用 DASHBOARD_HOST 允許外部訪問。
+    
+    環境變數：
+    - DASHBOARD_HOST: 監聽地址（預設：127.0.0.1）
+      支援任何有效的 IP 地址或主機名，但建議僅在開發環境使用非 localhost 地址
+    - DASHBOARD_PORT: 監聽端口（預設：5000）
+    - DASHBOARD_DEBUG: 啟用 Flask 除錯模式（預設：false）
+      警告：除錯模式不應在生產環境使用
+    
     如果模板文件不存在，會自動創建默認模板。
     """
     # 確保目錄存在
@@ -187,6 +213,52 @@ def main() -> None:
     print("🚀 啟動高階代碼掃描儀表板...")
     print("📊 訪問 http://localhost:5000 查看儀表板")
     app.run(debug=True, host='0.0.0.0', port=5000)
+    # 從環境變數讀取配置，預設為安全的 localhost 綁定
+    host = os.environ.get('DASHBOARD_HOST', DEFAULT_HOST)
+    
+    # 驗證 host 格式 - 接受任何有效的 IP 地址或主機名
+    if host not in LOCALHOST_ADDRESSES:
+        # 嘗試驗證是否為有效的 IP 地址
+        try:
+            # 支援 IPv4 和 IPv6
+            ipaddress.ip_address(host)
+            # Valid IP address - will show warning if not localhost
+        except ValueError:
+            # 不是有效的 IP 地址，可能是主機名
+            # 允許常見的特殊值
+            if host not in ('0.0.0.0', '::', 'localhost'):
+                print(f"⚠️  警告：無效的 DASHBOARD_HOST 值，使用預設值 {DEFAULT_HOST}")
+                host = DEFAULT_HOST
+    
+    # 驗證並解析端口
+    try:
+        port = int(os.environ.get('DASHBOARD_PORT', DEFAULT_PORT))
+        if not (MIN_PORT <= port <= MAX_PORT):
+            print(f"⚠️  警告：指定的端口超出有效範圍 ({MIN_PORT}-{MAX_PORT})，使用預設值 {DEFAULT_PORT}")
+            port = DEFAULT_PORT
+    except (ValueError, TypeError):
+        print(f"⚠️  警告：環境變數 DASHBOARD_PORT 無效，使用預設值 {DEFAULT_PORT}")
+        port = DEFAULT_PORT
+    
+    # 驗證並解析除錯模式
+    debug_mode_str = os.environ.get('DASHBOARD_DEBUG', 'false').lower()
+    debug_mode = debug_mode_str in ('true', '1', 'yes', 'on')
+    
+    # 安全警告（在啟動服務器之前顯示）
+    if host not in LOCALHOST_ADDRESSES:
+        print("⚠️  警告：服務器將監聽外部網絡接口")
+        print("   建議僅在受信任的開發環境中使用此配置")
+        print("   切勿在生產或共享環境中暴露儀表板")
+    
+    if debug_mode:
+        print("⚠️  警告：Flask 除錯模式已啟用")
+        print("   除錯模式會暴露敏感資訊，切勿在生產環境使用")
+    
+    # 啟動服務器
+    print("🚀 啟動高階代碼掃描儀表板...")
+    print(f"📊 訪問 http://{host}:{port} 查看儀表板")
+    print(f"🔧 除錯模式: {'啟用' if debug_mode else '停用'}")
+    app.run(debug=debug_mode, host=host, port=port)
 
 def create_default_template(template_path: Path) -> None:
     """

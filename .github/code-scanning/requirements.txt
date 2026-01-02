@@ -2,7 +2,13 @@
 # Advanced Code Scanning System Dependencies
 
 # 安全掃描工具
+# Pinned to exact versions to prevent supply-chain risks from unvetted releases
 bandit==1.7.10
+safety==2.3.5
+
+# Web 框架
+# Pinned to exact versions to prevent supply-chain risks from unvetted releases
+# 安全掃描工具 - 固定版本以防供應鏈攻擊
 safety==3.2.11
 
 # Web 框架
