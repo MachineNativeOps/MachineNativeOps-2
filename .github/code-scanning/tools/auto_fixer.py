@@ -68,10 +68,19 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
             line_num = vulnerability.get('line_number', 1) - 1
             original_line = lines[line_num] if line_num < len(lines) else ""
             
-            # 將硬編碼密碼替換為環境變量
+            # 將硬編碼密碼替換為基於變量名的環境變量
+            def _replace_password(match: re.Match) -> str:
+                lhs = match.group('lhs')
+                var_name = match.group('var') or 'password'
+                # 將變量名轉換為環境變量名，例如 api_password -> API_PASSWORD
+                env_name = re.sub(r'\W+', '_', var_name).upper()
+                if not env_name:
+                    env_name = 'PASSWORD'
+                return f"{lhs}os.environ.get('{env_name}')"
+
             fixed_line = re.sub(
-                r'(password\s*=\s*)["\'][^"\']+["\']',
-                r"\1os.environ.get('DB_PASSWORD')",
+                r'(?P<lhs>\b(?P<var>\w*password\w*)\s*=\s*)["\'][^"\']+["\']',
+                _replace_password,
                 original_line
             )
             
