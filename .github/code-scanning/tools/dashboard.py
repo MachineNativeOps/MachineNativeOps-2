@@ -209,10 +209,6 @@ def main() -> None:
     if not template_file.exists():
         create_default_template(template_file)
     
-    # 啟動服務器
-    print("🚀 啟動高階代碼掃描儀表板...")
-    print("📊 訪問 http://localhost:5000 查看儀表板")
-    app.run(debug=True, host='0.0.0.0', port=5000)
     # 從環境變數讀取配置，預設為安全的 localhost 綁定
     host = os.environ.get('DASHBOARD_HOST', DEFAULT_HOST)
     
@@ -231,6 +227,26 @@ def main() -> None:
                 host = DEFAULT_HOST
     
     # 驗證並解析端口
+    port_str = os.environ.get('DASHBOARD_PORT', '5000')
+    try:
+        port = int(port_str)
+        if not (0 < port < 65536):
+            raise ValueError
+    except ValueError:
+        print("⚠️  警告：無效的 DASHBOARD_PORT 值，使用預設值 5000")
+        port = 5000
+    
+    # 解析除錯模式，預設為 False，以避免在生產環境中啟用除錯
+    debug_env = os.environ.get('DASHBOARD_DEBUG', 'false').strip().lower()
+    debug_mode = debug_env in ('1', 'true', 'yes', 'y', 'on')
+    
+    # 啟動服務器
+    print("🚀 啟動高階代碼掃描儀表板...")
+    print(f"📊 訪問 http://{host}:{port} 查看儀表板")
+    if debug_mode:
+        print("⚠️  警告：DASHBOARD_DEBUG 已啟用，僅應在受信任的開發環境中使用。")
+    
+    app.run(debug=debug_mode, host=host, port=port)
     try:
         port = int(os.environ.get('DASHBOARD_PORT', DEFAULT_PORT))
         if not (MIN_PORT <= port <= MAX_PORT):
