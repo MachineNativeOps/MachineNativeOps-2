@@ -306,8 +306,13 @@ class LongLineFixer(VulnerabilityFixer):
             
             # 檢查是否為字符串字面量或註釋（不適合自動拆分）
             stripped = original_line.lstrip()
-            if stripped.startswith('#') or ('"' in stripped or "'" in stripped):
-                return False, original_line, "此行包含字符串或註釋，需要人工檢查"
+            if stripped.startswith('#'):
+                return False, original_line, "此行包含註釋，需要人工檢查"
+            
+            # 若此行主要為字符串字面量（可選的簡單賦值之後緊跟字符串），則跳過自動拆分
+            stripped_after_assign = re.sub(r'^[\w\.\[\]\(\)\s]+= *', '', stripped)
+            if stripped_after_assign.startswith('"') or stripped_after_assign.startswith("'"):
+                return False, original_line, "此行主要為字符串字面量，需要人工檢查"
             
             # 檢測縮進
             indent = len(original_line) - len(stripped)
