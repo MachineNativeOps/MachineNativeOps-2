@@ -161,6 +161,20 @@ def download_report(filename):
     # Ensure the resolved path is still within REPORTS_DIR (defense in depth)
     try:
         base_path = REPORTS_DIR.resolve()
+        report_path = (REPORTS_DIR / safe_filename).resolve()
+    except OSError:
+        # Invalid path (e.g., contains characters not allowed by the OS)
+        return jsonify({'error': 'Report not found'}), 404
+
+    # Prevent directory traversal by ensuring the resolved path is within REPORTS_DIR
+    try:
+        report_path.relative_to(base_path)
+    except ValueError:
+        # Path is not relative to base_path (i.e., outside REPORTS_DIR)
+        return jsonify({'error': 'Report not found'}), 404
+
+    if report_path.exists():
+        return send_file(report_path, as_attachment=True)
         resolved_path = report_path.resolve()
         
         # Validate path is within base directory - raises ValueError if outside
@@ -227,6 +241,26 @@ def main() -> None:
                 host = DEFAULT_HOST
     
     # 驗證並解析端口
+    port_str = os.environ.get('DASHBOARD_PORT', '5000')
+    try:
+        port = int(port_str)
+        if not (0 < port < 65536):
+            raise ValueError
+    except ValueError:
+        print("⚠️  警告：無效的 DASHBOARD_PORT 值，使用預設值 5000")
+        port = 5000
+    
+    # 解析除錯模式，預設為 False，以避免在生產環境中啟用除錯
+    debug_env = os.environ.get('DASHBOARD_DEBUG', 'false').strip().lower()
+    debug_mode = debug_env in ('1', 'true', 'yes', 'y', 'on')
+    
+    # 啟動服務器
+    print("🚀 啟動高階代碼掃描儀表板...")
+    print(f"📊 訪問 http://{host}:{port} 查看儀表板")
+    if debug_mode:
+        print("⚠️  警告：DASHBOARD_DEBUG 已啟用，僅應在受信任的開發環境中使用。")
+    
+    app.run(debug=debug_mode, host=host, port=port)
     try:
         port = int(os.environ.get('DASHBOARD_PORT', DEFAULT_PORT))
         if not (MIN_PORT <= port <= MAX_PORT):

@@ -123,7 +123,7 @@ class AdvancedCodeScanner:
             with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as tmp_file:
                 bandit_output_path = tmp_file.name
             
-            subprocess.run(
+            result = subprocess.run(
                 ["bandit", "-r", str(self.repo_path), "-f", "json", "-o", bandit_output_path],
                 capture_output=True,
                 text=True,
@@ -180,6 +180,10 @@ class AdvancedCodeScanner:
         python_files = list(self.repo_path.rglob("*.py"))
         
         for file_path in python_files:
+            # 跳過測試/示例代碼文件
+            if any(marker in str(file_path).lower() for marker in ['test', 'example', 'demo', 'sample']):
+                continue
+            
             try:
                 # 跳過測試/示例代碼文件（移到外層以提高效能）
                 if any(marker in str(file_path).lower() for marker in ['test', 'example', 'demo', 'sample']):
@@ -233,6 +237,22 @@ class AdvancedCodeScanner:
                                         "tool": "custom",
                                         "confidence": 0.7
                                     })
+                            if f"{keyword} = " in line_lower or f'"{keyword}": ' in line_lower:
+                                if '=' in line and any(c in line for c in ['"', "'"]):
+                                    if not line.strip().startswith("#"):
+                                        findings.append({
+                                            "severity": "high",
+                                            "type": "Hardcoded Credential",
+                                            "location": f"{file_path}:{line_num}",
+                                            "file_path": str(file_path),
+                                            "line_number": line_num,
+                                            "code_snippet": line.strip(),
+                                            "cwe_id": "CWE-798",
+                                            "description": f"檢測到可能的硬編碼 {key_type}",
+                                            "recommendation": "使用環境變量或密鑰管理服務存儲敏感信息",
+                                            "tool": "custom",
+                                            "confidence": 0.7
+                                        })
             
             except Exception as e:
                 continue
@@ -272,11 +292,7 @@ class AdvancedCodeScanner:
                             "confidence": 0.9
                         })
             
-            except (IOError, OSError, UnicodeDecodeError) as e:
-                print(f"  ⚠️ 無法讀取依賴文件 {req_file}: {e}")
-                continue
             except Exception as e:
-                print(f"  ⚠️ 處理依賴文件 {req_file} 時發生意外錯誤: {e}")
                 continue
         
         return findings
@@ -329,11 +345,7 @@ class AdvancedCodeScanner:
                             "confidence": 1.0
                         })
             
-            except (IOError, OSError, UnicodeDecodeError) as e:
-                print(f"  ⚠️ 無法讀取文件 {file_path}: {e}")
-                continue
-            except Exception as e:
-                print(f"  ⚠️ 處理文件 {file_path} 時發生意外錯誤: {e}")
+            except Exception:
                 continue
         
         return findings
@@ -474,6 +486,10 @@ def main() -> None:
     從命令行參數讀取儲存庫路徑並執行掃描。
     如果發現嚴重或高嚴重性問題，將以非零狀態碼退出。
     """
+    if len(sys.argv) > 1:
+        repo_path = sys.argv[1]
+    else:
+        repo_path = "."
     import argparse
     
     parser = argparse.ArgumentParser(description='高階深度代碼掃描工具')
@@ -485,11 +501,13 @@ def main() -> None:
     
     args = parser.parse_args()
     
+    # 優先使用命名參數，如果沒有則使用位置參數
+    repo_path = args.repo if args.repo_path is None else args.repo_path
     # 優先使用位置參數，如果沒有則使用命名參數
     repo_path = args.repo_path if args.repo_path is not None else args.repo
     output_dir = args.output_dir
     
-    scanner = AdvancedCodeScanner(repo_path, output_dir)
+    scanner = AdvancedCodeScanner(repo_path)
     results = scanner.deep_scan()
     
     # 返回適當的退出代碼
