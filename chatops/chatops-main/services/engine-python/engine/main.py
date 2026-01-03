@@ -3,15 +3,15 @@ import argparse
 import json
 import os
 import re
+import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from datetime import datetime, timezone
 from pathlib import Path
 
+# Add scripts directory for common utilities
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'scripts'))
+from common_utils import now_iso  # noqa: E402
+
 NAME_PATTERN = re.compile(r"^(dev|staging|prod)-[a-z0-9-]+-(deploy|svc|ing|cm|secret)-v\d+\.\d+\.\d+(-[A-Za-z0-9]+)?$")
-
-
-def now_iso():
-    return datetime.now(timezone.utc).isoformat()
 
 
 def _extract_yaml_metadata(text: str):

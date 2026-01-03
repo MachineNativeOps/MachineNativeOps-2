@@ -2,14 +2,15 @@
 import argparse
 import json
 import re
+import sys
 from pathlib import Path
-from datetime import datetime, timezone
+
+# Add scripts directory to path for common utilities
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common_utils import now_iso  # noqa: E402
+
 
 NAME_PATTERN = re.compile(r"^(dev|staging|prod)-[a-z0-9-]+-(deploy|svc|ing|cm|secret)-v\d+\.\d+\.\d+(-[A-Za-z0-9]+)?$")
-
-
-def now_iso():
-    return datetime.now(timezone.utc).isoformat()
 
 
 def scan_k8s_yaml(root: Path):

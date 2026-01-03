@@ -11,11 +11,11 @@ import argparse
 import re
 import json
 from pathlib import Path
-from datetime import datetime, timezone
+import sys
 
-
-def now_iso():
-    return datetime.now(timezone.utc).isoformat()
+# Add scripts directory to path for common utilities
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common_utils import now_iso  # noqa: E402
 
 
 UNPINNED = re.compile(r"uses:\s*[^@\s]+@v\d+", re.IGNORECASE)

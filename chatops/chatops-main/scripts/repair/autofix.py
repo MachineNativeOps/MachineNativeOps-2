@@ -3,12 +3,13 @@ import argparse
 import json
 import os
 import re
-from datetime import datetime, timezone
+import sys
+from datetime import datetime
 from pathlib import Path
 
-
-def now_iso():
-    return datetime.now(timezone.utc).isoformat()
+# Add scripts directory to path for common utilities
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from common_utils import now_iso  # noqa: E402
 
 
 WHITELIST_ROOTS = ["scripts", "policies", "deployments", ".github", "artifacts", "var", "tests", "services", "proto"]
