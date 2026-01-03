@@ -485,7 +485,7 @@ def main() -> None:
     args = parser.parse_args()
     
     # 優先使用位置參數，如果沒有則使用命名參數
-    repo_path = args.repo_path if args.repo_path is not None else args.repo
+    repo_path = args.repo_path or args.repo
     output_dir = args.output_dir
     
     scanner = AdvancedCodeScanner(repo_path, output_dir)
