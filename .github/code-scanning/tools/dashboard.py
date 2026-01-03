@@ -14,6 +14,8 @@ from flask import Flask, render_template, jsonify, send_file
 from werkzeug.utils import secure_filename
 from pathlib import Path
 import json
+import os
+import secrets
 from datetime import datetime
 from typing import Dict
 
@@ -27,6 +29,10 @@ TEMPLATE_DIR = Path(".github/code-scanning/templates")
 TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
 
 app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
+
+# 安全配置：從環境變量讀取 SECRET_KEY 或生成隨機密鑰
+# Security configuration: Load SECRET_KEY from environment or generate random key
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY') or secrets.token_hex(32)
 
 class DashboardData:
     """儀表板數據管理"""
@@ -164,22 +170,8 @@ def download_report(filename):
 
     if report_path.exists():
         return send_file(report_path, as_attachment=True)
-        resolved_path = report_path.resolve()
-        
-        # Check that the resolved path is under the base directory
-        # Using relative_to() which raises ValueError if path is outside base
-        resolved_path.relative_to(base_path)
-        
-        # Ensure it's not the base directory itself and is a file
-        if resolved_path == base_path or not resolved_path.is_file():
-            return jsonify({'error': 'Report not found'}), 404
-            
-    except (OSError, ValueError):
-        # Invalid path or path outside base directory
-        return jsonify({'error': 'Invalid path'}), 400
     
-    # Return the safe file
-    return send_file(resolved_path, as_attachment=True)
+    return jsonify({'error': 'Report not found'}), 404
 
 @app.route('/dashboard')
 def dashboard():
