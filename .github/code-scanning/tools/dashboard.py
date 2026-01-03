@@ -150,7 +150,7 @@ def download_report(filename):
     # Ensure the resolved path is still within REPORTS_DIR (defense in depth)
     try:
         base_path = REPORTS_DIR.resolve()
-        report_path = (REPORTS_DIR / filename).resolve()
+        report_path = (REPORTS_DIR / safe_filename).resolve()
     except OSError:
         # Invalid path (e.g., contains characters not allowed by the OS)
         return jsonify({'error': 'Report not found'}), 404
