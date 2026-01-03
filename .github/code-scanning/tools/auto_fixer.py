@@ -95,11 +95,8 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                         break
                 
                 if needs_import:
-                    # 在文件頂部添加 import os
+                    # 在文件頂部添加 import os，遵循 PEP 8 導入順序
                     insert_pos = 0
-                    for i, line in enumerate(lines):
-                        if line.startswith('import ') or line.startswith('from '):
-                            insert_pos = i + 1
                     
                     # 跳過 shebang
                     if lines and lines[0].startswith('#!'):
@@ -121,23 +118,24 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                                 if insert_pos < len(lines):
                                     insert_pos += 1
                     
-                    # 跳過 from __future__ imports
+                    # 跳過 from __future__ imports（必須在所有其他導入之前）
                     while insert_pos < len(lines) and lines[insert_pos].lstrip().startswith('from __future__ import'):
                         insert_pos += 1
                     
-                    # 找到標準庫導入的位置（在其他導入之前）
-                    # 如果已有標準庫導入，插入到它們之後
-                    found_stdlib_import = False
+                    # 查找最後一個標準庫導入的位置（os 是標準庫）
+                    # 標準庫導入應該在第三方庫導入之前
+                    last_import_pos = insert_pos
                     for i in range(insert_pos, len(lines)):
                         if lines[i].startswith('import ') or lines[i].startswith('from '):
+                            # 如果是標準庫導入，記錄位置
                             if not lines[i].startswith(('import os', 'from os ')):
-                                found_stdlib_import = True
-                                insert_pos = i + 1
-                        elif found_stdlib_import and lines[i].strip() and not lines[i].startswith(('#', 'import', 'from')):
-                            # 找到第一個非導入、非空、非註釋行，說明導入區結束
+                                last_import_pos = i + 1
+                        elif lines[i].strip() and not lines[i].startswith('#'):
+                            # 遇到非空、非註釋行，導入區結束
                             break
                     
-                    lines.insert(insert_pos, 'import os\n')
+                    # 在最後一個導入後插入，如果沒有其他導入則在 docstring 後插入
+                    lines.insert(last_import_pos, 'import os\n')
                 
                 # 寫入文件
                 with open(file_path, 'w') as f:
@@ -209,17 +207,9 @@ class UnpinnedDependencyFixer(VulnerabilityFixer):
             # 提取包名
             package_name = original_line.strip().split('>=')[0].split('==')[0].split('~=')[0].strip()
             
-            # 嘗試獲取最新版本（這裡簡化處理，實際應該使用 API）
-            # 添加固定版本號
-            fixed_line = f"{package_name}>=1.0.0  # TODO: 檢查並固定具體版本\n"
-            
-            lines[line_num] = fixed_line
-            
-            # 寫入文件
-            with open(file_path, 'w') as f:
-                f.writelines(lines)
-            
-            return True, original_line.strip(), fixed_line.strip()
+            # 標記為需要人工審查，不自動添加版本號
+            # 因為不是所有包都從 1.0.0 開始，自動添加可能導致問題
+            return False, original_line.strip(), f"依賴 {package_name} 需要手動固定版本號，請查詢合適的版本並使用 == 固定"
         
         except Exception as e:
             print(f"  ⚠️ 修復未固定版本依賴時發生錯誤: {e}")
@@ -277,10 +267,12 @@ class LongLineFixer(VulnerabilityFixer):
                     split_pos = remaining[:120].rfind(' ')
                 
                 if split_pos == -1:
-                    break
+                    # 無法找到安全的拆分點，標記為需要人工審查
+                    return False, original_line, "無法找到安全的拆分點，需要人工檢查"
                 
                 fixed_lines.append(remaining[:split_pos + 1] + '\n')
-                remaining = '    ' + remaining[split_pos + 1:]
+                # 使用檢測到的縮進風格
+                remaining = indent_str + file_indent + remaining[split_pos + 1:].lstrip()
             
             fixed_lines.append(remaining + '\n')
             
@@ -295,6 +287,23 @@ class LongLineFixer(VulnerabilityFixer):
         except Exception as e:
             print(f"  ⚠️ 修復過長代碼行時發生錯誤: {e}")
             return False, "", str(e)
+    
+    def _detect_indentation(self, lines: List[str]) -> str:
+        """檢測文件的縮進風格（空格或 Tab）"""
+        # 統計文件中使用的縮進類型
+        space_indent = 0
+        tab_indent = 0
+        
+        for line in lines:
+            if line.startswith('    '):
+                space_indent += 1
+            elif line.startswith('\t'):
+                tab_indent += 1
+        
+        # 返回最常用的縮進風格，默認 4 個空格
+        if tab_indent > space_indent:
+            return '\t'
+        return '    '
     
     def get_description(self) -> str:
         return "修復過長的代碼行"
@@ -534,12 +543,12 @@ def main() -> None:
     fixer = AutoFixer()
     
     if dry_run:
-        print("🔍 干運行模式 - 不會實際修改文件")
-        print("⚠️  干運行模式尚未完全實現，將跳過文件寫入操作")
-        # Note: 完整的干運行模式需要在各個修復器中添加dry_run參數支持
+        print("🔍 模擬運行模式 - 不會實際修改文件")
+        print("⚠️  模擬運行模式尚未完全實現，將跳過文件寫入操作")
+        # Note: 完整的模擬運行模式需要在各個修復器中添加 dry_run 參數支持
     else:
-        report = fixer.auto_fix_all(scan_results)
-        print(json.dumps(report, ensure_ascii=False, indent=2))
+        fixer.auto_fix_all(scan_results)
+        print(json.dumps(fixer.fix_report, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
     main()

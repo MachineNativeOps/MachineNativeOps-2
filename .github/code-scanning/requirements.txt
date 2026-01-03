@@ -6,14 +6,8 @@
 bandit==1.7.10
 safety==2.3.5
 
-# Web 框架
-# Pinned to exact versions to prevent supply-chain risks from unvetted releases
-safety==3.2.11
-
-# Web 框架
-flask>=3.0.0
-werkzeug>=3.0.1
 # Web 框架 - 固定版本以防供應鏈攻擊
+# Pinned to exact versions to prevent supply-chain risks from unvetted releases
 flask==3.0.3
 werkzeug==3.1.4
 
