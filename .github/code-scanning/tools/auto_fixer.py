@@ -102,11 +102,13 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                 # 檢查是否需要導入 os
                 needs_import = True
                 for line in lines[:line_num]:
-                    if 'import os' in line:
+                    # 使用正則表達式精確匹配 import os，避免誤匹配註釋或字符串
+                    if re.search(r'\bimport\s+os\b', line) or re.search(r'\bfrom\s+os\b', line):
                         needs_import = False
                         break
                 
                 if needs_import:
+                    # 在文件頂部添加 import os，遵循 PEP 8 標準
                     # 在文件頂部添加 import os，遵循 PEP 8 導入順序
                     insert_pos = 0
                     
@@ -119,21 +121,62 @@ class HardcodedPasswordFixer(VulnerabilityFixer):
                         line = lines[insert_pos].lstrip()
                         if line.startswith(('"""', "'''")):
                             docstring_delim = line[:3]
-                            if line.count(docstring_delim) >= 2:
+                            # 檢查是否為單行 docstring（分隔符在同一行中出現至少兩次）
+                            rest_of_line = line[3:]  # 移除開頭的分隔符
+                            if docstring_delim in rest_of_line:
                                 # 單行 docstring
                                 insert_pos += 1
                             else:
-                                # 多行 docstring
+                                # 多行 docstring - 尋找行首的結束分隔符
                                 insert_pos += 1
-                                while insert_pos < len(lines) and docstring_delim not in lines[insert_pos]:
-                                    insert_pos += 1
-                                if insert_pos < len(lines):
+                                while insert_pos < len(lines):
+                                    if lines[insert_pos].lstrip().startswith(docstring_delim):
+                                        insert_pos += 1
+                                        break
                                     insert_pos += 1
                     
                     # 跳過 from __future__ imports（必須在所有其他導入之前）
                     while insert_pos < len(lines) and lines[insert_pos].lstrip().startswith('from __future__ import'):
                         insert_pos += 1
                     
+                    # 找到標準庫導入的位置（在其他導入之前）
+                    # os 是標準庫，應該在第三方庫導入之前
+                    # 如果已有其他標準庫導入（如 import sys, import re），插入到它們之後
+                    # 如果沒有標準庫導入但有第三方庫導入，插入到第三方庫之前
+                    found_first_import = False
+                    for i in range(insert_pos, len(lines)):
+                        stripped = lines[i].lstrip()
+                        if stripped.startswith('import ') or stripped.startswith('from '):
+                            # 檢查是否已經有 import os（包括各種形式）
+                            if re.search(r'\bimport\s+os\b', stripped) or re.search(r'\bfrom\s+os\b', stripped):
+                                # os 已經導入，不需要再添加
+                                needs_import = False
+                                break
+                            if not found_first_import:
+                                found_first_import = True
+                                insert_pos = i
+                            # 繼續掃描標準庫導入
+                            # 簡單啟發式：標準庫通常是單個單詞（os, sys, re 等）
+                            # 第三方庫通常有下劃線或多個單詞
+                            import_match = re.match(r'(?:import|from)\s+([a-zA-Z_][a-zA-Z0-9_]*)', stripped)
+                            if import_match:
+                                module_name = import_match.group(1)
+                                # 常見標準庫模組名
+                                stdlib_modules = {'os', 'sys', 're', 'json', 'pathlib', 'datetime', 
+                                                'typing', 'dataclasses', 'abc', 'collections', 
+                                                'itertools', 'functools', 'operator', 'copy'}
+                                if module_name in stdlib_modules:
+                                    # 這是標準庫導入，插入點應該在它之後
+                                    insert_pos = i + 1
+                                else:
+                                    # 這是第三方庫導入，應該插入在它之前
+                                    break
+                        elif found_first_import and stripped and not stripped.startswith('#'):
+                            # 找到第一個非導入、非空、非註釋行，導入區結束
+                            break
+                    
+                    if needs_import:
+                        lines.insert(insert_pos, 'import os\n')
                     # 查找最後一個標準庫導入的位置（os 是標準庫）
                     # 標準庫導入應該在第三方庫導入之前
                     last_import_pos = insert_pos
