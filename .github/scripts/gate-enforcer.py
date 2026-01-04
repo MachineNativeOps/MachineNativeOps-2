@@ -110,7 +110,7 @@ class GateEnforcer:
 
     # Checkbox 模式匹配
     CHECKBOX_PATTERN = re.compile(
-        r'^(\s*)-\s*\[([ xX✅❌⏭️🔄⏸️]?)\]\s*(.+)$',
+        r'^(\s*)-\s*\[((?:[ xX]|✅|❌|⏭️|🔄|⏸️)?)\]\s*(.+)$',
         re.MULTILINE
     )
 
