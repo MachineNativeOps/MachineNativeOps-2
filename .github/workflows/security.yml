@@ -61,28 +61,66 @@ jobs:
 
       - name: Scan for high-risk patterns
         run: |
-          # Note: Using explicit character class patterns for case-insensitive matching instead of (?i) PCRE syntax
-          # git grep -E doesn't support Perl regex features
-          set +e  # Don't fail on grep matches
-          patterns=(
-            '[Aa][Ww][Ss][_-]?[Aa][Cc][Cc][Ee][Ss][Ss][_-]?[Kk][Ee][Yy][_-]?[Ii][Dd]'
-            '[Aa][Ww][Ss][_-]?[Ss][Ee][Cc][Rr][Ee][Tt][_-]?[Aa][Cc][Cc][Ee][Ss][Ss][_-]?[Kk][Ee][Yy]'
+          # Note: Using explicit character class patterns for case-insensitive matching
+          # git grep -E doesn't support PCRE (?i) syntax
+          set +e  # Don't fail immediately on grep matches
+          
+          # High-confidence patterns that should fail the build
+          high_confidence_patterns=(
             '[Gg][Hh][Pp]_[A-Za-z0-9]{36}'
             '[Gg][Ii][Tt][Hh][Uu][Bb]_[Pp][Aa][Tt]_[A-Za-z0-9_]{80,}'
-            '[Aa][Pp][Ii][_-]?[Kk][Ee][Yy]'
-            '[Ss][Ee][Cc][Rr][Ee][Tt][_-]?[Kk][Ee][Yy]'
-            '[Pp][Rr][Ii][Vv][Aa][Tt][Ee][_-]?[Kk][Ee][Yy]'
+          )
+          
+          # Lower-confidence patterns that should warn but not fail
+          # Note: Using separate patterns for clarity and maintainability
+          warning_patterns=(
+            # AWS access key variations
+            '[Aa][Ww][Ss][_-][Aa][Cc][Cc][Ee][Ss][Ss][_-][Kk][Ee][Yy][_-][Ii][Dd]'
+            '[Aa][Ww][Ss][_-][Kk][Ee][Yy][_-][Ii][Dd]'
+            '[Aa][Ww][Ss][_-][Aa][Cc][Cc][Ee][Ss][Ss][_-][Kk][Ee][Yy]'
+            '[Aa][Ww][Ss][_-][Kk][Ee][Yy]'
+            # AWS secret key variations
+            '[Aa][Ww][Ss][_-][Ss][Ee][Cc][Rr][Ee][Tt][_-][Aa][Cc][Cc][Ee][Ss][Ss][_-][Kk][Ee][Yy]'
+            '[Aa][Ww][Ss][_-][Ss][Ee][Cc][Rr][Ee][Tt][_-][Kk][Ee][Yy]'
+            # Generic key patterns
+            '[Aa][Pp][Ii][_-][Kk][Ee][Yy]'
+            '[Ss][Ee][Cc][Rr][Ee][Tt][_-][Kk][Ee][Yy]'
+            '[Pp][Rr][Ii][Vv][Aa][Tt][Ee][_-][Kk][Ee][Yy]'
+            # Slack tokens
             'xox[baprs]-[A-Za-z0-9-]{10,}'
           )
-          regex="($(printf '%s|' "${patterns[@]}" | sed 's/|$//'))"
-
-          found=0
-          if git grep -nE "$regex" -- . ':!node_modules' ':!.git' ':!.github/workflows/security.yml' 2>/dev/null; then
-            echo "⚠️ Potential secrets detected. Please review the matches above."
-            found=1
+          
+          # Exclude specific safe files, not all yml/md files
+          exclusions=(
+            ':!node_modules'
+            ':!.git'
+            ':!.github/workflows/security.yml'
+            ':!docs/examples/*.md'
+            ':!*.example.yml'
+            ':!*.example.yaml'
+            ':!*.template.yml'
+            ':!*.template.yaml'
+          )
+          
+          # Check high-confidence patterns (fail on match)
+          high_conf_regex="$(printf '%s|' "${high_confidence_patterns[@]}" | sed 's/|$//')"
+          high_conf_found=0
+          if git grep -nE "$high_conf_regex" -- . "${exclusions[@]}" 2>/dev/null; then
+            echo "❌ High-confidence secrets detected (GitHub tokens with specific format)."
+            high_conf_found=1
           fi
-
-          if [ $found -eq 0 ]; then
+          
+          # Check warning patterns (warn but don't fail)
+          warn_regex="$(printf '%s|' "${warning_patterns[@]}" | sed 's/|$//')"
+          warn_found=0
+          if git grep -nE "$warn_regex" -- . "${exclusions[@]}" 2>/dev/null; then
+            echo "⚠️ Potential secrets detected. Please review the matches above."
+            warn_found=1
+          fi
+          
+          if [ $high_conf_found -eq 0 ] && [ $warn_found -eq 0 ]; then
             echo "✅ No obvious secrets found."
           fi
-          exit 0  # Don't fail the workflow for warnings
+          
+          # Fail only for high-confidence matches
+          exit $high_conf_found
