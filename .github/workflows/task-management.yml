@@ -1,0 +1,305 @@
+name: Task Management Automation
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  auto-label-task:
+    name: Auto-label Task Issues
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'task')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Parse task metadata
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            
+            // Extract complexity
+            const complexityMatch = body.match(/### Task Complexity\s+([^\n]+)/);
+            const complexity = complexityMatch ? complexityMatch[1].trim() : null;
+            
+            // Extract category
+            const categoryMatch = body.match(/### Category\s+([^\n]+)/);
+            const category = categoryMatch ? categoryMatch[1].trim() : null;
+            
+            // Extract priority
+            const priorityMatch = body.match(/### Priority\s+([^\n]+)/);
+            const priority = priorityMatch ? priorityMatch[1].trim() : null;
+            
+            // Count sub-tasks
+            const subtaskMatches = body.match(/- \[ \]/g);
+            const subtaskCount = subtaskMatches ? subtaskMatches.length : 0;
+            
+            // Count completed sub-tasks
+            const completedMatches = body.match(/- \[x\]/gi);
+            const completedCount = completedMatches ? completedMatches.length : 0;
+            
+            core.setOutput('complexity', complexity);
+            core.setOutput('category', category);
+            core.setOutput('priority', priority);
+            core.setOutput('subtaskCount', subtaskCount);
+            core.setOutput('completedCount', completedCount);
+            
+            console.log(`Parsed: complexity=${complexity}, category=${category}, priority=${priority}`);
+            console.log(`Sub-tasks: ${completedCount}/${subtaskCount} completed`);
+      
+      - name: Add complexity label
+        if: steps.parse.outputs.complexity
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const complexity = '${{ steps.parse.outputs.complexity }}';
+            let label = 'complexity/medium'; // default
+            
+            if (complexity.includes('Low')) {
+              label = 'complexity/low';
+            } else if (complexity.includes('High')) {
+              label = 'complexity/high';
+            } else if (complexity.includes('Critical')) {
+              label = 'complexity/critical';
+            }
+            
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [label]
+            });
+      
+      - name: Add category label
+        if: steps.parse.outputs.category
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const category = '${{ steps.parse.outputs.category }}';
+            
+            // Map category to governance dimension
+            const categoryMap = {
+              '00-vision-strategy': 'dimension/00-vision',
+              '01-architecture': 'dimension/01-architecture',
+              '02-decision': 'dimension/02-decision',
+              '10-policy': 'dimension/10-policy',
+              '20-intent': 'dimension/20-intent',
+              '23-policies': 'dimension/23-policies',
+              '30-agents': 'dimension/30-agents',
+              '39-automation': 'dimension/39-automation',
+              '40-self-healing': 'dimension/40-self-healing',
+              '60-contracts': 'dimension/60-contracts',
+              '70-audit': 'dimension/70-audit',
+              '80-feedback': 'dimension/80-feedback',
+              'controlplane': 'layer/controlplane',
+              'workspace': 'layer/workspace',
+              'infrastructure': 'area/infrastructure',
+              'documentation': 'area/documentation',
+              'security': 'area/security'
+            };
+            
+            for (const [key, label] of Object.entries(categoryMap)) {
+              if (category.includes(key)) {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  labels: [label]
+                });
+                break;
+              }
+            }
+      
+      - name: Add priority label
+        if: steps.parse.outputs.priority
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const priority = '${{ steps.parse.outputs.priority }}';
+            let label = 'priority/P2'; // default
+            
+            if (priority.includes('P0')) {
+              label = 'priority/P0';
+            } else if (priority.includes('P1')) {
+              label = 'priority/P1';
+            } else if (priority.includes('P3')) {
+              label = 'priority/P3';
+            }
+            
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [label]
+            });
+      
+      - name: Update progress comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const subtaskCount = parseInt('${{ steps.parse.outputs.subtaskCount }}');
+            const completedCount = parseInt('${{ steps.parse.outputs.completedCount }}');
+            
+            if (subtaskCount === 0) {
+              console.log('No sub-tasks found, skipping progress update');
+              return;
+            }
+            
+            const percentage = Math.round((completedCount / subtaskCount) * 100);
+            const progressBar = '█'.repeat(Math.floor(percentage / 5)) + '░'.repeat(20 - Math.floor(percentage / 5));
+            
+            const comment = `## 📊 Task Progress
+            
+**Sub-tasks:** ${completedCount}/${subtaskCount} completed (${percentage}%)
+
+\`\`\`
+${progressBar}
+\`\`\`
+
+${percentage === 100 ? '🎉 **All sub-tasks completed!** Ready for final review.' : ''}
+${percentage >= 75 && percentage < 100 ? '⚡ **Almost there!** Final push needed.' : ''}
+${percentage >= 50 && percentage < 75 ? '🔄 **Good progress!** Keep going.' : ''}
+${percentage < 50 && percentage > 0 ? '🚀 **Getting started!** Momentum building.' : ''}
+
+---
+*Last updated: ${new Date().toISOString()}*
+*Automation: Task Management Bot*
+            `;
+            
+            // Find existing progress comment
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            const botComment = comments.data.find(c => 
+              c.user.type === 'Bot' && c.body.includes('📊 Task Progress')
+            );
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+  validate-task-structure:
+    name: Validate Task Structure
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'task')
+    
+    steps:
+      - name: Validate required fields
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            
+            const requiredSections = [
+              'Task Overview',
+              'Task Complexity',
+              'Category',
+              'Sub-Tasks Breakdown',
+              'Execution Plan',
+              'Acceptance Criteria',
+              'Priority',
+              'Expected Outputs'
+            ];
+            
+            const missingSections = requiredSections.filter(section => 
+              !body.includes(`### ${section}`)
+            );
+            
+            if (missingSections.length > 0) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `⚠️ **Task Structure Validation Failed**
+                
+The following required sections are missing:
+${missingSections.map(s => `- ${s}`).join('\n')}
+
+Please update the issue to include all required sections following the [Task Decomposition Guide](.github/TASK_DECOMPOSITION_GUIDE.md).
+                `
+              });
+              
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: ['needs-clarification']
+              });
+            } else {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                name: 'needs-clarification'
+              }).catch(() => {}); // Ignore if label doesn't exist
+              
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: '✅ **Task structure validated successfully!**\n\nAll required sections are present. Ready to proceed with execution.'
+              });
+            }
+
+  notify-stakeholders:
+    name: Notify Stakeholders
+    runs-on: ubuntu-latest
+    if: |
+      github.event.action == 'opened' &&
+      contains(github.event.issue.labels.*.name, 'task') &&
+      contains(github.event.issue.body, 'P0 - Critical')
+    
+    steps:
+      - name: Notify team of critical task
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🚨 **CRITICAL TASK CREATED**
+              
+This is a P0 critical task that requires immediate attention.
+
+**Next Steps:**
+1. Review task decomposition
+2. Assign to appropriate team members
+3. Begin execution within 24 hours
+4. Update progress daily
+
+**Escalation Path:**
+- If blocked: Add \`blocked\` label and comment with blocker details
+- If help needed: Mention @team-leads in comments
+- If urgent: Notify in #critical-tasks Slack channel
+
+---
+*Automated notification - Critical Task Alert System*
+              `
+            });

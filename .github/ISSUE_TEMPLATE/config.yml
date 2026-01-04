@@ -6,6 +6,9 @@ contact_links:
 - about: Check out our documentation for guides and tutorials
   name: 📖 Documentation
   url: https://docs.machinenativeops.io
+- about: Learn how to create tasks with sub-issues
+  name: 📋 Task Decomposition Guide
+  url: https://github.com/MachineNativeOps/machine-native-ops/blob/main/.github/TASK_DECOMPOSITION_GUIDE.md
 - about: Report security vulnerabilities privately
   name: 🔒 Security Issues
   url: https://github.com/MachineNativeOps/machine-native-ops/security/advisories/new

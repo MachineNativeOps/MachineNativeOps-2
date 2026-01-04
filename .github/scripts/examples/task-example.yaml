@@ -1,0 +1,44 @@
+# Example Task Configuration
+# This file demonstrates the structure for creating tasks with sub-issues
+
+title: Implement Advanced Monitoring Dashboard
+overview: |
+  Create a comprehensive monitoring dashboard for the MachineNativeOps platform
+  that provides real-time visibility into system health, performance metrics,
+  and governance compliance status across all dimensions.
+
+complexity: high
+
+category: 40-self-healing
+
+subtasks:
+  - Design dashboard architecture and component layout
+  - Implement metrics collection backend service
+  - Create real-time data streaming pipeline
+  - Build frontend dashboard UI components
+  - Integrate with existing governance framework
+  - Add alerting and notification system
+  - Write comprehensive tests and documentation
+  - Deploy to staging environment for validation
+
+execution_plan: |
+  1. Architecture design (Phase 1 - Foundation)
+  2. Backend implementation (Phase 2 - Data Layer)
+  3. Frontend development (Phase 3 - Presentation)
+  4. Integration (Phase 4 - Connectivity)
+  5. Testing and deployment (Phase 5 - Quality)
+
+priority: P1 - High
+
+acceptance_criteria:
+  - All sub-tasks completed and verified
+  - Dashboard displays metrics from all 55 governance dimensions
+  - Real-time updates working with < 1s latency
+  - Security scan passes with zero critical/high issues
+  - Test coverage > 80% for all components
+
+governance_compliance:
+  fhs: true
+  immutability: true
+  validation: true
+  contract: true

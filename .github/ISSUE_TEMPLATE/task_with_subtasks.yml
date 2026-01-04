@@ -1,0 +1,236 @@
+name: 📋 Task with Sub-Issues
+description: Create a task with decomposed sub-issues following AI Behavior Contract principles
+labels:
+  - task
+  - triage
+  - needs-decomposition
+assignees: []
+title: '[Task]: '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Task Decomposition Template
+        
+        This template follows the [AI Behavior Contract](.github/AI-BEHAVIOR-CONTRACT.md) principle of **Proactive Task Decomposition**.
+        
+        Create a well-structured task with clear sub-tasks that can be tracked independently.
+  
+  - type: checkboxes
+    id: existing-issues
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for this task.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  
+  - type: textarea
+    id: task-overview
+    attributes:
+      label: Task Overview
+      description: A clear and concise description of the overall task or goal.
+      placeholder: |
+        Example: Implement a new monitoring system for the controlplane layer
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Task Complexity
+      description: Assess the complexity level of this task
+      options:
+        - Low - Can be completed in a single session
+        - Medium - Requires 2-3 focused sessions
+        - High - Requires multiple sessions and coordination
+        - Critical - Requires extensive planning and cross-team coordination
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What governance dimension or category does this task relate to?
+      options:
+        - 00-vision-strategy - Vision & Strategy
+        - 01-architecture - Architecture
+        - 02-decision - Decision Framework
+        - 10-policy - Policy Framework
+        - 20-intent - Intent Orchestration
+        - 23-policies - Policies
+        - 30-agents - Agent Governance
+        - 39-automation - Automation
+        - 40-self-healing - Self-Healing
+        - 60-contracts - Contracts
+        - 70-audit - Audit
+        - 80-feedback - Feedback Loops
+        - controlplane - Controlplane Layer
+        - workspace - Workspace Layer
+        - infrastructure - Infrastructure
+        - documentation - Documentation
+        - security - Security
+        - other - Other
+    validations:
+      required: true
+  
+  - type: textarea
+    id: subtasks
+    attributes:
+      label: Sub-Tasks Breakdown
+      description: |
+        Break down the task into 2-5 specific sub-tasks using GitHub task list syntax.
+        Each sub-task should be atomic and independently completable.
+        
+        Use the format:
+        - [ ] Sub-task 1: Description
+        - [ ] Sub-task 2: Description (depends on Sub-task 1)
+        - [ ] Sub-task 3: Description
+      value: |
+        - [ ] Sub-task 1: [Brief description]
+        - [ ] Sub-task 2: [Brief description]
+        - [ ] Sub-task 3: [Brief description]
+      render: markdown
+    validations:
+      required: true
+  
+  - type: textarea
+    id: execution-plan
+    attributes:
+      label: Execution Plan
+      description: Describe the recommended execution order and rationale
+      placeholder: |
+        1. Start with Sub-task 1 because...
+        2. Then proceed to Sub-task 2, which depends on...
+        3. Finally, Sub-task 3 to complete...
+        
+        Rationale: This order ensures...
+    validations:
+      required: true
+  
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any external dependencies, files, or resources needed
+      placeholder: |
+        - Access to: controlplane/baseline/config/
+        - Required files: system-manifest.yaml
+        - External systems: GitHub Actions, Cloudflare
+        - Team members: @username for review
+  
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define what "done" looks like for this task
+      placeholder: |
+        - [ ] All sub-tasks completed
+        - [ ] Tests passing
+        - [ ] Documentation updated
+        - [ ] Code reviewed
+        - [ ] Deployed to staging
+      render: markdown
+    validations:
+      required: true
+  
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How urgent is this task?
+      options:
+        - P0 - Critical (Blocks other work)
+        - P1 - High (Should be done soon)
+        - P2 - Medium (Normal priority)
+        - P3 - Low (Nice to have)
+    validations:
+      required: true
+  
+  - type: textarea
+    id: required-inputs
+    attributes:
+      label: Required Inputs
+      description: |
+        List specific inputs needed to start this task (following AI Behavior Contract principle #2)
+      placeholder: |
+        - Configuration files: path/to/config.yaml
+        - API credentials: vault://secrets/api-key
+        - Documentation: link/to/docs
+        - Schema definitions: path/to/schema
+  
+  - type: textarea
+    id: expected-outputs
+    attributes:
+      label: Expected Outputs
+      description: What artifacts or deliverables will this task produce?
+      placeholder: |
+        - New files: path/to/new-file.yaml
+        - Updated files: path/to/existing-file.md
+        - Test results: test-report.json
+        - Documentation: README.md updates
+    validations:
+      required: true
+  
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: How will we measure the success of this task?
+      placeholder: |
+        - Performance: < 100ms response time
+        - Availability: 99.9% uptime
+        - Test coverage: > 80%
+        - Documentation: All functions documented
+  
+  - type: checkboxes
+    id: governance-compliance
+    attributes:
+      label: Governance Compliance
+      description: Ensure this task aligns with MachineNativeOps governance framework
+      options:
+        - label: Task follows FHS 3.0 compliance guidelines
+        - label: Task aligns with controlplane immutability principles
+        - label: Task includes proper validation and audit trails
+        - label: Task follows AI Behavior Contract principles
+  
+  - type: textarea
+    id: risk-assessment
+    attributes:
+      label: Risk Assessment
+      description: Identify potential risks and mitigation strategies
+      placeholder: |
+        **Risks:**
+        - Risk 1: Description
+          - Likelihood: Low/Medium/High
+          - Impact: Low/Medium/High
+          - Mitigation: How to address
+        
+        **Rollback Plan:**
+        - Steps to rollback if something goes wrong
+  
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that would be helpful
+      placeholder: |
+        - Related PRs: #123, #456
+        - Related issues: #789
+        - Reference documentation: link/to/docs
+        - Slack discussion: link/to/thread
+  
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: How would you like to contribute to this task?
+      options:
+        - label: I will implement this task
+        - label: I can help with sub-task 1
+        - label: I can help with sub-task 2
+        - label: I can help with sub-task 3
+        - label: I can help with testing
+        - label: I can help with code review
+        - label: I can help with documentation
