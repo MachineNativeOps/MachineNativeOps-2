@@ -197,42 +197,23 @@ class AdvancedCodeScanner:
             # Skip test files and example files
             file_path_str = str(file_path).lower()
             if any(pattern in file_path_str for pattern in test_file_patterns):
-            # 跳過測試/示例代碼文件
-            if any(marker in str(file_path).lower() for marker in ['test', 'example', 'demo', 'sample']):
                 continue
             
             try:
-                # 跳過測試/示例代碼文件（移到外層以提高效能）
-                if any(marker in str(file_path).lower() for marker in ['test', 'example', 'demo', 'sample']):
-                    continue
                 
                 with open(file_path, 'r', encoding='utf-8') as f:
                     lines = f.readlines()
                 
                 for line_num, line in enumerate(lines, 1):
-                    line_lower = line.lower()
                     line_stripped = line.strip()
                     
-                    # 跳過註釋
+                    # 跳過註釋 (Skip comment lines)
                     if line_stripped.startswith("#"):
-                        continue
-                    
-                    # Skip comment lines (both full-line and inline comments)
-                    stripped_line = line.strip()
-                    if stripped_line.startswith("#"):
                         continue
                     
                     # Remove inline comments for analysis
                     code_part = line.split('#')[0] if '#' in line else line
                     code_part_lower = code_part.lower()
-                    # Skip comments
-                    stripped = line.strip()
-                    if stripped.startswith("#"):
-                        continue
-                    
-                    # Skip test files
-                    if any(test_marker in str(file_path).lower() for test_marker in ['test_', '_test.', 'tests/']):
-                        continue
                     
                     # 檢查硬編碼憑證
                     for key_type, keywords in patterns.items():
