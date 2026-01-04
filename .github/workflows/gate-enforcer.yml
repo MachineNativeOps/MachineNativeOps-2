@@ -50,15 +50,59 @@ jobs:
           # 提取 markdown 和 json 報告
           cat /tmp/gate_report.txt
 
-          # 解析 JSON 報告獲取分數
-          SCORE=$(grep -A 100 '^{' /tmp/gate_report.txt | python -c "import sys,json; data=json.load(sys.stdin); print(data['score'])" 2>/dev/null || echo "0")
-          PASSED=$(grep -A 100 '^{' /tmp/gate_report.txt | python -c "import sys,json; data=json.load(sys.stdin); print(data['passed'])" 2>/dev/null || echo "0")
-          FAILED=$(grep -A 100 '^{' /tmp/gate_report.txt | python -c "import sys,json; data=json.load(sys.stdin); print(data['failed'])" 2>/dev/null || echo "0")
+          # 使用 Python 解析 JSON 報告並直接寫入 GITHUB_OUTPUT
+          python - << 'PY'
+import json
+import os
+import pathlib
+import sys
 
-          echo "score=$SCORE" >> $GITHUB_OUTPUT
-          echo "passed=$PASSED" >> $GITHUB_OUTPUT
-          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+report_path = pathlib.Path("/tmp/gate_report.txt")
+try:
+    text = report_path.read_text(encoding="utf-8")
+except Exception as e:
+    print(f"::error::無法讀取報告檔案 {report_path}: {e}", file=sys.stderr)
+    sys.exit(1)
 
+json_lines = []
+started = False
+for line in text.splitlines():
+    if not started and line.lstrip().startswith("{"):
+        started = True
+    if started:
+        json_lines.append(line)
+
+if not json_lines:
+    print("::error::在 gate_report.txt 中找不到 JSON 報告（以 '{' 開頭的區塊）", file=sys.stderr)
+    sys.exit(1)
+
+json_text = "\n".join(json_lines)
+try:
+    data = json.loads(json_text)
+except Exception as e:
+    print(f"::error::解析 JSON 報告失敗: {e}", file=sys.stderr)
+    sys.exit(1)
+
+required_keys = ("score", "passed", "failed")
+missing = [k for k in required_keys if k not in data]
+if missing:
+    print(f"::error::JSON 報告中缺少必要欄位: {', '.join(missing)}", file=sys.stderr)
+    sys.exit(1)
+
+github_output = os.environ.get("GITHUB_OUTPUT")
+if not github_output:
+    print("::error::GITHUB_OUTPUT 環境變數未設定，無法匯出輸出值", file=sys.stderr)
+    sys.exit(1)
+
+try:
+    with open(github_output, "a", encoding="utf-8") as fh:
+        fh.write(f"score={data['score']}\n")
+        fh.write(f"passed={data['passed']}\n")
+        fh.write(f"failed={data['failed']}\n")
+except Exception as e:
+    print(f"::error::寫入 GITHUB_OUTPUT 失敗: {e}", file=sys.stderr)
+    sys.exit(1)
+PY
           # 保存報告
           cp /tmp/gate_report.txt gate-report.md
 
