@@ -131,8 +131,9 @@ class GateEnforcer:
             )
             if result.returncode == 0:
                 self.changed_files = [f.strip() for f in result.stdout.strip().split('\n') if f.strip()]
-        except Exception:
-            pass
+        except Exception as e:
+            # 如果無法取得變更檔案，記錄錯誤但不要中止流程，維持默認/既有的 changed_files
+            print(f"[GateEnforcer] Failed to get changed files: {e}", file=sys.stderr)
         return self.changed_files
 
     def parse_checkboxes(self) -> list:
